@@ -98,14 +98,16 @@ function Reveal({
 function CharacterMark({ small = false }: { small?: boolean }) {
   return (
     <div className={`aria-character${small ? " aria-character--small" : ""}`} aria-hidden="true">
-      <span className="aria-character__spark" />
-      <span className="aria-character__face">
-        <i />
-        <i />
-        <b />
+      <span className="aria-character__art">
+        <span className="aria-character__spark" />
+        <span className="aria-character__face">
+          <i />
+          <i />
+          <b />
+        </span>
+        <span className="aria-character__thought aria-character__thought--one" />
+        <span className="aria-character__thought aria-character__thought--two" />
       </span>
-      <span className="aria-character__thought aria-character__thought--one" />
-      <span className="aria-character__thought aria-character__thought--two" />
     </div>
   );
 }
