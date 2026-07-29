@@ -249,11 +249,19 @@ section {
     var(--color-accent) 92%,
     transparent 92%
   );
-  background-position: 0 0;
+  background-position: left center;
   background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background-size: 0% 100%;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
+  animation: highlight-sweep 900ms var(--ease-out) 420ms forwards;
+  will-change: background-size;
+}
+
+@keyframes highlight-sweep {
+  to {
+    background-size: 100% 100%;
+  }
 }
 
 /* Navigation */
