@@ -341,11 +341,15 @@ main {
   position: relative;
   z-index: 2;
   display: grid;
-  width: min(1320px, calc(100% - 48px));
-  grid-template-columns: minmax(330px, 0.72fr) minmax(560px, 1.28fr);
-  gap: 40px;
+  width: min(1240px, calc(100% - 48px));
+  grid-template-columns: minmax(400px, 1fr) minmax(500px, 600px);
+  gap: 52px;
   align-items: center;
   padding: 64px 0 76px;
+}
+
+.hero-copy {
+  max-width: 590px;
 }
 
 .hero-lede {
@@ -443,6 +447,9 @@ main {
 }
 
 .system-card {
+  width: 100%;
+  max-width: 600px;
+  justify-self: end;
   overflow: hidden;
   background: #f7f9fc;
   border: 1px solid #cbd8e6;
@@ -2006,7 +2013,8 @@ footer {
   }
 
   .system-card {
-    width: min(100%, 650px);
+    width: min(100%, 600px);
+    justify-self: center;
   }
 
   .scroll-cue {
