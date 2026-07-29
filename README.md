@@ -29,22 +29,18 @@ npm run preview
 
 The compiled website is written to `dist/`.
 
-## GitHub Pages
+## Deploy to Vercel
 
-The repository includes a GitHub Actions workflow at `.github/workflows/deploy.yml`.
-
-1. Open the repository’s **Settings → Pages**.
-2. Under **Build and deployment**, choose **GitHub Actions** as the source.
-3. Push to `main`, or run the workflow manually from the **Actions** tab.
-
-Vite uses a relative asset base, so the build works at both a repository subpath and a custom domain.
+1. Import this repository into Vercel.
+2. Vercel will detect Vite automatically.
+3. Use `npm run build` as the build command and `dist` as the output directory if Vercel does not fill them in automatically.
 
 ## Configuration
 
 - Replace `your-email@example.com` in `src/App.tsx` with the research contact email.
 - Replace `YOUR_FORM_ID` in `src/App.tsx` with the ID from a Formspree form.
 - Add real researcher photos by replacing the `.portrait` placeholders in `src/App.tsx`.
-- To use a custom domain, create `public/CNAME` containing only the domain name.
+- Configure a custom domain from the Vercel project settings.
 
 ## Research data
 
