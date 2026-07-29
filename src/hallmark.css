@@ -1518,7 +1518,7 @@ tbody tr:last-child td {
 /* Team */
 
 .team {
-  padding-block: var(--space-4xl) var(--space-3xl);
+  padding-block: var(--space-2xl);
   background: var(--color-paper-cyan);
 }
 
@@ -1554,6 +1554,20 @@ tbody tr:last-child td {
   color: var(--color-accent-2-ink);
   background: var(--color-accent);
   transform: rotate(3deg);
+}
+
+.person-mark--photo {
+  overflow: hidden;
+  border-radius: 1.25rem;
+  transform: none !important;
+}
+
+.person-mark--photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 24%;
 }
 
 .team-person span {
@@ -1859,7 +1873,7 @@ footer {
   }
 
   .team {
-    padding-block: var(--space-3xl) var(--space-2xl);
+    padding-block: var(--space-2xl);
   }
 
   .join {
