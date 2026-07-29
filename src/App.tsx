@@ -15,6 +15,7 @@ import {
   team,
   type Feature,
 } from "./data";
+import AriaExperience from "./AriaExperience";
 
 const navItems = [
   { label: "How It Works", href: "#how-it-works" },
@@ -626,10 +627,10 @@ function Team() {
                 </p>
               </article>
               <article>
-                <span>02 / Karthick Mallireddy</span>
+                <span>02 / Karthik Malireddy</span>
                 <h3>Co-research and system development</h3>
                 <p>
-                  Karthick co-develops ARIA’s research approach, helping turn the core idea into a
+                  Karthik co-develops ARIA’s research approach, helping turn the core idea into a
                   testable system grounded in evidence, careful evaluation, and relevance to real
                   learning environments.
                 </p>
@@ -687,7 +688,7 @@ function SeeUs() {
                 Intentional Innovation: Keeping Learning Human in an AI World
               </p>
               <p className="summit-description">
-                Meet Naren Saravanan and Karthick Mallireddy as they present ARIA and share how
+                Meet Naren Saravanan and Karthik Malireddy as they present ARIA and share how
                 state-aware AI could help students with ADHD and learning disabilities become more
                 independent thinkers. The summit brings together educators, researchers, students,
                 and technology builders focused on using AI with purpose, rigor, and care.
@@ -817,7 +818,7 @@ function Footer() {
           <span className="footer-brand">ARIA</span>
           <p>Research Initiative © 2026</p>
         </div>
-        <p>Research by Naren Saravanan &amp; Karthick Mallireddy</p>
+        <p>Research by Naren Saravanan &amp; Karthik Malireddy</p>
         <div className="footer-links">
           <a href="#research">Research</a>
           <a href="mailto:11narensara11@gmail.com">Contact</a>
@@ -828,26 +829,5 @@ function Footer() {
 }
 
 export default function App() {
-  const { scrollYProgress } = useScroll();
-  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 24, mass: 0.2 });
-
-  return (
-    <>
-      <a className="skip-link" href="#main">
-        Skip to content
-      </a>
-      <motion.div className="page-progress" style={{ scaleX: progress }} />
-      <Navigation />
-      <main id="main">
-        <Hero />
-        <Problem />
-        <HowItWorks />
-        <Research />
-        <SeeUs />
-        <Team />
-        <GetInvolved />
-      </main>
-      <Footer />
-    </>
-  );
+  return <AriaExperience />;
 }
