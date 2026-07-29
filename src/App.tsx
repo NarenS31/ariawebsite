@@ -627,7 +627,7 @@ function Team() {
                 </p>
               </article>
               <article>
-                <span>02 / Karthik Malireddy</span>
+                <span>02 / Karthick Mallireddy</span>
                 <h3>Co-research and system development</h3>
                 <p>
                   Karthik co-develops ARIA’s research approach, helping turn the core idea into a
@@ -688,7 +688,7 @@ function SeeUs() {
                 Intentional Innovation: Keeping Learning Human in an AI World
               </p>
               <p className="summit-description">
-                Meet Naren Saravanan and Karthik Malireddy as they present ARIA and share how
+                Meet Naren Saravanan and Karthick Mallireddy as they present ARIA and share how
                 state-aware AI could help students with ADHD and learning disabilities become more
                 independent thinkers. The summit brings together educators, researchers, students,
                 and technology builders focused on using AI with purpose, rigor, and care.
@@ -818,7 +818,7 @@ function Footer() {
           <span className="footer-brand">ARIA</span>
           <p>Research Initiative © 2026</p>
         </div>
-        <p>Research by Naren Saravanan &amp; Karthik Malireddy</p>
+        <p>Research by Naren Saravanan &amp; Karthick Mallireddy</p>
         <div className="footer-links">
           <a href="#research">Research</a>
           <a href="mailto:11narensara11@gmail.com">Contact</a>

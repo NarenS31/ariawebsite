@@ -139,7 +139,7 @@ export const team: TeamMember[] = [
     location: "Waxhaw, North Carolina",
   },
   {
-    name: "Karthik Malireddy",
+    name: "Karthick Mallireddy",
     role: "Student Researcher",
     school: "Senior, Marvin Ridge High School",
     location: "Waxhaw, North Carolina",

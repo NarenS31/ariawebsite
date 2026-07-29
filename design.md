@@ -1,11 +1,12 @@
-# Design — ARIA Research Website
+# Design | ARIA Research Website
 
 A locked design system for the ARIA public research site. Future pages should extend this
 system rather than inventing a separate visual identity.
 
 ## Genre
 
-Playful. Warm, interactive, and student-friendly without weakening the research.
+Research-forward, warm, and student-friendly. Interactions should explain the research without
+making the initiative look like a generic AI assistant or children’s application.
 
 ## Macrostructure family
 
@@ -27,8 +28,8 @@ Playful. Warm, interactive, and student-friendly without weakening the research.
 
 ## Typography
 
-- Display and body: Plus Jakarta Sans, weights 400–700, normal style.
-- Mono labels and data: JetBrains Mono, weights 400–600.
+- Display and body: the platform’s system sans-serif stack, weights 400 to 700.
+- Mono labels and data: the platform’s system monospace stack, weights 400 to 600.
 - Display tracking: `-0.035em`.
 - Type anchor: `clamp(2.75rem, 5vw + 1rem, 5.25rem)`.
 
@@ -57,8 +58,9 @@ A named four-point scale from `--space-3xs` through `--space-4xl`. No arbitrary 
 
 ## What pages must share
 
-- ARIA character mark and wordmark.
+- ARIA wordmark without an assistant character or status-light decoration.
 - Warm cream paper, ink, pear, cyan, and one coral emphasis.
 - Plus Jakarta Sans and JetBrains Mono.
-- Rounded, tactile controls and visible focus states.
+- Restrained controls, full-width navigation, and visible focus states.
 - Honest research limitations beside evidence.
+- Compact narrative sections with centered content and limited unused side space.

@@ -8,7 +8,7 @@ const summitTicketsUrl =
   "https://www.eventbrite.com/e/ai-in-education-summit-2026-khan-lab-school-tickets-1988581168807?aff=oddtdtcreator";
 
 const navItems = [
-  { label: "The idea", href: "#idea" },
+  { label: "About", href: "#about" },
   { label: "How it works", href: "#how-it-works" },
   { label: "Early results", href: "#research" },
   { label: "Meet us", href: "#team" },
@@ -51,7 +51,7 @@ const workflow = [
     verb: "Interpret",
     title: "ARIA estimates the thinking state.",
     body: "The system looks for seven states: planning, flow, confusion, rushing, frustration, being stuck, and insight. It shows its evidence instead of pretending certainty.",
-    detail: "A state is a useful hypothesis—not a diagnosis.",
+    detail: "A state is a useful hypothesis, not a diagnosis.",
     tone: "cyan",
   },
   {
@@ -66,7 +66,7 @@ const workflow = [
     number: "4.0",
     verb: "Transfer",
     title: "The prompt should become unnecessary.",
-    body: "Over time, ARIA looks for the student to begin planning and self-checking independently. That transfer—not more time with an AI—is the long-term research goal.",
+    body: "Over time, ARIA looks for the student to begin planning and self-checking independently. That transfer, not more time with an AI, is the long-term research goal.",
     detail: "Success means ARIA can step back.",
     tone: "mint",
   },
@@ -95,21 +95,6 @@ function Reveal({
   );
 }
 
-function CharacterMark({ small = false }: { small?: boolean }) {
-  return (
-    <div className={`aria-character${small ? " aria-character--small" : ""}`} aria-hidden="true">
-      <span className="aria-character__spark" />
-      <span className="aria-character__face">
-        <i />
-        <i />
-        <b />
-      </span>
-      <span className="aria-character__thought aria-character__thought--one" />
-      <span className="aria-character__thought aria-character__thought--two" />
-    </div>
-  );
-}
-
 function Navigation() {
   const [open, setOpen] = useState(false);
   const [compact, setCompact] = useState(false);
@@ -134,7 +119,6 @@ function Navigation() {
       </a>
       <div className="site-nav shell">
         <a className="wordmark" href="#home" aria-label="ARIA home">
-          <CharacterMark small />
           <span>ARIA</span>
           <small>Research Initiative</small>
         </a>
@@ -195,10 +179,7 @@ function ThoughtPlayground() {
   return (
     <div className="thought-playground">
       <div className="playground-top">
-        <span className="live-label">
-          <i aria-hidden="true" />
-          Try a thinking moment
-        </span>
+        <span className="live-label">Thinking-state example</span>
         <span>Tap a state to change ARIA’s question</span>
       </div>
       <div className="state-tabs" role="tablist" aria-label="Student thinking states">
@@ -231,13 +212,11 @@ function ThoughtPlayground() {
             <p>“{current.student}”</p>
           </div>
           <div className="signal-line" aria-label={`Signal: ${current.signal}`}>
-            <i aria-hidden="true" />
             <span>{current.signal}</span>
             <b aria-hidden="true">→</b>
           </div>
           <div className="aria-bubble">
             <div>
-              <CharacterMark small />
               <span>ARIA asks</span>
             </div>
             <p>“{current.aria}”</p>
@@ -245,7 +224,7 @@ function ThoughtPlayground() {
         </motion.div>
       </AnimatePresence>
       <p className="playground-note">
-        A teaching concept—not a diagnostic tool. ARIA’s state estimate is always uncertain and
+        A teaching concept, not a diagnostic tool. ARIA’s state estimate is always uncertain and
         should remain visible to the learner.
       </p>
     </div>
@@ -258,22 +237,22 @@ function Hero() {
       <div className="shell hero-layout">
         <div className="hero-copy">
           <Reveal>
-            <p className="kicker">Metacognitive AI for students who learn differently</p>
+            <p className="kicker">Independent research in metacognition</p>
           </Reveal>
           <Reveal delay={0.06}>
             <h1>
-              What if AI noticed <span className="highlight">how you think?</span>
+              What if a learning tool noticed <span className="highlight">how you think?</span>
             </h1>
           </Reveal>
           <Reveal delay={0.12}>
             <p className="hero-lede">
-              ARIA listens to a student’s reasoning—not just the final answer—then asks one useful
+              ARIA studies a student’s reasoning, not just the final answer, then asks one useful
               question to help them plan, recover, or check their work.
             </p>
           </Reveal>
           <Reveal className="hero-actions" delay={0.18}>
-            <a className="btn btn--pear" href="#idea">
-              Follow the idea <span aria-hidden="true">↓</span>
+            <a className="btn btn--pear" href="#about">
+              Why we are building it <span aria-hidden="true">↓</span>
             </a>
             <a className="text-link" href="#research">
               See the early evidence <span aria-hidden="true">→</span>
@@ -282,11 +261,10 @@ function Hero() {
           <Reveal className="hero-trust" delay={0.24}>
             <span>On-device by design</span>
             <span>Answers stay with the student</span>
-            <span>Early research—not a finished claim</span>
+            <span>Early research, not a finished claim</span>
           </Reveal>
         </div>
         <Reveal className="hero-demo" delay={0.14}>
-          <CharacterMark />
           <ThoughtPlayground />
         </Reveal>
       </div>
@@ -294,44 +272,48 @@ function Hero() {
   );
 }
 
-function Idea() {
+function About() {
   return (
-    <section className="idea-section section" id="idea">
+    <section className="idea-section section" id="about">
       <div className="shell idea-layout">
         <div className="idea-statement">
+          <p className="kicker">About ARIA</p>
           <h2>
-            The goal is not an AI that thinks for students.
-            <span>It is an AI that helps students notice their own thinking.</span>
+            Built from personal experience with ADHD and research into today’s learning tools.
+            <span>We are studying how technology can strengthen independent thinking.</span>
           </h2>
         </div>
         <div className="idea-notes">
           <Reveal>
             <article>
               <span>01</span>
-              <h3>Answers can hide the hard part.</h3>
+              <h3>It started with lived experience.</h3>
               <p>
-                A correct result does not show whether a student planned, monitored confusion, or
-                recovered from getting stuck.
+                Naren’s experience with ADHD made one problem clear: getting an answer is not the
+                same as learning how to plan, work through confusion, and recover when a strategy
+                fails.
               </p>
             </article>
           </Reveal>
           <Reveal delay={0.08}>
             <article>
               <span>02</span>
-              <h3>Thinking skills can be practiced.</h3>
+              <h3>Current tools often solve too much.</h3>
               <p>
-                ARIA focuses on metacognition: planning before starting, checking while working, and
-                choosing a new strategy when the first one fails.
+                Our research into current tutoring tools found that many systems optimize for fast,
+                correct responses. They rarely make the student’s thinking process visible or help
+                students practice metacognition directly.
               </p>
             </article>
           </Reveal>
           <Reveal delay={0.16}>
             <article>
               <span>03</span>
-              <h3>Independence is the finish line.</h3>
+              <h3>ARIA turns that gap into a research question.</h3>
               <p>
-                The intervention should shrink as the student begins using the strategy without
-                being prompted.
+                Naren Saravanan and Karthick Mallireddy are testing whether short, state-aware
+                questions can help students plan and self-check independently. Success means the
+                support becomes less necessary over time.
               </p>
             </article>
           </Reveal>
@@ -385,7 +367,6 @@ function WorkflowVisual({ index }: { index: number }) {
   if (index === 2) {
     return (
       <div className="stage-visual visual-question" aria-label="ARIA asks a Socratic question">
-        <CharacterMark small />
         <span>ARIA asks</span>
         <p>“Which part of your plan still feels reliable?”</p>
         <small>No answer revealed</small>
@@ -531,13 +512,13 @@ function Summit() {
             Intentional Innovation: Keeping Learning Human in an AI World
           </p>
           <p>
-            Meet Naren Saravanan and Karthik Malireddy as they share ARIA’s research, current
+            Meet Naren Saravanan and Karthick Mallireddy as they share ARIA’s research, current
             limitations, and next questions with educators, researchers, students, and builders.
           </p>
           <dl>
             <div>
               <dt>When</dt>
-              <dd>Saturday, October 24 · 8:00 AM–5:00 PM PT</dd>
+              <dd>Saturday, October 24 · 8:00 AM to 5:00 PM PT</dd>
             </div>
             <div>
               <dt>Where</dt>
@@ -626,7 +607,7 @@ function Join() {
               <p>{group.text}</p>
               <a
                 href={`mailto:11narensara11@gmail.com?subject=${encodeURIComponent(
-                  `ARIA — ${group.label} collaboration`,
+                  `ARIA | ${group.label} collaboration`,
                 )}`}
               >
                 Start a conversation <span aria-hidden="true">↗</span>
@@ -636,11 +617,10 @@ function Join() {
         </div>
         <div className="updates-panel">
           <div>
-            <CharacterMark small />
             <span>Research updates</span>
           </div>
           <h3>Follow the honest version of the story.</h3>
-          <p>New evidence, limitations, demos, and ways to participate—sent only when there is something useful to share.</p>
+          <p>New evidence, limitations, demos, and ways to participate, sent only when there is something useful to share.</p>
           <a
             className="btn btn--cyan"
             href="mailto:11narensara11@gmail.com?subject=Add%20me%20to%20ARIA%20research%20updates"
@@ -666,7 +646,7 @@ function Footer() {
         <a className="footer-wordmark" href="#home">
           ARIA
         </a>
-        <p>Research by Naren Saravanan and Karthik Malireddy · 2026</p>
+        <p>Research by Naren Saravanan and Karthick Mallireddy · 2026</p>
         <div>
           <a href="#research">Research</a>
           <a href="mailto:11narensara11@gmail.com">Contact</a>
@@ -689,7 +669,7 @@ export default function AriaExperience() {
       <Navigation />
       <main id="main">
         <Hero />
-        <Idea />
+        <About />
         <Workflow />
         <Research />
         <Summit />
