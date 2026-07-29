@@ -9,9 +9,9 @@ const summitTicketsUrl =
 
 const navItems = [
   { label: "About", href: "#about" },
+  { label: "Founders", href: "#founders" },
   { label: "How it works", href: "#how-it-works" },
   { label: "Early results", href: "#research" },
-  { label: "Meet us", href: "#team" },
 ] as const;
 
 const thoughtStates = {
@@ -555,7 +555,7 @@ function Summit() {
 
 function Founders() {
   return (
-    <section className="team section" id="team">
+    <section className="team section" id="founders">
       <div className="shell">
         <div className="section-intro">
           <p className="kicker">Founders</p>
