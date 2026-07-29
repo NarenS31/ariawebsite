@@ -95,6 +95,21 @@ function Reveal({
   );
 }
 
+function CharacterMark({ small = false }: { small?: boolean }) {
+  return (
+    <div className={`aria-character${small ? " aria-character--small" : ""}`} aria-hidden="true">
+      <span className="aria-character__spark" />
+      <span className="aria-character__face">
+        <i />
+        <i />
+        <b />
+      </span>
+      <span className="aria-character__thought aria-character__thought--one" />
+      <span className="aria-character__thought aria-character__thought--two" />
+    </div>
+  );
+}
+
 function Navigation() {
   const [open, setOpen] = useState(false);
   const [compact, setCompact] = useState(false);
@@ -119,6 +134,7 @@ function Navigation() {
       </a>
       <div className="site-nav shell">
         <a className="wordmark" href="#home" aria-label="ARIA home">
+          <CharacterMark small />
           <span>ARIA</span>
           <small>Research Initiative</small>
         </a>
@@ -217,6 +233,7 @@ function ThoughtPlayground() {
           </div>
           <div className="aria-bubble">
             <div>
+              <CharacterMark small />
               <span>ARIA asks</span>
             </div>
             <p>“{current.aria}”</p>
@@ -265,6 +282,7 @@ function Hero() {
           </Reveal>
         </div>
         <Reveal className="hero-demo" delay={0.14}>
+          <CharacterMark />
           <ThoughtPlayground />
         </Reveal>
       </div>
@@ -367,6 +385,7 @@ function WorkflowVisual({ index }: { index: number }) {
   if (index === 2) {
     return (
       <div className="stage-visual visual-question" aria-label="ARIA asks a Socratic question">
+        <CharacterMark small />
         <span>ARIA asks</span>
         <p>“Which part of your plan still feels reliable?”</p>
         <small>No answer revealed</small>
@@ -625,6 +644,7 @@ function Join() {
         </div>
         <div className="updates-panel">
           <div>
+            <CharacterMark small />
             <span>Research updates</span>
           </div>
           <h3>Follow the honest version of the story.</h3>
