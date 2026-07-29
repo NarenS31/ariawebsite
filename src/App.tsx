@@ -171,7 +171,6 @@ function Navigation() {
 
 function SystemDiagram() {
   const reduceMotion = useReducedMotion();
-  const states = ["Planning", "Flow", "Confused", "Rushing", "Frustrated", "Stuck", "Insight"];
 
   return (
     <motion.div
@@ -184,98 +183,134 @@ function SystemDiagram() {
       <div className="system-header">
         <div className="system-brand">
           <span>ARIA</span>
-          <small>Inference loop</small>
+          <small>Student workspace preview</small>
         </div>
         <div className="system-runtime">
-          <span>Illustrative session</span>
+          <span>Example learning session</span>
           <span className="device-tag">Private · On-device</span>
         </div>
       </div>
       <div className="system-console">
-        <motion.section
-          className="signal-panel"
+        <motion.div
+          className="student-screen"
           initial={reduceMotion ? false : { opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ ...revealTransition, delay: 0.38 }}
         >
-          <div className="system-section-label">
-            <span>01</span>
+          <div className="screen-toolbar">
             <div>
-              <small>Student signal</small>
-              <strong>Think-aloud capture</strong>
-            </div>
-            <time>00:12.4</time>
-          </div>
-          <div className="reasoning-sample">
-            <span className="signal-bars" aria-hidden="true">
-              {[8, 15, 23, 12, 19, 27, 16, 10].map((height, index) => (
-                <i key={`${height}-${index}`} style={{ height }} />
-              ))}
-            </span>
-            <p>“I should identify what the problem gives me, then decide which step comes first.”</p>
-          </div>
-          <div className="signal-features" aria-label="Behavioral signals detected">
-            <span>2.4s pause</span>
-            <span>Plan language</span>
-            <span>Steady pace</span>
-          </div>
-        </motion.section>
-
-        <motion.section
-          className="inference-panel"
-          initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ ...revealTransition, delay: 0.49 }}
-        >
-          <div className="system-section-label">
-            <span>02</span>
-            <div>
-              <small>Real-time inference</small>
-              <strong>Cognitive state</strong>
-            </div>
-            <span className="processing-status">Detected</span>
-          </div>
-          <div className="state-readout">
-            <div>
-              <small>Current state</small>
-              <strong>Planning</strong>
-            </div>
-            <p>Student is forming a strategy before acting.</p>
-          </div>
-          <div className="state-spectrum" aria-label="Seven cognitive states monitored by ARIA">
-            {states.map((state) => (
-              <span className={state === "Planning" ? "active" : ""} key={state}>
-                {state}
+              <span className="screen-dots" aria-hidden="true">
+                <i />
+                <i />
+                <i />
               </span>
-            ))}
+              <strong>ARIA Practice</strong>
+            </div>
+            <span className="session-progress">
+              Problem 2 of 5
+              <i>
+                <b />
+              </i>
+            </span>
           </div>
-        </motion.section>
+          <div className="workspace-grid">
+            <section className="problem-pane">
+              <div className="problem-label">
+                <span>Math reasoning</span>
+                <span>Think before solving</span>
+              </div>
+              <h3>The school robotics club has $240.</h3>
+              <p className="problem-copy">
+                The club buys 6 sensor kits for $28 each. How much money will remain after the
+                purchase?
+              </p>
+              <div className="think-aloud-box">
+                <label>Explain what you are thinking</label>
+                <p>
+                  6 times 28 is 168, so I think I just subtract...
+                  <span className="typing-caret" aria-hidden="true" />
+                </p>
+                <div className="input-tools">
+                  <span className="voice-control" aria-hidden="true">
+                    <i />
+                  </span>
+                  <span>Typing and pause patterns stay on this device</span>
+                  <strong>00:09</strong>
+                </div>
+              </div>
+            </section>
+            <aside className="aria-pane">
+              <div className="aria-pane-header">
+                <span className="aria-mark">A</span>
+                <div>
+                  <strong>ARIA</strong>
+                  <small>Observing the learning process</small>
+                </div>
+                <span className="live-dot">Live</span>
+              </div>
+              <div className="aria-observation">
+                <span>Pattern detected</span>
+                <div>
+                  <strong>Rushing</strong>
+                  <small>Student began calculating before stating a plan.</small>
+                </div>
+                <ul>
+                  <li>Immediate calculation</li>
+                  <li>Fast input pace</li>
+                  <li>No goal identified yet</li>
+                </ul>
+              </div>
+              <div className="aria-intervention">
+                <span>ARIA asks</span>
+                <blockquote>
+                  Before calculating, what does the problem ask you to find, and what steps will
+                  get you there?
+                </blockquote>
+              </div>
+              <div className="answer-guardrail">
+                <span aria-hidden="true">✓</span>
+                No solution revealed. The student keeps ownership of the work.
+              </div>
+            </aside>
+          </div>
+        </motion.div>
 
-        <motion.section
-          className="response-panel"
+        <motion.div
+          className="demo-sequence"
           initial={reduceMotion ? false : { opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ ...revealTransition, delay: 0.6 }}
+          transition={{ ...revealTransition, delay: 0.52 }}
         >
-          <div className="system-section-label">
+          <div>
+            <span>01</span>
+            <p>
+              <strong>Student reasons aloud</strong>
+              ARIA receives words, pauses, revisions, and typing rhythm.
+            </p>
+          </div>
+          <i aria-hidden="true" />
+          <div>
+            <span>02</span>
+            <p>
+              <strong>ARIA interprets the moment</strong>
+              It identifies the likely cognitive state, not just right or wrong.
+            </p>
+          </div>
+          <i aria-hidden="true" />
+          <div>
             <span>03</span>
-            <div>
-              <small>State-specific intervention</small>
-              <strong>Metacognitive prompt</strong>
-            </div>
+            <p>
+              <strong>ARIA asks one useful question</strong>
+              The prompt targets the student’s process while withholding the answer.
+            </p>
           </div>
-          <blockquote>What is your plan before you begin the next step?</blockquote>
-          <div className="response-rule">
-            <span aria-hidden="true">✓</span>
-            Guidance only. The answer stays with the student.
-          </div>
-        </motion.section>
+        </motion.div>
       </div>
       <div className="system-outcome">
-        <span>Research objective</span>
-        <strong>Prompt less over time</strong>
+        <span>What changes over time</span>
+        <strong>ARIA prompts less</strong>
         <i aria-hidden="true" />
-        <strong>Build independent thinking</strong>
+        <strong>The student plans independently</strong>
       </div>
     </motion.div>
   );
