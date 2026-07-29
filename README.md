@@ -4,9 +4,9 @@ The public research website for ARIA, an open initiative investigating metacogni
 
 ## Stack
 
-- React 18
+- Next.js App Router
+- React 19
 - TypeScript
-- Vite
 - Framer Motion
 - Plain CSS
 
@@ -17,23 +17,18 @@ npm install
 npm run dev
 ```
 
-Dependency versions are pinned in `package.json`. The deployment workflow installs them
-without writing a lockfile so GitHub Pages builds consistently from the declared versions.
-
 ## Production build
 
 ```bash
 npm run build
-npm run preview
+npm start
 ```
-
-The compiled website is written to `dist/`.
 
 ## Deploy to Vercel
 
 1. Import this repository into Vercel.
-2. Vercel will detect Vite automatically.
-3. Use `npm run build` as the build command and `dist` as the output directory if Vercel does not fill them in automatically.
+2. Vercel will detect Next.js automatically.
+3. Deploy using the default framework settings; no custom build or output-directory configuration is required.
 
 ## Configuration
 

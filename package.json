@@ -4,21 +4,21 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "preview": "vite preview",
-    "typecheck": "tsc -b --pretty false"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit --pretty false"
   },
   "dependencies": {
     "framer-motion": "12.38.0",
-    "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "next": "16.2.3",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
   },
   "devDependencies": {
-    "@types/react": "18.3.28",
-    "@types/react-dom": "18.3.7",
-    "@vitejs/plugin-react": "4.7.0",
-    "typescript": "5.9.3",
-    "vite": "5.4.21"
+    "@types/node": "20.19.39",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "typescript": "5.9.3"
   }
 }
