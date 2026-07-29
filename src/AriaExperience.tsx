@@ -136,7 +136,6 @@ function Navigation() {
       </a>
       <div className="site-nav shell">
         <a className="wordmark" href="#home" aria-label="ARIA home">
-          <CharacterMark small />
           <span>ARIA</span>
           <small>Research Initiative</small>
         </a>
@@ -513,6 +512,42 @@ function Research() {
             </p>
           </div>
         </Reveal>
+
+        <Reveal className="method-summary">
+          <div className="method-summary__intro">
+            <p className="kicker">How we tested ARIA</p>
+            <h3>A held-out test checks recognition, not classroom impact.</h3>
+            <p>
+              This evaluation asks whether ARIA can identify the intended thinking state in
+              unfamiliar simulated writing. It does not yet test whether students learn more.
+            </p>
+          </div>
+          <ol className="method-summary__steps">
+            <li>
+              <span>01</span>
+              <p>
+                Train with <strong>3,507 simulated think-aloud examples</strong> across seven
+                thinking states.
+              </p>
+            </li>
+            <li>
+              <span>02</span>
+              <p>
+                Test on <strong>350 separate examples</strong> that were not used for training.
+              </p>
+            </li>
+            <li>
+              <span>03</span>
+              <p>
+                Compare ARIA’s prediction with the intended state, then repeat with unfamiliar
+                writing styles to expose weak spots.
+              </p>
+            </li>
+          </ol>
+          <a className="btn btn--ink" href="/methodology">
+            Read the evaluation methodology <span aria-hidden="true">→</span>
+          </a>
+        </Reveal>
       </div>
     </section>
   );
@@ -639,7 +674,6 @@ function Join() {
         </div>
         <div className="updates-panel">
           <div>
-            <CharacterMark small />
             <span>Research updates</span>
           </div>
           <h3>Follow the honest version of the story.</h3>
