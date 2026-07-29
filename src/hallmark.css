@@ -664,6 +664,41 @@ section {
   display: none;
 }
 
+.wordmark .aria-character--small {
+  width: 2.75rem;
+  height: 2.75rem;
+}
+
+.wordmark .aria-character--small .aria-character__face {
+  inset: 0.55rem;
+  box-shadow: 0.18rem 0.24rem 0 var(--color-ink);
+}
+
+.wordmark .aria-character--small .aria-character__thought,
+.wordmark .aria-character--small .aria-character__spark {
+  display: block;
+}
+
+.wordmark .aria-character--small .aria-character__thought--one {
+  inset: 0.18rem 0.12rem auto auto;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-width: 1px;
+}
+
+.wordmark .aria-character--small .aria-character__thought--two {
+  inset: -0.28rem -0.2rem auto auto;
+  width: 0.8rem;
+  height: 0.8rem;
+  border-width: 1px;
+}
+
+.wordmark .aria-character--small .aria-character__spark {
+  inset: 0.42rem auto auto -0.08rem;
+  width: 0.65rem;
+  height: 0.65rem;
+}
+
 /* Hero */
 
 .hero {
@@ -731,6 +766,10 @@ section {
 .hero-demo {
   position: relative;
   min-width: 0;
+}
+
+.hero-demo > .aria-character {
+  inset: -5.5rem var(--space-lg) auto auto;
 }
 
 .thought-playground {
