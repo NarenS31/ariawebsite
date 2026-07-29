@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
-import "../src/styles.css";
+import "@fontsource-variable/jetbrains-mono";
+import "@fontsource-variable/plus-jakarta-sans";
+import "../src/hallmark.css";
 
 export const metadata: Metadata = {
   title: "ARIA | Metacognitive AI Research",
