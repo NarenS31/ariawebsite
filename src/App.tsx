@@ -20,11 +20,14 @@ import {
 const navItems = [
   { label: "How It Works", href: "#how-it-works" },
   { label: "Research", href: "#research" },
+  { label: "See Us", href: "#see-us" },
   { label: "Team", href: "#about" },
   { label: "Get Involved", href: "#get-involved" },
 ] as const;
 
 const revealTransition = { duration: 0.55, ease: [0.22, 1, 0.36, 1] } as const;
+const summitTicketsUrl =
+  "https://www.eventbrite.com/e/ai-in-education-summit-2026-khan-lab-school-tickets-1988581168807?aff=oddtdtcreator";
 
 function Reveal({
   children,
@@ -589,6 +592,64 @@ function Team() {
   );
 }
 
+function SeeUs() {
+  return (
+    <section className="section summit-section" id="see-us">
+      <div className="container">
+        <Reveal>
+          <div className="summit-shell">
+            <div className="summit-date" aria-label="October 24, 2026">
+              <span>October</span>
+              <strong>24</strong>
+              <span>2026</span>
+            </div>
+            <div className="summit-content">
+              <Eyebrow>See ARIA in person</Eyebrow>
+              <p className="summit-status">
+                <i aria-hidden="true" />
+                Accepted to present
+              </p>
+              <h2>Khan Lab School AI in Education Summit 2026</h2>
+              <p className="summit-theme">
+                Intentional Innovation: Keeping Learning Human in an AI World
+              </p>
+              <p className="summit-description">
+                Meet Naren Saravanan and Karthick Mallireddy as they present ARIA and share how
+                state-aware AI could help students with ADHD and learning disabilities become more
+                independent thinkers. The summit brings together educators, researchers, students,
+                and technology builders focused on using AI with purpose, rigor, and care.
+              </p>
+              <div className="summit-details">
+                <div>
+                  <span>Date and time</span>
+                  <strong>Saturday, October 24, 2026</strong>
+                  <p>8:00 AM to 5:00 PM Pacific Time</p>
+                </div>
+                <div>
+                  <span>Location</span>
+                  <strong>Khan Lab School, Middle &amp; Upper School</strong>
+                  <p>1200 Villa Street, Mountain View, California</p>
+                </div>
+              </div>
+              <div className="summit-actions">
+                <a
+                  className="button button--summit"
+                  href={summitTicketsUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Get tickets to see us <span>↗</span>
+                </a>
+                <p>In person · Nine-hour summit · Free parking</p>
+              </div>
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 function GetInvolved() {
   const groups = [
     {
@@ -709,6 +770,7 @@ export default function App() {
         <Problem />
         <HowItWorks />
         <Research />
+        <SeeUs />
         <Team />
         <GetInvolved />
       </main>
