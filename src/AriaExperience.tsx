@@ -568,18 +568,11 @@ function Founders() {
         <div className="team-list">
           {team.map((member, index) => (
             <Reveal className="team-person" key={member.name} delay={index * 0.08}>
-              <div
-                className={`person-mark${index === 1 ? " person-mark--photo" : ""}`}
-                aria-hidden="true"
-              >
-                {index === 1 ? (
-                  <img src="/karthick-mallireddy.jpg" alt="" />
-                ) : (
-                  member.name
-                    .split(" ")
-                    .map((part) => part[0])
-                    .join("")
-                )}
+              <div className="person-mark person-mark--photo" aria-hidden="true">
+                <img
+                  src={index === 0 ? "/naren-saravanan.jpg" : "/karthick-mallireddy.jpg"}
+                  alt=""
+                />
               </div>
               <div>
                 <span>{member.role}</span>
