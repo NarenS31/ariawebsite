@@ -17,6 +17,9 @@ npm install
 npm run dev
 ```
 
+Dependency versions are pinned in `package.json`. The deployment workflow installs them
+without writing a lockfile so GitHub Pages builds consistently from the declared versions.
+
 ## Production build
 
 ```bash
