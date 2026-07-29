@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import "@fontsource-variable/jetbrains-mono";
-import "@fontsource-variable/plus-jakarta-sans";
 import "../src/hallmark.css";
 
 export const metadata: Metadata = {
