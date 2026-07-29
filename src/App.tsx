@@ -9,7 +9,6 @@ import {
   useSpring,
 } from "framer-motion";
 import {
-  cognitiveStates,
   features,
   metrics,
   stateResults,
@@ -172,25 +171,7 @@ function Navigation() {
 
 function SystemDiagram() {
   const reduceMotion = useReducedMotion();
-  const stages = [
-    {
-      number: "01",
-      kicker: "Student signal",
-      title: "Think-aloud reasoning + behavioral features",
-    },
-    {
-      number: "02",
-      kicker: "Real-time inference",
-      title: "Cognitive state detection",
-      states: true,
-    },
-    {
-      number: "03",
-      kicker: "State-specific response",
-      title: "One metacognitive question, never the answer",
-      detail: "“What is your plan before you begin the next step?”",
-    },
-  ];
+  const states = ["Planning", "Flow", "Confused", "Rushing", "Frustrated", "Stuck", "Insight"];
 
   return (
     <motion.div
@@ -201,43 +182,100 @@ function SystemDiagram() {
       aria-label="ARIA real-time metacognitive intervention pipeline"
     >
       <div className="system-header">
-        <span>ARIA / System overview</span>
-        <span className="device-tag">On-device</span>
+        <div className="system-brand">
+          <span>ARIA</span>
+          <small>Inference loop</small>
+        </div>
+        <div className="system-runtime">
+          <span>Illustrative session</span>
+          <span className="device-tag">Private · On-device</span>
+        </div>
       </div>
-      <div className="system-body">
-        {stages.map((stage, index) => (
-          <div key={stage.number}>
-            <motion.div
-              className={`system-step${index === 1 ? " system-step--active" : ""}`}
-              initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ ...revealTransition, delay: 0.38 + index * 0.11 }}
-            >
-              <span className="step-index">{stage.number}</span>
-              <span>
-                <span className="step-kicker">{stage.kicker}</span>
-                <strong>{stage.title}</strong>
-                {stage.states && (
-                  <span className="state-cloud">
-                    {cognitiveStates.map((state) => (
-                      <span className="state-pill" key={state}>
-                        {state}
-                      </span>
-                    ))}
-                  </span>
-                )}
-                {stage.detail && <span className="step-detail">{stage.detail}</span>}
-              </span>
-            </motion.div>
-            {index < stages.length - 1 && <div className="system-connector" aria-hidden="true" />}
+      <div className="system-console">
+        <motion.section
+          className="signal-panel"
+          initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ ...revealTransition, delay: 0.38 }}
+        >
+          <div className="system-section-label">
+            <span>01</span>
+            <div>
+              <small>Student signal</small>
+              <strong>Think-aloud capture</strong>
+            </div>
+            <time>00:12.4</time>
           </div>
-        ))}
+          <div className="reasoning-sample">
+            <span className="signal-bars" aria-hidden="true">
+              {[8, 15, 23, 12, 19, 27, 16, 10].map((height, index) => (
+                <i key={`${height}-${index}`} style={{ height }} />
+              ))}
+            </span>
+            <p>“I should identify what the problem gives me, then decide which step comes first.”</p>
+          </div>
+          <div className="signal-features" aria-label="Behavioral signals detected">
+            <span>2.4s pause</span>
+            <span>Plan language</span>
+            <span>Steady pace</span>
+          </div>
+        </motion.section>
+
+        <motion.section
+          className="inference-panel"
+          initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ ...revealTransition, delay: 0.49 }}
+        >
+          <div className="system-section-label">
+            <span>02</span>
+            <div>
+              <small>Real-time inference</small>
+              <strong>Cognitive state</strong>
+            </div>
+            <span className="processing-status">Detected</span>
+          </div>
+          <div className="state-readout">
+            <div>
+              <small>Current state</small>
+              <strong>Planning</strong>
+            </div>
+            <p>Student is forming a strategy before acting.</p>
+          </div>
+          <div className="state-spectrum" aria-label="Seven cognitive states monitored by ARIA">
+            {states.map((state) => (
+              <span className={state === "Planning" ? "active" : ""} key={state}>
+                {state}
+              </span>
+            ))}
+          </div>
+        </motion.section>
+
+        <motion.section
+          className="response-panel"
+          initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ ...revealTransition, delay: 0.6 }}
+        >
+          <div className="system-section-label">
+            <span>03</span>
+            <div>
+              <small>State-specific intervention</small>
+              <strong>Metacognitive prompt</strong>
+            </div>
+          </div>
+          <blockquote>What is your plan before you begin the next step?</blockquote>
+          <div className="response-rule">
+            <span aria-hidden="true">✓</span>
+            Guidance only. The answer stays with the student.
+          </div>
+        </motion.section>
       </div>
       <div className="system-outcome">
-        <span>Longitudinal objective</span>
-        <strong>
-          Self-initiated metacognition <b>↑</b>
-        </strong>
+        <span>Research objective</span>
+        <strong>Prompt less over time</strong>
+        <i aria-hidden="true" />
+        <strong>Build independent thinking</strong>
       </div>
     </motion.div>
   );
