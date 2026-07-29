@@ -534,11 +534,12 @@ function Summit() {
   );
 }
 
-function Team() {
+function Founders() {
   return (
     <section className="team section" id="team">
       <div className="shell">
         <div className="section-intro">
+          <p className="kicker">Founders</p>
           <h2>Built from lived experience. Tested with care.</h2>
           <p>
             ARIA began with a question shaped by experience with ADHD: what if a tutor paid
@@ -548,11 +549,18 @@ function Team() {
         <div className="team-list">
           {team.map((member, index) => (
             <Reveal className="team-person" key={member.name} delay={index * 0.08}>
-              <div className="person-mark" aria-hidden="true">
-                {member.name
-                  .split(" ")
-                  .map((part) => part[0])
-                  .join("")}
+              <div
+                className={`person-mark${index === 1 ? " person-mark--photo" : ""}`}
+                aria-hidden="true"
+              >
+                {index === 1 ? (
+                  <img src="/karthick-mallireddy.jpg" alt="" />
+                ) : (
+                  member.name
+                    .split(" ")
+                    .map((part) => part[0])
+                    .join("")
+                )}
               </div>
               <div>
                 <span>{member.role}</span>
@@ -670,10 +678,10 @@ export default function AriaExperience() {
       <main id="main">
         <Hero />
         <About />
+        <Founders />
         <Workflow />
         <Research />
         <Summit />
-        <Team />
         <Join />
       </main>
       <Footer />
