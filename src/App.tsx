@@ -184,7 +184,7 @@ function SystemDiagram() {
     {
       number: "03",
       kicker: "State-specific response",
-      title: "One metacognitive question—never the answer",
+      title: "One metacognitive question, never the answer",
       detail: "“What is your plan before you begin the next step?”",
     },
   ];
@@ -259,7 +259,7 @@ function Hero() {
           {[
             <Eyebrow key="eyebrow">Independent research initiative · Open research</Eyebrow>,
             <h1 key="title">
-              Teaching Students with Learning Disabilities to Think—Not Just Answer
+              Teaching Students with Learning Disabilities to Think, Not Just Answer
             </h1>,
             <p className="hero-lede" key="lede">
               ARIA detects cognitive states from student think-alouds in real time and responds
@@ -317,7 +317,7 @@ function Problem() {
       number: "02",
       label: "The deficit",
       title: "The missing skill is metacognition.",
-      body: "Planning before starting. Monitoring while working. Catching your own errors. These are learnable skills that ADHD specifically impairs—and schools rarely teach them explicitly.",
+      body: "Planning before starting. Monitoring while working. Catching your own errors. These are learnable skills that ADHD specifically impairs, and schools rarely teach them explicitly.",
     },
     {
       number: "03",
@@ -372,7 +372,7 @@ function HowItWorks() {
         <SectionHeading
           eyebrow="Research method"
           title="How ARIA Works"
-          description="Language, behavioral signals, and state-specific prompts make the learning process—not the final answer—the center of each intervention."
+          description="Language, behavioral signals, and state-specific prompts make the learning process, not the final answer, the center of each intervention."
         />
         <div className="feature-grid">
           {features.map((feature, index) => (
@@ -499,25 +499,41 @@ function Team() {
         </div>
 
         <Reveal className="origin-story">
-          <div>
+          <div className="origin-heading">
             <Eyebrow>Research origin</Eyebrow>
-            <h2>Why We’re Building This</h2>
+            <h2>Built from lived experience. Advanced through shared research.</h2>
           </div>
           <div className="origin-copy">
-            <p>
-              ARIA began with Naren’s experience of ADHD and a recurring problem with AI tutors:
-              they answered his questions when what he needed was help learning how to think
-              through problems independently.
+            <p className="origin-lead">
+              ARIA began with a question shaped by Naren’s experience with ADHD: what if an AI
+              tutor paid attention to how a student was thinking, instead of simply producing the
+              next answer?
             </p>
-            <p>
-              Today, Naren Saravanan and Karthick Mallireddy are developing ARIA as an independent
-              research initiative. The system detects cognitive states in real time and responds
-              with the smallest targeted question that can help a student move forward.
-            </p>
-            <p>
-              This problem is bigger than one student and one project. We are looking for
-              researchers, educators, and students who want to help determine whether AI can teach
-              neurodivergent students to self-regulate—not just perform.
+            <div className="origin-researchers">
+              <article>
+                <span>01 / Naren Saravanan</span>
+                <h3>Lived experience and research direction</h3>
+                <p>
+                  Naren’s experience exposed a gap in conventional AI tutoring. Immediate answers
+                  can finish an assignment, but they do not necessarily help a student plan,
+                  monitor confusion, or recover from getting stuck.
+                </p>
+              </article>
+              <article>
+                <span>02 / Karthick Mallireddy</span>
+                <h3>Co-research and system development</h3>
+                <p>
+                  Karthick co-develops ARIA’s research approach, helping turn the core idea into a
+                  testable system grounded in evidence, careful evaluation, and relevance to real
+                  learning environments.
+                </p>
+              </article>
+            </div>
+            <p className="origin-mission">
+              Together, the two Marvin Ridge seniors are investigating whether state-aware
+              questions can help neurodivergent students build durable metacognitive skills. The
+              goal is not an AI that thinks for students. It is an AI that helps students become
+              more independent thinkers.
             </p>
           </div>
         </Reveal>
@@ -597,7 +613,7 @@ function GetInvolved() {
                     <li key={item}>{item}</li>
                   ))}
                 </ul>
-                <a href="mailto:your-email@example.com">Start a conversation →</a>
+                <a href="mailto:11narensara11@gmail.com">Start a conversation →</a>
               </article>
             </Reveal>
           ))}
@@ -640,7 +656,7 @@ function Footer() {
         <p>Research by Naren Saravanan &amp; Karthick Mallireddy</p>
         <div className="footer-links">
           <a href="#research">Research</a>
-          <a href="mailto:your-email@example.com">Contact</a>
+          <a href="mailto:11narensara11@gmail.com">Contact</a>
         </div>
       </div>
     </footer>

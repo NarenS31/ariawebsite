@@ -50,7 +50,7 @@ export const features: Feature[] = [
     title: "Think-Aloud Protocol",
     icon: "speech",
     description:
-      "Before attempting any problem, students type or speak their reasoning out loud. ARIA studies hesitations, false starts, and moments of confusion—not only the final answer.",
+      "Before attempting any problem, students type or speak their reasoning out loud. ARIA studies hesitations, false starts, and moments of confusion, not only the final answer.",
   },
   {
     number: "02",
@@ -71,7 +71,7 @@ export const features: Feature[] = [
     title: "Transfer Detection",
     icon: "trend",
     description:
-      "ARIA tracks whether students begin self-initiating metacognitive behaviors without prompting—the core longitudinal research question. Transfer F1: 0.886.",
+      "ARIA tracks whether students begin self-initiating metacognitive behaviors without prompting. This is the core longitudinal research question. Transfer F1: 0.886.",
   },
   {
     number: "05",
@@ -85,7 +85,7 @@ export const features: Feature[] = [
     title: "Behavioral Fusion",
     icon: "keyboard",
     description:
-      "Typing speed, pause duration, keystroke timing, and backspace rate complement language signals with features that depend on student behavior—not generator style.",
+      "Typing speed, pause duration, keystroke timing, and backspace rate complement language signals with features that depend on student behavior, not generator style.",
   },
 ];
 
