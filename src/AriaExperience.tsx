@@ -330,7 +330,7 @@ function About() {
               <span>03</span>
               <h3>ARIA turns that gap into a research question.</h3>
               <p>
-                Naren Saravanan and Karthick Mallireddy are testing whether short, state-aware
+                Naren Saravanan and Karthick Malireddy are testing whether short, state-aware
                 questions can help students plan and self-check independently. Success means the
                 support becomes less necessary over time.
               </p>
@@ -591,7 +591,7 @@ function Summit() {
             Intentional Innovation: Keeping Learning Human in an AI World
           </p>
           <p>
-            Meet Naren Saravanan and Karthick Mallireddy as they share ARIA’s research, current
+            Meet Naren Saravanan and Karthick Malireddy as they share ARIA’s research, current
             limitations, and next questions with educators, researchers, students, and builders.
           </p>
           <dl>
@@ -726,7 +726,7 @@ function Footer() {
         <a className="footer-wordmark" href="#home">
           ARIA
         </a>
-        <p>Research by Naren Saravanan and Karthick Mallireddy · 2026</p>
+        <p>Research by Naren Saravanan and Karthick Malireddy · 2026</p>
         <div>
           <a href="#research">Research</a>
           <a href="mailto:11narensara11@gmail.com">Contact</a>
