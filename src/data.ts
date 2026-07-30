@@ -1,31 +1,8 @@
-export type CognitiveState =
-  | "Planning"
-  | "Flow"
-  | "Confused"
-  | "Rushing"
-  | "Frustrated"
-  | "Stuck"
-  | "Insight";
-
-export interface Feature {
-  number: string;
-  title: string;
-  description: string;
-  icon: "speech" | "signal" | "question" | "trend" | "lock" | "keyboard";
-}
-
 export interface Metric {
   value: string;
   label: string;
   description: string;
   technical: string;
-}
-
-export interface StateResult {
-  state: CognitiveState;
-  f1: string;
-  recall: string;
-  precision: string;
 }
 
 export interface TeamMember {
@@ -35,100 +12,35 @@ export interface TeamMember {
   location: string;
 }
 
-export const cognitiveStates: CognitiveState[] = [
-  "Planning",
-  "Flow",
-  "Confused",
-  "Rushing",
-  "Frustrated",
-  "Stuck",
-  "Insight",
-];
-
-export const features: Feature[] = [
-  {
-    number: "01",
-    title: "Think-Aloud Protocol",
-    icon: "speech",
-    description:
-      "Before attempting any problem, students type or speak their reasoning out loud. ARIA studies hesitations, false starts, and moments of confusion, not only the final answer.",
-  },
-  {
-    number: "02",
-    title: "Cognitive State Detection",
-    icon: "signal",
-    description:
-      "A language model trained on 3,507 simulated think-aloud examples detects seven thinking states in real time. In early testing, it identified the correct state in 8 out of 10 examples.",
-  },
-  {
-    number: "03",
-    title: "Metacognitive Intervention",
-    icon: "question",
-    description:
-      "Instead of answering, ARIA asks one targeted question. A rushing student articulates a plan; a stuck student receives the smallest question that can restart progress.",
-  },
-  {
-    number: "04",
-    title: "Transfer Detection",
-    icon: "trend",
-    description:
-      "ARIA tracks whether students begin using planning and self-checking strategies without being prompted. This is the central long-term research question.",
-  },
-  {
-    number: "05",
-    title: "Privacy by Architecture",
-    icon: "lock",
-    description:
-      "On-device inference keeps student data on the machine. Privacy is enforced by the architecture itself, with school environments and FERPA requirements in mind.",
-  },
-  {
-    number: "06",
-    title: "Behavioral Fusion",
-    icon: "keyboard",
-    description:
-      "Typing speed, pause duration, keystroke timing, and backspace rate complement language signals with features that depend on student behavior, not generator style.",
-  },
-];
-
 export const metrics: Metric[] = [
   {
-    value: "8 in 10",
-    label: "Thinking states identified correctly",
+    value: "100",
+    label: "Structured math and English tasks",
     description:
-      "In the early test, ARIA correctly recognized what a student was experiencing in 80% of examples.",
-    technical: "80.0% accuracy across 350 test examples",
+      "Every research task now includes acceptable answers, solution paths, misconception evidence, graded hints, scoring criteria, and provenance.",
+    technical: "Schema checks pass · independent educator review pending",
   },
   {
-    value: "80 / 100",
-    label: "Consistent across seven different states",
+    value: "13",
+    label: "Observable reasoning moves",
     description:
-      "ARIA performed reliably across planning, flow, confusion, rushing, frustration, being stuck, and insight.",
-    technical: "Macro-F1: 0.796",
+      "ARIA records visible moves such as planning, justification, checking, self-correction, uncertainty, and help-seeking with the exact words supporting each label.",
+    technical: "Transparent baseline · independent human validation pending",
   },
   {
-    value: "89 / 100",
-    label: "Recognized independent strategy use",
+    value: "5",
+    label: "Blinded evaluation conditions",
     description:
-      "ARIA showed strong early performance at noticing when students used a thinking strategy without being prompted.",
-    technical: "Transfer-detection F1: 0.886",
+      "The locked study compares generic, problem-only, turn-grounded, profile-and-history, and full closed-loop responses on the same tasks.",
+    technical: "100 paired episodes planned · two qualified educators required",
   },
   {
-    value: "19 points",
-    label: "Performance dropped on unfamiliar writing",
+    value: "0",
+    label: "Completed classroom outcome studies",
     description:
-      "When the wording came from a different AI generator, accuracy fell. This is an important limitation we are actively addressing.",
-    technical: "Mean cross-generator accuracy gap: 19.0 points",
+      "ARIA has not yet shown that it improves learning, retention, transfer, or outcomes for students with ADHD. Those claims require reviewed studies with real students.",
+    technical: "Important limitation · causal evidence remains pending",
   },
-];
-
-export const stateResults: StateResult[] = [
-  { state: "Planning", f1: "0.796", recall: "0.820", precision: "0.774" },
-  { state: "Flow", f1: "0.578", recall: "0.480", precision: "0.727" },
-  { state: "Confused", f1: "0.732", recall: "0.820", precision: "0.661" },
-  { state: "Rushing", f1: "0.882", recall: "0.820", precision: "0.953" },
-  { state: "Frustrated", f1: "0.870", recall: "0.940", precision: "0.810" },
-  { state: "Stuck", f1: "0.851", recall: "0.740", precision: "1.000" },
-  { state: "Insight", f1: "0.860", recall: "0.980", precision: "0.766" },
 ];
 
 export const team: TeamMember[] = [

@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
 import { useEffect, useId, useState, type ReactNode } from "react";
-import { metrics, stateResults, team } from "./data";
+import { metrics, team } from "./data";
 
 const summitTicketsUrl =
   "https://www.eventbrite.com/e/ai-in-education-summit-2026-khan-lab-school-tickets-1988581168807?aff=oddtdtcreator";
@@ -11,27 +11,27 @@ const navItems = [
   { label: "About", href: "#about" },
   { label: "Founders", href: "#founders" },
   { label: "How it works", href: "#how-it-works" },
-  { label: "Early results", href: "#research" },
+  { label: "Research status", href: "#research" },
 ] as const;
 
 const thoughtStates = {
   confused: {
-    label: "Confused",
+    label: "Uncertain",
     student: "I know I have seen this before, but I cannot tell which step comes next.",
     aria: "What part still feels clear? Start there, then name the first point where the path gets fuzzy.",
-    signal: "Uncertainty + stalled next step",
+    signal: "Observed: uncertainty + help-seeking",
   },
   rushing: {
-    label: "Rushing",
-    student: "I think it is 72. I just multiplied everything quickly.",
-    aria: "Before calculating again, what is the problem asking you to find?",
-    signal: "Fast answer + no stated plan",
+    label: "Self-correcting",
+    student: "Wait, I multiplied too early. I need to work out what the question asks first.",
+    aria: "What will you identify before you calculate again?",
+    signal: "Observed: self-correction + task orientation",
   },
   stuck: {
-    label: "Stuck",
-    student: "I have tried twice. I do not know what else to do.",
-    aria: "What is the smallest piece of the problem you can explain with confidence?",
-    signal: "Repeated attempt + no new strategy",
+    label: "Asking for help",
+    student: "I do not know where to start. Can you give me a hint without solving it?",
+    aria: "What quantity does the problem give you, and what quantity does it ask you to find?",
+    signal: "Observed: explicit help request",
   },
 } as const;
 
@@ -48,10 +48,10 @@ const workflow = [
   },
   {
     number: "2.0",
-    verb: "Interpret",
-    title: "ARIA estimates the thinking state.",
-    body: "The system looks for seven states: planning, flow, confusion, rushing, frustration, being stuck, and insight. It shows its evidence instead of pretending certainty.",
-    detail: "A state is a useful hypothesis, not a diagnosis.",
+    verb: "Ground",
+    title: "ARIA identifies observable reasoning moves.",
+    body: "The system marks visible moves such as planning, justification, checking, self-correction, uncertainty, and help-seeking, then preserves the exact words supporting each label.",
+    detail: "The label describes the message, not the student.",
     tone: "cyan",
   },
   {
@@ -196,10 +196,10 @@ function ThoughtPlayground() {
   return (
     <div className="thought-playground">
       <div className="playground-top">
-        <span className="live-label">Thinking-state example</span>
-        <span>Tap a state to change ARIA’s question</span>
+        <span className="live-label">Reasoning-move example</span>
+        <span>Tap a move to change ARIA’s question</span>
       </div>
-      <div className="state-tabs" role="tablist" aria-label="Student thinking states">
+      <div className="state-tabs" role="tablist" aria-label="Observable student reasoning moves">
         {(Object.keys(thoughtStates) as ThoughtState[]).map((key) => (
           <button
             key={key}
@@ -242,8 +242,8 @@ function ThoughtPlayground() {
         </motion.div>
       </AnimatePresence>
       <p className="playground-note">
-        A teaching concept, not a diagnostic tool. ARIA’s state estimate is always uncertain and
-        should remain visible to the learner.
+        ARIA labels what is visible in the student’s words. It does not diagnose a hidden mental
+        state, ability, emotion, or disability.
       </p>
     </div>
   );
@@ -273,13 +273,13 @@ function Hero() {
               Why we are building it <span aria-hidden="true">↓</span>
             </a>
             <a className="text-link" href="#research">
-              See the early evidence <span aria-hidden="true">→</span>
+              See the research status <span aria-hidden="true">→</span>
             </a>
           </Reveal>
           <Reveal className="hero-trust" delay={0.24}>
-            <span>On-device by design</span>
+            <span>Evidence spans stay visible</span>
             <span>Answers stay with the student</span>
-            <span>Early research, not a finished claim</span>
+            <span>Human validation is still pending</span>
           </Reveal>
         </div>
         <Reveal className="hero-demo" delay={0.14}>
@@ -360,23 +360,23 @@ function WorkflowVisual({ index }: { index: number }) {
   }
   if (index === 1) {
     return (
-      <div className="stage-visual visual-state" aria-label="ARIA estimates a confused thinking state">
+      <div className="stage-visual visual-state" aria-label="ARIA identifies observable reasoning moves">
         <div>
-          <span>Likely state</span>
-          <strong>Confused</strong>
-          <small>Confidence 82%</small>
+          <span>Observed move</span>
+          <strong>Self-correction</strong>
+          <small>Evidence stays visible</small>
         </div>
         <ul>
           <li>
-            <span>Uncertainty language</span>
+            <span>“Wait”</span>
             <i className="bar bar--high" />
           </li>
           <li>
-            <span>Pause before next step</span>
+            <span>“I meant subtract”</span>
             <i className="bar bar--mid" />
           </li>
           <li>
-            <span>Self-correction</span>
+            <span>No diagnosis inferred</span>
             <i className="bar bar--low" />
           </li>
         </ul>
@@ -449,11 +449,11 @@ function Research() {
       <div className="shell">
         <div className="section-intro section-intro--split">
           <div>
-            <h2>Promising signals, with the limitations left in.</h2>
+            <h2>Research infrastructure first. Human evidence next.</h2>
           </div>
           <p>
-            These results come from simulated think-aloud examples. They help the team find weak
-            spots, but they do not yet show that ARIA improves learning in real classrooms.
+            ARIA now has a testable research program, not just a model demo. These numbers describe
+            what is built and what remains unproven.
           </p>
         </div>
 
@@ -464,7 +464,7 @@ function Research() {
               key={metric.label}
               delay={index * 0.05}
             >
-              <span>{index === 3 ? "Important limitation" : `Finding 0${index + 1}`}</span>
+              <span>{index === 3 ? "Evidence boundary" : `Research asset 0${index + 1}`}</span>
               <strong>{metric.value}</strong>
               <h3>{metric.label}</h3>
               <p>{metric.description}</p>
@@ -476,71 +476,94 @@ function Research() {
         <Reveal className="results-sheet">
           <div className="results-sheet__head">
             <div>
-              <span>Experiment 01</span>
-              <h3>Seven thinking states, shown plainly</h3>
+              <span>Development benchmark</span>
+              <h3>Useful for finding failures. Not evidence of learning.</h3>
             </div>
-            <p>350 simulated examples not used in training</p>
+            <p>Synthetic examples · no human ground truth</p>
           </div>
           <div className="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th scope="col">Thinking state</th>
-                  <th scope="col">Balanced score</th>
-                  <th scope="col">Cases found</th>
-                  <th scope="col">Predictions correct</th>
+                  <th scope="col">Development check</th>
+                  <th scope="col">Current result</th>
+                  <th scope="col">Plain-language meaning</th>
+                  <th scope="col">Evidence level</th>
                 </tr>
               </thead>
               <tbody>
-                {stateResults.map((result) => (
-                  <tr key={result.state}>
-                    <th scope="row">{result.state}</th>
-                    <td>{Math.round(Number(result.f1) * 100)}%</td>
-                    <td>{Math.round(Number(result.recall) * 100)}%</td>
-                    <td>{Math.round(Number(result.precision) * 100)}%</td>
-                  </tr>
-                ))}
+                <tr>
+                  <th scope="row">Same-style synthetic recognition</th>
+                  <td>84.6%</td>
+                  <td>About 85 of 100 held-out simulated messages matched their designed label.</td>
+                  <td>Synthetic development test</td>
+                </tr>
+                <tr>
+                  <th scope="row">Balanced synthetic score</th>
+                  <td>0.837</td>
+                  <td>Performance summarized while giving each legacy state equal weight.</td>
+                  <td>Synthetic development test</td>
+                </tr>
+                <tr>
+                  <th scope="row">Writing-style stress test</th>
+                  <td>9.05-point gap</td>
+                  <td>Average accuracy changed when unfamiliar generators wrote the examples.</td>
+                  <td>Cross-generator stress test</td>
+                </tr>
+                <tr>
+                  <th scope="row">Independent human labels</th>
+                  <td>Pending</td>
+                  <td>Two trained annotators must label real student language before accuracy claims advance.</td>
+                  <td>No result yet</td>
+                </tr>
               </tbody>
             </table>
           </div>
           <div className="research-caveat">
-            <strong>Read this before reading the scores.</strong>
+            <strong>Why the old headline changed.</strong>
             <p>
-              Performance fell by an average of 19 points on writing from other generators,
-              suggesting that the model learned some writing-style patterns. Validation with real
-              students is still needed.
+              Synthetic labels can test software, but they cannot show that ARIA understands real
+              students. The primary language target is now observable reasoning moves with exact
+              evidence spans and independent human validation.
             </p>
           </div>
         </Reveal>
 
         <Reveal className="method-summary">
           <div className="method-summary__intro">
-            <p className="kicker">How we tested ARIA</p>
-            <h3>A held-out test checks recognition, not classroom impact.</h3>
+            <p className="kicker">What happens next</p>
+            <h3>Each stronger claim has a stronger evidence gate.</h3>
             <p>
-              This evaluation asks whether ARIA can identify the intended thinking state in
-              unfamiliar simulated writing. It does not yet test whether students learn more.
+              The protocol separates task correctness, response quality, language measurement,
+              feasibility, learning, retention, and unprompted transfer.
             </p>
           </div>
           <ol className="method-summary__steps">
             <li>
               <span>01</span>
               <p>
-                Train with <strong>3,507 simulated think-aloud examples</strong> across seven
-                thinking states.
+                Have qualified educators independently review all <strong>100 task models</strong>.
               </p>
             </li>
             <li>
               <span>02</span>
               <p>
-                Test on <strong>350 separate examples</strong> that were not used for training.
+                Blindly rate <strong>five paired response conditions</strong> for grounding,
+                actionability, learner ownership, and answer leakage.
               </p>
             </li>
             <li>
               <span>03</span>
               <p>
-                Compare ARIA’s prediction with the intended state, then repeat with unfamiliar
-                writing styles to expose weak spots.
+                Validate observable reasoning moves on real student language, split by complete
+                student or session.
+              </p>
+            </li>
+            <li>
+              <span>04</span>
+              <p>
+                Run a reviewed feasibility pilot before testing learning and transfer against an
+                active control.
               </p>
             </li>
           </ol>
