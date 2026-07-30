@@ -1,4 +1,5 @@
 export interface Metric {
+  eyebrow: string;
   value: string;
   label: string;
   description: string;
@@ -14,32 +15,36 @@ export interface TeamMember {
 
 export const metrics: Metric[] = [
   {
+    eyebrow: "Task bank",
     value: "100",
-    label: "Structured math and English tasks",
+    label: "Problems ready for review",
     description:
-      "Every research task now includes acceptable answers, solution paths, misconception evidence, graded hints, scoring criteria, and provenance.",
-    technical: "Schema checks pass · independent educator review pending",
+      "The math and English bank includes answer guides, solution paths, common mistakes, hints, and scoring notes.",
+    technical: "Built and checked in code · educator review is next",
   },
   {
+    eyebrow: "Student language",
     value: "13",
-    label: "Observable reasoning moves",
+    label: "Ways students show their thinking",
     description:
-      "ARIA records visible moves such as planning, justification, checking, self-correction, uncertainty, and help-seeking with the exact words supporting each label.",
-    technical: "Transparent baseline · independent human validation pending",
+      "ARIA can mark planning, checking, self-correction, uncertainty, and help-seeking while showing the exact words behind the label.",
+    technical: "Working in the product · human annotation is next",
   },
   {
+    eyebrow: "Comparison study",
     value: "5",
-    label: "Blinded evaluation conditions",
+    label: "Versions of the system to compare",
     description:
-      "The locked study compares generic, problem-only, turn-grounded, profile-and-history, and full closed-loop responses on the same tasks.",
-    technical: "100 paired episodes planned · two qualified educators required",
+      "The same student moments will be tested with generic help, problem context, current reasoning, learning history, and the full ARIA pipeline.",
+    technical: "Study designed · independent educator ratings are next",
   },
   {
-    value: "0",
-    label: "Completed classroom outcome studies",
+    eyebrow: "Classroom evidence",
+    value: "Not yet",
+    label: "Learning results",
     description:
-      "ARIA has not yet shown that it improves learning, retention, transfer, or outcomes for students with ADHD. Those claims require reviewed studies with real students.",
-    technical: "Important limitation · causal evidence remains pending",
+      "We have not run a classroom study, so we are not claiming that ARIA improves learning, retention, transfer, or ADHD outcomes.",
+    technical: "A reviewed student study is still required",
   },
 ];
 

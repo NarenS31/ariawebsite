@@ -39,34 +39,34 @@ type ThoughtState = keyof typeof thoughtStates;
 
 const workflow = [
   {
-    number: "1.0",
+    number: "01",
     verb: "Notice",
-    title: "The student thinks out loud.",
-    body: "Words, revisions, pauses, and typing rhythm reveal more than a final answer can. ARIA pays attention to the learning process while the student works.",
-    detail: "The work stays on the device.",
+    title: "The student works out loud.",
+    body: "A plan, revision, pause, or question gives ARIA more to work with than a final answer alone.",
+    detail: "The student’s words stay central.",
     tone: "pear",
   },
   {
-    number: "2.0",
+    number: "02",
     verb: "Ground",
-    title: "ARIA identifies observable reasoning moves.",
-    body: "The system marks visible moves such as planning, justification, checking, self-correction, uncertainty, and help-seeking, then preserves the exact words supporting each label.",
+    title: "ARIA grounds itself in the message.",
+    body: "It marks visible reasoning moves and keeps the exact evidence beside each label.",
     detail: "The label describes the message, not the student.",
     tone: "cyan",
   },
   {
-    number: "3.0",
+    number: "03",
     verb: "Ask",
-    title: "One question interrupts the pattern.",
-    body: "ARIA does not hand over the solution. It chooses a short Socratic prompt that helps the student plan, check, recover, or reflect.",
+    title: "ARIA asks one next-step question.",
+    body: "It uses the problem and the student’s current reasoning without revealing the solution.",
     detail: "The student keeps ownership of the work.",
     tone: "coral",
   },
   {
-    number: "4.0",
+    number: "04",
     verb: "Transfer",
-    title: "The prompt should become unnecessary.",
-    body: "Over time, ARIA looks for the student to begin planning and self-checking independently. That transfer, not more time with an AI, is the long-term research goal.",
+    title: "The support should fade.",
+    body: "ARIA looks for the student to begin planning and checking without being prompted.",
     detail: "Success means ARIA can step back.",
     tone: "mint",
   },
@@ -410,34 +410,42 @@ function WorkflowVisual({ index }: { index: number }) {
 
 function Workflow() {
   return (
-    <section className="workflow" id="how-it-works">
-      <div className="section-intro shell">
-        <p className="kicker">How ARIA works</p>
-        <h2>Four moments. One direction: more independence.</h2>
-        <p>
-          ARIA’s workflow is sequential on purpose. Each intervention begins with evidence and ends
-          by returning control to the learner.
-        </p>
-      </div>
-      <div className="workflow-stages">
-        {workflow.map((stage, index) => (
-          <article className={`workflow-stage workflow-stage--${stage.tone}`} key={stage.number}>
-            <div className="shell stage-layout">
-              <div className="stage-number" aria-hidden="true">
-                {stage.number}
+    <section className="workflow section" id="how-it-works">
+      <div className="shell">
+        <div className="section-intro">
+          <p className="kicker">How ARIA works</p>
+          <h2>One learning moment, from thought to next step.</h2>
+          <p>
+            The whole cycle stays focused on the work in front of the student. ARIA notices what
+            they actually say, asks one question, and looks for the strategy to become independent.
+          </p>
+        </div>
+        <ol className="workflow-flow">
+          {workflow.map((stage, index) => (
+            <li className={`workflow-card workflow-card--${stage.tone}`} key={stage.number}>
+              <div className="workflow-card__top">
+                <span className="workflow-card__number">0{index + 1}</span>
+                <span className="workflow-card__verb">{stage.verb}</span>
               </div>
-              <Reveal className="stage-copy">
-                <span>{stage.verb}</span>
-                <h3>{stage.title}</h3>
-                <p>{stage.body}</p>
-                <small>{stage.detail}</small>
-              </Reveal>
-              <Reveal className="stage-demo" delay={0.08}>
-                <WorkflowVisual index={index} />
-              </Reveal>
-            </div>
-          </article>
-        ))}
+              <h3>{stage.title}</h3>
+              <p>{stage.body}</p>
+              <small>{stage.detail}</small>
+              {index < workflow.length - 1 && (
+                <span className="workflow-card__arrow" aria-hidden="true">→</span>
+              )}
+            </li>
+          ))}
+        </ol>
+        <div className="workflow-throughline">
+          <span>Student says</span>
+          <strong>“Wait, I multiplied too early.”</strong>
+          <i aria-hidden="true">→</i>
+          <span>ARIA notices</span>
+          <strong>Self-correction</strong>
+          <i aria-hidden="true">→</i>
+          <span>ARIA asks</span>
+          <strong>“What will you check before trying again?”</strong>
+        </div>
       </div>
     </section>
   );
@@ -449,11 +457,12 @@ function Research() {
       <div className="shell">
         <div className="section-intro section-intro--split">
           <div>
-            <h2>Research infrastructure first. Human evidence next.</h2>
+            <h2>Where the work stands.</h2>
           </div>
           <p>
-            ARIA now has a testable research program, not just a model demo. These numbers describe
-            what is built and what remains unproven.
+            The foundation is in place: a task bank, a way to describe student reasoning, and a
+            fair comparison study. The next step is to put each part in front of educators and
+            students.
           </p>
         </div>
 
@@ -464,7 +473,7 @@ function Research() {
               key={metric.label}
               delay={index * 0.05}
             >
-              <span>{index === 3 ? "Evidence boundary" : `Research asset 0${index + 1}`}</span>
+              <span>{metric.eyebrow}</span>
               <strong>{metric.value}</strong>
               <h3>{metric.label}</h3>
               <p>{metric.description}</p>
