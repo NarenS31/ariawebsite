@@ -1,31 +1,64 @@
 import type { Metadata } from "next";
-import { stateResults } from "@/src/data";
 
 export const metadata: Metadata = {
-  title: "Evaluation Methodology | ARIA Research Initiative",
+  title: "Research Methodology | ARIA Research Initiative",
   description:
-    "A plain-language research note explaining how ARIA's early cognitive-state evaluation was conducted, measured, and limited.",
+    "A plain-language account of ARIA’s evidence levels, research protocols, current metrics, and unanswered questions.",
 };
 
 const glossary = [
   {
-    term: "Accuracy",
-    meaning: "Out of all test examples, how often ARIA selected the intended thinking state.",
+    term: "Development benchmark",
+    meaning:
+      "A test used to find software weaknesses. Synthetic benchmark scores are not evidence that students learn more.",
   },
   {
-    term: "Precision",
+    term: "Human ground truth",
     meaning:
-      "When ARIA predicted a particular state, how often that prediction matched the intended label.",
+      "Labels created independently by trained people using a locked codebook, without seeing ARIA’s prediction.",
   },
   {
-    term: "Recall",
+    term: "Active control",
     meaning:
-      "Of all examples written for a particular state, how many ARIA successfully recognized.",
+      "A comparison tool with the same tasks, interface, time, and base model, but without ARIA’s learner-conditioned pipeline.",
   },
   {
-    term: "F1 score",
+    term: "Transfer",
     meaning:
-      "One score that balances precision and recall. Macro-F1 gives each of the seven states equal importance.",
+      "A student uses planning, checking, or self-correction on a new task while ARIA is absent.",
+  },
+];
+
+const evidenceRows = [
+  {
+    layer: "Task models",
+    status: "100 schema-checked drafts",
+    meaning: "Educator correctness review is pending.",
+    claim: "The bank is structured and ready for review.",
+  },
+  {
+    layer: "Observable language",
+    status: "13 reasoning-move codes",
+    meaning: "Independent annotation on real student language is pending.",
+    claim: "ARIA can show the exact phrase behind a tentative label.",
+  },
+  {
+    layer: "Response quality",
+    status: "5 blinded conditions designed",
+    meaning: "Two qualified educators must rate the locked responses.",
+    claim: "A fair comparison can be run; no winner is claimed yet.",
+  },
+  {
+    layer: "Synthetic stress test",
+    status: "84.6% same-style accuracy",
+    meaning: "The balanced score is 0.837; the cross-generator gap is 9.05 points.",
+    claim: "Useful for debugging only.",
+  },
+  {
+    layer: "Student outcomes",
+    status: "0 completed controlled studies",
+    meaning: "Feasibility, learning, retention, and transfer remain untested with students.",
+    claim: "No effectiveness claim.",
   },
 ];
 
@@ -37,86 +70,86 @@ export default function MethodologyPage() {
           ARIA <span>Research Initiative</span>
         </a>
         <a className="text-link" href="/#research">
-          Back to early results <span aria-hidden="true">←</span>
+          Back to research status <span aria-hidden="true">←</span>
         </a>
       </header>
 
       <article className="methodology-note">
         <header className="methodology-hero">
-          <p className="kicker">Research note 01 · July 2026</p>
-          <h1>How ARIA’s early evaluation works.</h1>
+          <p className="kicker">Research note 01 · Updated July 2026</p>
+          <h1>How ARIA plans to earn its claims.</h1>
           <p>
-            This note explains what the current numbers measure, how the test was structured, and
-            what the results cannot yet tell us.
+            ARIA separates software checks, educator judgment, real-language validation, student
+            feasibility, and learning outcomes. A result advances only the claim it actually tests.
           </p>
           <div className="methodology-status">
-            <span>Current evidence</span>
-            <strong>Simulation-based model evaluation</strong>
-            <small>Not a classroom learning-outcomes study</small>
+            <span>Current status</span>
+            <strong>Research infrastructure ready</strong>
+            <small>Independent human evidence and student outcomes remain pending</small>
           </div>
         </header>
 
         <section className="methodology-section">
           <p className="kicker">The research question</p>
-          <h2>Can ARIA recognize a student’s likely thinking state from a think-aloud?</h2>
+          <h2>Can ARIA provide grounded help without taking over the work?</h2>
           <p>
-            The evaluation tests state recognition. Each example represents one of seven states:
-            planning, flow, confusion, rushing, frustration, being stuck, or insight. ARIA reads
-            the example and predicts the most likely state.
+            The program tests several different questions: whether tasks are correct, whether
+            responses use the student’s actual reasoning, whether language labels match independent
+            human judgments, and eventually whether students learn and transfer strategies.
           </p>
         </section>
 
         <section className="methodology-section">
-          <p className="kicker">Evaluation design</p>
-          <h2>Five steps, from examples to an honest result.</h2>
+          <p className="kicker">Evidence sequence</p>
+          <h2>Five gates, from a working system to a learning claim.</h2>
           <ol className="methodology-process">
             <li>
               <span>01</span>
               <div>
-                <h3>Build a simulated training set.</h3>
+                <h3>Validate the task bank.</h3>
                 <p>
-                  ARIA was trained with 3,507 simulated think-aloud examples spanning all seven
-                  thinking states.
+                  Two subject-qualified educators independently review answer models, solution
+                  paths, misconceptions, hints, and scoring criteria. Disagreements stay visible.
                 </p>
               </div>
             </li>
             <li>
               <span>02</span>
               <div>
-                <h3>Keep the evaluation examples separate.</h3>
+                <h3>Blindly compare response quality.</h3>
                 <p>
-                  The main test used 350 additional simulated examples that were not used to train
-                  the state detector.
+                  Educators rate five paired conditions for problem grounding, student grounding,
+                  usefulness, actionability, ownership, answer leakage, and invented student actions.
                 </p>
               </div>
             </li>
             <li>
               <span>03</span>
               <div>
-                <h3>Make one prediction per example.</h3>
+                <h3>Validate language on real student messages.</h3>
                 <p>
-                  For each think-aloud, ARIA selected one likely state. That prediction was compared
-                  with the state the example was designed to represent.
+                  Two trained annotators label observable reasoning moves with exact evidence spans.
+                  Evaluation is split by complete student or session, never random messages.
                 </p>
               </div>
             </li>
             <li>
               <span>04</span>
               <div>
-                <h3>Measure the overall and state-level performance.</h3>
+                <h3>Run a reviewed feasibility pilot.</h3>
                 <p>
-                  Accuracy summarizes all predictions. Precision, recall, and F1 show where the
-                  system is reliable and where individual states remain difficult.
+                  With institutional review, parent permission, and student assent, test whether the
+                  tool is understandable, usable, and safe before asking whether it is effective.
                 </p>
               </div>
             </li>
             <li>
               <span>05</span>
               <div>
-                <h3>Change the writing source.</h3>
+                <h3>Measure learning against an active control.</h3>
                 <p>
-                  A cross-generator stress test checked how performance changed when examples used
-                  an unfamiliar writing style. Accuracy fell by an average of 19 points.
+                  Use independent outcome tasks, concealed assignment, blinded scoring, intention-to-
+                  treat analysis, and a delayed no-ARIA transfer measure.
                 </p>
               </div>
             </li>
@@ -124,25 +157,22 @@ export default function MethodologyPage() {
         </section>
 
         <section className="methodology-section">
-          <p className="kicker">Results at a glance</p>
+          <p className="kicker">Current evidence ledger</p>
           <div className="methodology-result-grid">
             <article>
-              <strong>80%</strong>
-              <h3>Overall accuracy</h3>
-              <p>ARIA selected the intended state in 8 out of 10 held-out examples.</p>
+              <strong>100</strong>
+              <h3>Structured task drafts</h3>
+              <p>Schema-valid and ready for independent educator review.</p>
             </article>
             <article>
-              <strong>0.796</strong>
-              <h3>Macro-F1</h3>
-              <p>Performance was summarized while giving every thinking state equal weight.</p>
+              <strong>13</strong>
+              <h3>Observable reasoning moves</h3>
+              <p>Each automatic label keeps the exact supporting words visible.</p>
             </article>
             <article>
-              <strong>0.886</strong>
-              <h3>Transfer-detection F1</h3>
-              <p>
-                A separate early test measured recognition of independent strategy use without a
-                prompt.
-              </p>
+              <strong>0</strong>
+              <h3>Completed outcome studies</h3>
+              <p>No classroom learning or ADHD-specific effectiveness claim is being made.</p>
             </article>
           </div>
 
@@ -150,19 +180,19 @@ export default function MethodologyPage() {
             <table>
               <thead>
                 <tr>
-                  <th scope="col">Thinking state</th>
-                  <th scope="col">F1</th>
-                  <th scope="col">Recall</th>
-                  <th scope="col">Precision</th>
+                  <th scope="col">Evidence layer</th>
+                  <th scope="col">Current status</th>
+                  <th scope="col">What remains</th>
+                  <th scope="col">Claim allowed today</th>
                 </tr>
               </thead>
               <tbody>
-                {stateResults.map((result) => (
-                  <tr key={result.state}>
-                    <th scope="row">{result.state}</th>
-                    <td>{Number(result.f1).toFixed(3)}</td>
-                    <td>{Number(result.recall).toFixed(3)}</td>
-                    <td>{Number(result.precision).toFixed(3)}</td>
+                {evidenceRows.map((row) => (
+                  <tr key={row.layer}>
+                    <th scope="row">{row.layer}</th>
+                    <td>{row.status}</td>
+                    <td>{row.meaning}</td>
+                    <td>{row.claim}</td>
                   </tr>
                 ))}
               </tbody>
@@ -171,8 +201,8 @@ export default function MethodologyPage() {
         </section>
 
         <section className="methodology-section">
-          <p className="kicker">Reading the metrics</p>
-          <h2>The numbers answer different questions.</h2>
+          <p className="kicker">Reading the language</p>
+          <h2>Four terms that prevent inflated claims.</h2>
           <dl className="methodology-glossary">
             {glossary.map((item) => (
               <div key={item.term}>
@@ -183,47 +213,95 @@ export default function MethodologyPage() {
           </dl>
         </section>
 
+        <section className="methodology-section">
+          <p className="kicker">Sources behind the design</p>
+          <h2>Evidence for the method, not proof of the product.</h2>
+          <p>
+            These sources support how ARIA should be studied. They do not establish that ARIA is
+            effective.
+          </p>
+          <dl className="methodology-glossary">
+            <div>
+              <dt>
+                <a href="https://doi.org/10.3389/fpsyg.2021.749749">
+                  Observable self-regulated learning
+                </a>
+              </dt>
+              <dd>Human coding of planning, monitoring, evaluation, and related think-aloud activity.</dd>
+            </div>
+            <div>
+              <dt>
+                <a href="https://aclanthology.org/2025.bea-1.77/">
+                  Human evaluation of AI tutors
+                </a>
+              </dt>
+              <dd>Mistake identification, guidance, and actionability evaluated with human labels.</dd>
+            </div>
+            <div>
+              <dt>
+                <a href="https://aclanthology.org/2023.findings-emnlp.372/">
+                  Grounded tutoring dialogue
+                </a>
+              </dt>
+              <dd>Teacher-authored scaffolding and documented risks of incorrect feedback or answer revelation.</dd>
+            </div>
+            <div>
+              <dt>
+                <a href="https://educationendowmentfoundation.org.uk/education-evidence/guidance-reports/metacognition">
+                  Metacognition guidance
+                </a>
+              </dt>
+              <dd>Planning, monitoring, and evaluation taught explicitly inside subject learning.</dd>
+            </div>
+            <div>
+              <dt>
+                <a href="https://ies.ed.gov/ncee/wwc/Docs/referenceresources/wwc_standards_handbook_v4.pdf">
+                  What Works Clearinghouse standards
+                </a>
+              </dt>
+              <dd>Randomization, attrition, baseline equivalence, eligible outcomes, and study confounds.</dd>
+            </div>
+            <div>
+              <dt>
+                <a href="https://www.hhs.gov/ohrp/regulations-and-policy/guidance/faq/children-research/index.html">
+                  Research with children
+                </a>
+              </dt>
+              <dd>Institutional review, parental permission, affirmative assent, and risk requirements.</dd>
+            </div>
+          </dl>
+        </section>
+
         <section className="methodology-limitations">
           <p className="kicker">Limitations</p>
-          <h2>What this evaluation does not prove.</h2>
+          <h2>What ARIA does not know yet.</h2>
           <ul>
-            <li>
-              The examples were simulated. Real students may express the same thinking state in
-              more varied and unexpected ways.
-            </li>
-            <li>
-              The 19-point cross-generator gap suggests that ARIA learned some writing-style
-              patterns instead of only learning general signals of thinking.
-            </li>
-            <li>
-              State labels are useful hypotheses, not diagnoses of a student’s ability, emotion, or
-              disability.
-            </li>
-            <li>
-              These results do not show that ARIA improves grades, understanding, confidence, or
-              long-term metacognitive independence.
-            </li>
+            <li>The 100 task models have not yet been approved by independent educators.</li>
+            <li>The observable-move baseline has not yet been tested against real human labels.</li>
+            <li>The five response conditions have not yet received locked, blinded ratings.</li>
+            <li>No student study has established usability, learning, retention, or transfer.</li>
+            <li>Synthetic benchmark performance does not establish real-student understanding.</li>
+            <li>Personal experience with ADHD motivates the question; it is not clinical evidence.</li>
           </ul>
         </section>
 
         <section className="methodology-next">
           <div>
-            <p className="kicker">Next evidence needed</p>
-            <h2>Move from simulated recognition to learning with real students.</h2>
+            <p className="kicker">Evidence base</p>
+            <h2>Built from learning science and rigorous evaluation standards.</h2>
           </div>
           <p>
-            The next phase should include consented think-aloud sessions, human review of state
-            labels, broader writing styles, subgroup analysis, and longitudinal testing of whether
-            students begin planning and self-checking without ARIA.
+            The design draws on observable self-regulated-learning coding, human evaluation of AI
+            tutoring, grounded tutoring dialogue, metacognitive transfer research, and What Works
+            Clearinghouse standards. Those sources justify the study design, not ARIA’s
+            effectiveness.
           </p>
         </section>
 
         <footer className="methodology-footer">
-          <p>
-            Prepared by Naren Saravanan and Karthick Mallireddy · ARIA Research Initiative
-          </p>
-          <a href="mailto:11narensara11@gmail.com?subject=ARIA%20evaluation%20methodology">
-            Ask about the evaluation <span aria-hidden="true">↗</span>
+          <p>Prepared by Naren Saravanan and Karthick Mallireddy · ARIA Research Initiative</p>
+          <a href="mailto:11narensara11@gmail.com?subject=ARIA%20research%20methodology">
+            Ask about the methodology <span aria-hidden="true">↗</span>
           </a>
         </footer>
       </article>
