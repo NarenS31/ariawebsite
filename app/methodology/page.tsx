@@ -299,7 +299,7 @@ export default function MethodologyPage() {
         </section>
 
         <footer className="methodology-footer">
-          <p>Prepared by Naren Saravanan and Karthick Malireddy · ARIA Research Initiative</p>
+          <p>Prepared by Naren Saravanan and Karthik Malireddy · ARIA Research Initiative</p>
           <a href="mailto:11narensara11@gmail.com?subject=ARIA%20research%20methodology">
             Ask about the methodology <span aria-hidden="true">↗</span>
           </a>
