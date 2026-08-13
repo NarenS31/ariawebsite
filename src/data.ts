@@ -19,7 +19,7 @@ export const metrics: Metric[] = [
     value: "100",
     label: "Problems ready for review",
     description:
-      "The math and English bank includes answer guides, solution paths, common mistakes, hints, and scoring notes.",
+      "The bank includes answer guides, solution paths, common mistakes, hints, and scoring notes. Evaluation starts with the math tasks.",
     technical: "Built and checked in code · educator review is next",
   },
   {

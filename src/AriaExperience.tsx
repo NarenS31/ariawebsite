@@ -9,21 +9,22 @@ const summitTicketsUrl =
 
 const navItems = [
   { label: "About", href: "#about" },
-  { label: "Founders", href: "#founders" },
-  { label: "How it works", href: "#how-it-works" },
+  { label: "Why math", href: "#why-math" },
+  { label: "How it helps", href: "#how-it-works" },
+  { label: "Roadmap", href: "#roadmap" },
   { label: "Research status", href: "#research" },
 ] as const;
 
 const thoughtStates = {
   confused: {
     label: "Uncertain",
-    student: "I know I have seen this before, but I cannot tell which step comes next.",
-    aria: "What part still feels clear? Start there, then name the first point where the path gets fuzzy.",
+    student: "I know I have seen this kind of equation before, but I cannot tell which step comes next.",
+    aria: "Which step still feels solid? Start there, then name the first line where it stops making sense.",
     signal: "Observed: uncertainty + help-seeking",
   },
   rushing: {
     label: "Self-correcting",
-    student: "Wait, I multiplied too early. I need to work out what the question asks first.",
+    student: "Wait, I multiplied before distributing. I need to work out what the question asks first.",
     aria: "What will you identify before you calculate again?",
     signal: "Observed: self-correction + task orientation",
   },
@@ -37,28 +38,194 @@ const thoughtStates = {
 
 type ThoughtState = keyof typeof thoughtStates;
 
+const mathReasons = [
+  {
+    number: "01",
+    title: "Problem-solving has clear steps.",
+    body: "A math problem breaks into discrete, observable moves — set up the equation, isolate the variable, check the result. That structure lets ARIA point to where a student stopped instead of guessing that they are generally confused.",
+  },
+  {
+    number: "02",
+    title: "Right and wrong are unambiguous.",
+    body: "Unlike an essay, a math step is either valid or it is not. That gives an honest correctness signal for whether a scaffold actually helped, and makes it harder for us to claim success without evidence.",
+  },
+  {
+    number: "03",
+    title: "Learning outcomes are measurable.",
+    body: "Attempts before giving up, time to a correct step, errors repeated across problems, and independent retries are all measurable in math. These are outcomes we can test rather than impressions we can only describe.",
+  },
+] as const;
+
+const helpLevels = [
+  {
+    level: "01",
+    title: "Metacognitive prompt",
+    body: "A question that returns attention to the student’s own reasoning. No mathematical content is given — the goal is for the student to state the plan or locate the breakdown themselves.",
+    example: "What are you trying to find, and what is the first step you would try?",
+    gate: "Escalates if the student stays stuck or idle after responding",
+    tone: "pear",
+  },
+  {
+    level: "02",
+    title: "Guided hint or similar problem",
+    body: "A narrowed hint about the specific step, or a simpler parallel problem that uses the same idea. The student still performs every step of their own problem; the hint only reduces the search space.",
+    example: "Both sides still have an x. What could you do to get the x terms on one side?",
+    gate: "Escalates only after repeated attempts at this level",
+    tone: "cyan",
+  },
+  {
+    level: "03",
+    title: "Answer explanation, after repeated struggle",
+    body: "Only after documented struggle at the earlier levels does ARIA explain the reasoning for the step. The explanation focuses on why each move is made, and is followed by a similar problem the student completes independently.",
+    example: "Here is why we subtract 3x from both sides — then try this one on your own.",
+    gate: "Never the first response, and never a silent solution",
+    tone: "coral",
+  },
+] as const;
+
+const watchedStates = [
+  {
+    name: "Stuck",
+    signal: "Repeated attempts on the same step, backtracking, or no forward progress for an extended stretch.",
+    response: "A Level 1 prompt aimed at locating the exact step that broke down.",
+  },
+  {
+    name: "Confused",
+    signal: "A step that contradicts the previous one, or a message that misstates what the problem is asking.",
+    response: "A question that checks understanding of the goal before any hint is given.",
+  },
+  {
+    name: "Idle",
+    signal: "No input for a sustained period, with no partial work on screen — disengagement rather than thinking.",
+    response: "A low-pressure re-entry prompt, not a hint and not a nudge to hurry.",
+  },
+  {
+    name: "Struggling productively",
+    signal: "Slow but real progress — the student is testing approaches, self-correcting, and moving between steps.",
+    response: "Stay out of the way. Interrupting productive struggle is a failure mode, not a missed opportunity.",
+  },
+  {
+    name: "Rushing or misusing the system",
+    signal: "Answers submitted faster than they could be worked, or repeated requests that skip straight to Level 3.",
+    response: "Slow the loop down and ask the student to show one step before help continues.",
+  },
+  {
+    name: "Planning",
+    signal: "The student is setting up an approach before computing — the behavior we most want to strengthen.",
+    response: "Acknowledge and let it run. Prompting here is only useful if the plan is unstated.",
+  },
+] as const;
+
+const roadmapPhases = [
+  {
+    phase: "Phase 1",
+    status: "Complete",
+    title: "Synthetic think-aloud data",
+    body: "Generate think-aloud examples to build and test a first version of the system. This shows the pipeline works end to end. It does not show that it works for real students.",
+  },
+  {
+    phase: "Phase 2",
+    status: "Current",
+    title: "Student interviews",
+    body: "Structured interviews with students who struggle in math: where they get stuck, what help they have rejected, and how they want to interact. Findings replace our assumptions in the design.",
+  },
+  {
+    phase: "Phase 3",
+    status: "Next",
+    title: "Formative prototype testing",
+    body: "Small sessions where students use the prototype on real math work while we observe. The goal is to find where prompts misfire, annoy, or get ignored, and revise before any outcome claims.",
+  },
+  {
+    phase: "Phase 4",
+    status: "Planned",
+    title: "Classroom and teacher-informed evaluation",
+    body: "Evaluation designed with teachers, in real instructional settings, using measures they consider meaningful. Only at this stage would it be reasonable to discuss learning outcomes.",
+  },
+] as const;
+
+const openQuestions = [
+  {
+    number: "01",
+    title: "Do students find the prompts helpful?",
+    body: "A prompt a student experiences as nagging is worse than no prompt. We will ask students directly, in interviews and right after sessions, whether a given prompt helped, annoyed, or was ignored.",
+  },
+  {
+    number: "02",
+    title: "Does ARIA read student states accurately?",
+    body: "Detection is currently measured against generated text. The real test is agreement with what students report about their own experience, and with what a trained observer would say.",
+  },
+  {
+    number: "03",
+    title: "Does scaffolding improve persistence?",
+    body: "We are looking at whether students attempt more steps before asking for an answer, and whether they return to a hard problem — not at whether the final answer was right.",
+  },
+  {
+    number: "04",
+    title: "What input do students actually prefer?",
+    body: "Text, tappable choices, or voice, and under what conditions. We expect preference to depend heavily on setting, especially whether a student is working near peers.",
+  },
+] as const;
+
+const limitations = [
+  {
+    heading: "The current model is built on synthetic think-aloud examples.",
+    body: "The data was generated to imitate student reasoning. It was not collected from students in classrooms.",
+  },
+  {
+    heading: "Reported results are development checks, not learning results.",
+    body: "They show the software behaves as designed on examples we created. They say nothing about whether a student learned anything.",
+  },
+  {
+    heading: "The interaction design is not yet validated.",
+    body: "Prompt wording, escalation thresholds, and timing are informed judgments. Student interviews and prototype testing are how they get corrected.",
+  },
+  {
+    heading: "We are not claiming classroom-validated learning gains.",
+    body: "ARIA has not been shown to improve grades, retention, or transfer, and it is not a substitute for a teacher, a tutor, or an IEP support plan.",
+  },
+  {
+    heading: "Real-student evaluation is the next step.",
+    body: "The claims on this site will change as that evidence arrives, including if it contradicts what we expected.",
+  },
+] as const;
+
+const inspirations = [
+  {
+    title: "When a teacher steps in",
+    body: "Work on how experienced teachers decide when to intervene, and the recognition that help offered too early can cut short the struggle that produces learning. ARIA’s escalation model is an attempt to take that timing question seriously.",
+  },
+  {
+    title: "Engagement as changing states",
+    body: "Research describing learning as a sequence of states — engaged, confused, frustrated, disengaged — rather than one fixed measure of ability. This is why ARIA treats “stuck” and “struggling productively” as different situations.",
+  },
+  {
+    title: "Who gets attention",
+    body: "Studies of how teacher attention distributes unevenly across a classroom, and how quiet students can go unnoticed for long stretches. It motivates watching for idle and silent states, not only for students who ask for help.",
+  },
+] as const;
+
 const workflow = [
   {
     number: "01",
     verb: "Notice",
-    title: "The student works out loud.",
-    body: "A plan, revision, pause, or question gives ARIA more to work with than a final answer alone.",
+    title: "The student works the problem out loud.",
+    body: "A plan, a revision, a pause, or a question gives ARIA more to work with than a final answer alone.",
     detail: "The student’s words stay central.",
     tone: "pear",
   },
   {
     number: "02",
     verb: "Ground",
-    title: "ARIA grounds itself in the message.",
-    body: "It marks visible reasoning moves and keeps the exact evidence beside each label.",
+    title: "ARIA grounds itself in the step.",
+    body: "It marks visible reasoning moves and keeps the exact evidence beside each label, at the level of a single step rather than the whole problem.",
     detail: "The label describes the message, not the student.",
     tone: "cyan",
   },
   {
     number: "03",
-    verb: "Ask",
-    title: "ARIA asks one next-step question.",
-    body: "It uses the problem and the student’s current reasoning without revealing the solution.",
+    verb: "Scaffold",
+    title: "ARIA offers the smallest useful scaffold.",
+    body: "A prompt first, a narrowed hint only if that does not move the student, and a worked explanation only after repeated struggle.",
     detail: "The student keeps ownership of the work.",
     tone: "coral",
   },
@@ -178,7 +345,7 @@ function Navigation() {
               </a>
             ))}
             <a href="#join" onClick={() => setOpen(false)}>
-              <span>05</span>
+              <span>0{navItems.length + 1}</span>
               Join the research
             </a>
           </motion.nav>
@@ -255,29 +422,31 @@ function Hero() {
       <div className="shell hero-layout">
         <div className="hero-copy">
           <Reveal>
-            <p className="kicker">Independent research in metacognition</p>
+            <p className="kicker">Math-first metacognitive tutoring · Research in progress</p>
           </Reveal>
           <Reveal delay={0.06}>
             <h1>
-              What if a learning tool noticed <span className="highlight">how you think?</span>
+              What if a math tutor noticed <span className="highlight">how you think?</span>
             </h1>
           </Reveal>
           <Reveal delay={0.12}>
             <p className="hero-lede">
-              ARIA studies a student’s reasoning, not just the final answer, then asks one useful
-              question to help them plan, recover, or check their work.
+              ARIA is designed to support reflection while a student works through a math problem.
+              It reads the reasoning rather than the final answer, then offers the smallest scaffold
+              that could move the student forward. We are evaluating whether that improves
+              persistence and clarity; current results are preliminary.
             </p>
           </Reveal>
           <Reveal className="hero-actions" delay={0.18}>
-            <a className="btn btn--pear" href="#about">
-              Why we are building it <span aria-hidden="true">↓</span>
+            <a className="btn btn--pear" href="#roadmap">
+              See the research roadmap <span aria-hidden="true">↓</span>
             </a>
             <a className="text-link" href="#research">
               See the research status <span aria-hidden="true">→</span>
             </a>
           </Reveal>
           <Reveal className="hero-trust" delay={0.24}>
-            <span>Evidence spans stay visible</span>
+            <span>Prompts before hints, answers last</span>
             <span>Answers stay with the student</span>
             <span>Human validation is still pending</span>
           </Reveal>
@@ -337,6 +506,303 @@ function About() {
             </article>
           </Reveal>
         </div>
+      </div>
+    </section>
+  );
+}
+
+function WhyMath() {
+  return (
+    <section className="why-math section" id="why-math">
+      <div className="shell">
+        <div className="section-intro section-intro--split">
+          <div>
+            <p className="kicker">Why math first</p>
+            <h2>ARIA is deliberately narrow.</h2>
+          </div>
+          <p>
+            Math is where a metacognitive tutor can be studied honestly before anyone claims it
+            works elsewhere. The structure of a math problem is what makes the research question
+            testable.
+          </p>
+        </div>
+        <div className="why-math-grid">
+          {mathReasons.map((reason, index) => (
+            <Reveal key={reason.number} delay={index * 0.06}>
+              <article className="why-math-card">
+                <span>{reason.number}</span>
+                <h3>{reason.title}</h3>
+                <p>{reason.body}</p>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+        <Reveal className="scope-note">
+          <strong>This is a scope choice, not a hidden limitation.</strong>
+          <p>
+            Starting with math means ARIA is not a general homework assistant, and we make no claims
+            about subjects we have not studied. If the approach holds up here, extending it is a
+            later research question rather than a feature we are shipping now.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function HelpModel() {
+  return (
+    <section className="help-model section" id="help-model">
+      <div className="shell">
+        <div className="section-intro">
+          <p className="kicker">The three-level help model</p>
+          <h2>Help escalates only when the level before it did not work.</h2>
+          <p>
+            The student always receives the least amount of help that could still move them forward.
+            An answer is the last resort, never the opening move.
+          </p>
+        </div>
+        <ol className="level-list">
+          {helpLevels.map((item) => (
+            <li className={`level-card level-card--${item.tone}`} key={item.level}>
+              <div className="level-card__mark">
+                <span>Level</span>
+                <strong>{item.level}</strong>
+              </div>
+              <div className="level-card__body">
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+                <blockquote>“{item.example}”</blockquote>
+                <small>{item.gate}</small>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
+function WatchedStates() {
+  return (
+    <section className="watched section" id="states">
+      <div className="shell">
+        <div className="section-intro section-intro--split">
+          <div>
+            <p className="kicker">What ARIA watches for</p>
+            <h2>Quiet does not always mean stuck.</h2>
+          </div>
+          <p>
+            The same behavior can mean very different things. A student who is quiet because the
+            work is going well should not be interrupted the same way as a student who has quietly
+            given up.
+          </p>
+        </div>
+        <div className="watched-grid">
+          {watchedStates.map((state, index) => (
+            <Reveal key={state.name} delay={index * 0.04}>
+              <article className="watched-card">
+                <h3>{state.name}</h3>
+                <p>{state.signal}</p>
+                <p className="watched-card__response">
+                  <span>Response</span>
+                  {state.response}
+                </p>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+        <Reveal className="privacy-note">
+          <div>
+            <span className="kicker">Privacy-aware interaction</span>
+            <h3>Text and lightweight choices first. Voice is optional.</h3>
+          </div>
+          <p>
+            Most interactions are a tap, a selected step, or one short line of text. Voice input is
+            never required. Students work in classrooms, shared rooms, and beside peers, and asking
+            someone to talk through a problem out loud can be exposing rather than helpful. Speaking
+            should be a preference the student chooses, not a condition of getting help.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function StudentFeedback() {
+  return (
+    <section className="feedback section" id="student-feedback">
+      <div className="shell">
+        <div className="section-intro">
+          <p className="kicker">Built from student feedback</p>
+          <h2>Moving from data we generated to students we listen to.</h2>
+        </div>
+        <div className="feedback-layout">
+          <Reveal className="feedback-copy">
+            <p>
+              ARIA’s current model was trained on synthetic think-aloud examples: text generated to
+              imitate how students describe their reasoning. That was a practical way to build a
+              working prototype, but synthetic data can only reflect what we already assumed
+              students would say.
+            </p>
+            <p>
+              So the design is moving toward the students themselves. We are shifting to structured
+              interviews with students who struggle in math, including students with ADHD and
+              learning disabilities, asking what actually happens when they get stuck and what kind
+              of help has and has not worked for them.
+            </p>
+            <p>
+              What we learn changes the system, not just the write-up. Interview findings feed
+              directly into which states ARIA watches for, how prompts are worded, when help
+              escalates, and what the interface asks of a student who is already frustrated.
+            </p>
+          </Reveal>
+          <Reveal className="feedback-questions" delay={0.08}>
+            <span className="kicker">What we ask students</span>
+            <ul>
+              <li>
+                <strong>Where do you actually get stuck?</strong>
+                Setting up the problem, a specific step, or checking whether the answer is right.
+              </li>
+              <li>
+                <strong>What do you do next?</strong>
+                Re-read, guess, ask someone, look up the answer, or stop.
+              </li>
+              <li>
+                <strong>What help has failed you?</strong>
+                Which tutoring tools felt useless, condescending, or too slow to be worth it.
+              </li>
+              <li>
+                <strong>What would you actually use?</strong>
+                Typing, tapping a choice, or speaking, and what you would never use in a classroom.
+              </li>
+            </ul>
+          </Reveal>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Roadmap() {
+  return (
+    <section className="roadmap section" id="roadmap">
+      <div className="shell">
+        <div className="section-intro section-intro--split">
+          <div>
+            <p className="kicker">Research roadmap</p>
+            <h2>Four phases, in order.</h2>
+          </div>
+          <p>
+            Each phase has to hold up before the next one is worth running, and we are early in that
+            sequence. Naming where we are is more useful than implying we are further along.
+          </p>
+        </div>
+        <ol className="phase-track">
+          {roadmapPhases.map((phase) => (
+            <li
+              className={`phase-card${phase.status === "Current" ? " phase-card--now" : ""}`}
+              aria-current={phase.status === "Current" ? "step" : undefined}
+              key={phase.phase}
+            >
+              <div className="phase-card__meta">
+                <span>{phase.phase}</span>
+                <em>{phase.status}</em>
+              </div>
+              <h3>{phase.title}</h3>
+              <p>{phase.body}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+}
+
+function Limitations() {
+  return (
+    <section className="limitations section" id="limitations">
+      <div className="shell">
+        <div className="section-intro section-intro--split">
+          <div>
+            <p className="kicker">Limitations and current stage</p>
+            <h2>What ARIA is not, yet.</h2>
+          </div>
+          <p>
+            ARIA is an early-stage research prototype. Stating that plainly is part of the work, so
+            nothing on this site reads as more than it is.
+          </p>
+        </div>
+        <ul className="limitation-list">
+          {limitations.map((item) => (
+            <li key={item.heading}>
+              <strong>{item.heading}</strong>
+              <p>{item.body}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+function TestingNext() {
+  return (
+    <section className="testing-next section" id="testing-next">
+      <div className="shell">
+        <div className="section-intro">
+          <p className="kicker">What we are testing next</p>
+          <h2>Four questions synthetic data cannot answer.</h2>
+          <p>
+            These are the questions student interviews and prototype sessions are designed to
+            answer. Any of them could come back against us.
+          </p>
+        </div>
+        <div className="question-grid">
+          {openQuestions.map((question, index) => (
+            <Reveal key={question.number} delay={index * 0.05}>
+              <article className="question-card">
+                <span>{question.number}</span>
+                <h3>{question.title}</h3>
+                <p>{question.body}</p>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Inspiration() {
+  return (
+    <section className="inspiration section" id="inspiration">
+      <div className="shell">
+        <div className="section-intro section-intro--split">
+          <div>
+            <p className="kicker">Research inspiration</p>
+            <h2>Ideas this work draws on.</h2>
+          </div>
+          <p>
+            ARIA is a student project. These are lines of education research that shaped how we
+            think about the problem.
+          </p>
+        </div>
+        <div className="inspiration-grid">
+          {inspirations.map((item, index) => (
+            <Reveal key={item.title} delay={index * 0.06}>
+              <article className="inspiration-card">
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+        <p className="inspiration-note">
+          These are influences on our thinking, not endorsements or affiliations. We are not
+          affiliated with the researchers or institutions behind this work, and nothing here should
+          be read as their validation of ARIA. A full reference list will accompany our paper.
+        </p>
       </div>
     </section>
   );
@@ -413,11 +879,12 @@ function Workflow() {
     <section className="workflow section" id="how-it-works">
       <div className="shell">
         <div className="section-intro">
-          <p className="kicker">How ARIA works</p>
-          <h2>One learning moment, from thought to next step.</h2>
+          <p className="kicker">How ARIA helps</p>
+          <h2>Step-by-step scaffolding, not answer-giving.</h2>
           <p>
-            The whole cycle stays focused on the work in front of the student. ARIA notices what
-            they actually say, asks one question, and looks for the strategy to become independent.
+            The cycle stays on the step in front of the student. ARIA notices what they actually
+            say, gives the smallest scaffold that could help, and looks for the support to become
+            unnecessary.
           </p>
         </div>
         <ol className="workflow-flow">
@@ -666,16 +1133,19 @@ function Founders() {
 function Join() {
   const groups = [
     {
-      label: "Researchers",
-      text: "Help with real think-aloud datasets, human annotation, study design, or new cognitive-state taxonomies.",
+      label: "Teachers + research advisors",
+      text: "Interested in reviewing our study design? We would rather have it critiqued now than defend a flawed one later. Tell us which outcomes are worth measuring, and help us evaluate ARIA with real students.",
+      cta: "Review our study design",
     },
     {
-      label: "Educators",
-      text: "Share what students with ADHD, dyslexia, and other learning disabilities need from a responsible pilot.",
+      label: "Students",
+      text: "Have you struggled with math tutoring tools? Share your experience: where you get stuck, which tools you stopped using, and whether you would type, tap, or speak. You do not need to be good at math to help.",
+      cta: "Share your experience",
     },
     {
-      label: "Families + students",
-      text: "Tell us what feels supportive, what feels intrusive, and what an AI tutor should never do.",
+      label: "Researchers + developers",
+      text: "Help with real think-aloud datasets, human annotation, study design, or interface work for low-effort, privacy-aware input.",
+      cta: "Start a conversation",
     },
   ];
 
@@ -699,7 +1169,7 @@ function Join() {
                   `ARIA | ${group.label} collaboration`,
                 )}`}
               >
-                Start a conversation <span aria-hidden="true">↗</span>
+                {group.cta} <span aria-hidden="true">↗</span>
               </a>
             </article>
           ))}
@@ -759,10 +1229,18 @@ export default function AriaExperience() {
       <main id="main">
         <Hero />
         <About />
-        <Founders />
+        <WhyMath />
         <Workflow />
+        <HelpModel />
+        <WatchedStates />
+        <StudentFeedback />
+        <Roadmap />
         <Research />
+        <Limitations />
+        <TestingNext />
+        <Inspiration />
         <Summit />
+        <Founders />
         <Join />
       </main>
       <Footer />
