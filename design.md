@@ -5,8 +5,8 @@ system rather than inventing a separate visual identity.
 
 ## Genre
 
-Research-forward, warm, and student-friendly. Interactions should explain the research without
-making the initiative look like a generic AI assistant or children’s application.
+Approachable, school-facing, and student-friendly. Product examples come first;
+research qualifications remain visible and detailed methods have dedicated pages.
 
 ## Macrostructure family
 
@@ -16,11 +16,11 @@ making the initiative look like a generic AI assistant or children’s applicati
 
 ## Theme
 
-- `--color-paper`: `oklch(97% 0.012 95)`
-- `--color-paper-2`: `oklch(94% 0.016 95)`
-- `--color-ink`: `oklch(20% 0.012 250)`
-- `--color-ink-2`: `oklch(39% 0.018 250)`
-- `--color-rule`: `oklch(78% 0.025 95)`
+- `--color-paper`: `oklch(100% 0 0)`
+- `--color-paper-2`: `oklch(98% 0.008 95)`
+- `--color-ink`: `oklch(23% 0.012 150)`
+- `--color-ink-2`: `oklch(40% 0.01 150)`
+- `--color-rule`: `oklch(88% 0.006 150)`
 - `--color-accent`: `oklch(86% 0.18 95)`
 - `--color-accent-2`: `oklch(66% 0.18 235)`
 - `--color-accent-3`: `oklch(68% 0.24 18)`
@@ -28,10 +28,18 @@ making the initiative look like a generic AI assistant or children’s applicati
 
 ## Typography
 
-- Display and body: the platform’s system sans-serif stack, weights 400 to 700.
+- Display: Avenir Next with Segoe UI and system sans-serif fallbacks, weights 700 to 750, upright.
+- Body: the existing system sans-serif stack, weights 400 to 700.
 - Mono labels and data: the platform’s system monospace stack, weights 400 to 600.
-- Display tracking: `-0.035em`.
-- Type anchor: `clamp(2.75rem, 5vw + 1rem, 5.25rem)`.
+- New display text uses zero tracking and fixed sizes at responsive breakpoints.
+- Home headline: 54px desktop, 42px mobile with a 34px category line.
+- Main sections use 56px vertical spacing, reduced to 36px on mobile.
+
+## Logo
+
+- `public/aria-symbol.svg`: transparent dark A with a yellow crossbar, based on the selected third logo reference.
+- `public/aria-wordmark.svg`: horizontal symbol and custom vector lettering with matching open crossbars, no font dependency.
+- Use the wordmark in navigation and footer, and the symbol for the browser icon and tutoring responses.
 
 ## Spacing
 
@@ -53,14 +61,14 @@ A named four-point scale from `--space-3xs` through `--space-4xl`. No arbitrary 
 
 ## CTA voice
 
-- Primary CTA: pear push-button with a physical edge and direct verb.
+- Primary CTA: ARIA yellow with a direct verb, modest corners, no decorative shadow.
 - Secondary CTA: underlined text link or cyan push-button.
 
 ## What pages must share
 
 - ARIA wordmark without an assistant character or status-light decoration.
-- Warm cream paper, ink, pear, cyan, and one coral emphasis.
-- Plus Jakarta Sans and JetBrains Mono.
+- White surfaces, dark ink, ARIA yellow, and restrained state colors.
+- Compact bold sans-serif headings and system sans-serif body copy; no remote font dependency.
 - Restrained controls, full-width navigation, and visible focus states.
 - Honest research limitations beside evidence.
 - Compact narrative sections with centered content and limited unused side space.

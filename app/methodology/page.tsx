@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import AriaLogo from "../../src/AriaLogo";
 
 export const metadata: Metadata = {
   title: "Research Methodology | ARIA Research Initiative",
@@ -32,21 +33,27 @@ const glossary = [
 const evidenceRows = [
   {
     layer: "Task models",
-    status: "100 schema-checked drafts",
+    status: "30 symbolic-engine-checked demo problems",
     meaning: "Educator correctness review is pending.",
-    claim: "The bank is structured and ready for review.",
+    claim: "Answers are re-derived by a symbolic engine across algebra, trigonometry and calculus.",
   },
   {
     layer: "Observable language",
-    status: "13 reasoning-move codes",
+    status: "Uncertainty, frustration, and help-seeking flags",
     meaning: "Independent annotation on real student language is pending.",
-    claim: "ARIA can show the exact phrase behind a tentative label.",
+    claim: "Language flags shape the tone of help; the math checker determines correctness.",
   },
   {
     layer: "Response quality",
-    status: "5 blinded conditions designed",
-    meaning: "Two qualified educators must rate the locked responses.",
-    claim: "A fair comparison can be run; no winner is claimed yet.",
+    status: "0 answer leaks in scripted harness runs",
+    meaning: "Independent human evaluation remains pending.",
+    claim: "No answer leaks or false mathematical claims in the scripted runs; this is not a student study.",
+  },
+  {
+    layer: "Intervention timing",
+    status: "52% fewer interventions in offline replay",
+    meaning: "ASSISTments 2009–10 logs; interruptions weighted three times as costly as delayed help. The saving disappears when delayed help is weighted more.",
+    claim: "Missed 3.7% of help opportunities (95% CI 2.2–5.3%). Supplied project summary; replay artifacts not independently verified during website work. Replay does not establish that an intervention works.",
   },
   {
     layer: "Synthetic stress test",
@@ -67,7 +74,7 @@ export default function MethodologyPage() {
     <main className="methodology-page">
       <header className="methodology-nav">
         <a className="methodology-wordmark" href="/">
-          ARIA <span>Research Initiative</span>
+          <AriaLogo />
         </a>
         <a className="text-link" href="/#research">
           Back to research status <span aria-hidden="true">←</span>
@@ -76,7 +83,7 @@ export default function MethodologyPage() {
 
       <article className="methodology-note">
         <header className="methodology-hero">
-          <p className="kicker">Research note 01 · Updated July 2026</p>
+          <p className="kicker">Research note 01 · Updated October 2026</p>
           <h1>How ARIA plans to earn its claims.</h1>
           <p>
             ARIA separates software checks, educator judgment, real-language validation, student
@@ -118,7 +125,7 @@ export default function MethodologyPage() {
               <div>
                 <h3>Blindly compare response quality.</h3>
                 <p>
-                  Educators rate five paired conditions for problem grounding, student grounding,
+                  Educators rate paired conditions for problem grounding, student grounding,
                   usefulness, actionability, ownership, answer leakage, and invented student actions.
                 </p>
               </div>
@@ -160,19 +167,19 @@ export default function MethodologyPage() {
           <p className="kicker">Current evidence ledger</p>
           <div className="methodology-result-grid">
             <article>
-              <strong>100</strong>
-              <h3>Structured task drafts</h3>
-              <p>Schema-valid and ready for independent educator review.</p>
+              <strong>30</strong>
+              <h3>Demo problems</h3>
+              <p>Answers re-derived by a symbolic engine; independent educator review is pending.</p>
             </article>
             <article>
-              <strong>13</strong>
-              <h3>Observable reasoning moves</h3>
-              <p>Each automatic label keeps the exact supporting words visible.</p>
+              <strong>0</strong>
+              <h3>Answer leaks in scripted tests</h3>
+              <p>No false mathematical claims in scripted harness replies. Not real-student evidence.</p>
             </article>
             <article>
               <strong>0</strong>
               <h3>Completed outcome studies</h3>
-              <p>No classroom learning or ADHD-specific effectiveness claim is being made.</p>
+              <p>No classroom learning effectiveness claim is being made.</p>
             </article>
           </div>
 
@@ -276,12 +283,14 @@ export default function MethodologyPage() {
           <p className="kicker">Limitations</p>
           <h2>What ARIA does not know yet.</h2>
           <ul>
-            <li>The 100 task models have not yet been approved by independent educators.</li>
+            <li>The 30 demo problems have not yet been approved by independent educators.</li>
             <li>The observable-move baseline has not yet been tested against real human labels.</li>
-            <li>The five response conditions have not yet received locked, blinded ratings.</li>
+            <li>The paired response conditions have not yet received locked, blinded ratings.</li>
+            <li>Timing has been tested on logs, not on students. Replay does not show that helping at that moment works.</li>
+            <li>ARIA currently works on typed math, not handwriting or photos.</li>
             <li>No student study has established usability, learning, retention, or transfer.</li>
             <li>Synthetic benchmark performance does not establish real-student understanding.</li>
-            <li>Personal experience with ADHD motivates the question; it is not clinical evidence.</li>
+            <li>ARIA is an educational prototype, not a diagnostic or clinical tool.</li>
           </ul>
         </section>
 

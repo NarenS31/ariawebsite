@@ -16,34 +16,34 @@ export interface TeamMember {
 export const metrics: Metric[] = [
   {
     eyebrow: "Task bank",
-    value: "100",
-    label: "Problems ready for review",
+    value: "30",
+    label: "Demo problems",
     description:
-      "The bank includes answer guides, solution paths, common mistakes, hints, and scoring notes. Evaluation starts with the math tasks.",
-    technical: "Built and checked in code · educator review is next",
+      "Each answer is re-derived by a symbolic engine, across algebra, trigonometry and calculus.",
+    technical: "data/demo_problems.json · educator review is next",
   },
   {
-    eyebrow: "Student language",
-    value: "13",
-    label: "Ways students show their thinking",
+    eyebrow: "Scripted safety check",
+    value: "0",
+    label: "Answer leaks",
     description:
-      "ARIA can mark planning, checking, self-correction, uncertainty, and help-seeking while showing the exact words behind the label.",
-    technical: "Working in the product · human annotation is next",
+      "In scripted harness runs, no reply revealed an answer and no reply contained a false mathematical claim.",
+    technical: "Scripted test, not real students",
   },
   {
-    eyebrow: "Comparison study",
-    value: "5",
-    label: "Versions of the system to compare",
+    eyebrow: "Offline replay",
+    value: "52%",
+    label: "Fewer interventions than always-helping",
     description:
-      "The same student moments will be tested with generic help, problem context, current reasoning, learning history, and the full ARIA pipeline.",
-    technical: "Study designed · independent educator ratings are next",
+      "In ASSISTments log replay, when interruptions cost three times as much as delayed help. Missed help opportunities: 3.7% (95% CI 2.2–5.3%). The saving disappears when delayed help is weighted more.",
+    technical: "Supplied project summary · replay artifacts not independently verified · not a classroom study",
   },
   {
     eyebrow: "Classroom evidence",
     value: "Not yet",
     label: "Learning results",
     description:
-      "We have not run a classroom study, so we are not claiming that ARIA improves learning, retention, transfer, or ADHD outcomes.",
+      "We have not run a classroom study, so we are not claiming that ARIA improves learning, retention, or transfer.",
     technical: "A reviewed student study is still required",
   },
 ];

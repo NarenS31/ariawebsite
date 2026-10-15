@@ -1,18 +1,20 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
-import { useEffect, useId, useState, type ReactNode } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { metrics, team } from "./data";
+import MathPreview from "./MathPreview";
+import AriaLogo from "./AriaLogo";
+import { EducatorSection, EvidenceSummary, StudentValue } from "./HomeSections";
 
 const summitTicketsUrl =
   "https://www.eventbrite.com/e/ai-in-education-summit-2026-khan-lab-school-tickets-1988581168807?aff=oddtdtcreator";
 
 const navItems = [
+  { label: "How it works", href: "#how-it-works" },
+  { label: "For educators", href: "/participate" },
+  { label: "Research", href: "/researchers" },
   { label: "About", href: "#about" },
-  { label: "Why math", href: "#why-math" },
-  { label: "How it helps", href: "#how-it-works" },
-  { label: "Roadmap", href: "#roadmap" },
-  { label: "Research status", href: "#research" },
 ] as const;
 
 const thoughtStates = {
@@ -62,7 +64,7 @@ const helpLevels = [
     title: "Metacognitive prompt",
     body: "A question that returns attention to the student’s own reasoning. No mathematical content is given — the goal is for the student to state the plan or locate the breakdown themselves.",
     example: "What are you trying to find, and what is the first step you would try?",
-    gate: "Escalates if the student stays stuck or idle after responding",
+    gate: "Escalates if the student stays stuck after responding",
     tone: "pear",
   },
   {
@@ -75,10 +77,10 @@ const helpLevels = [
   },
   {
     level: "03",
-    title: "Answer explanation, after repeated struggle",
-    body: "Only after documented struggle at the earlier levels does ARIA explain the reasoning for the step. The explanation focuses on why each move is made, and is followed by a similar problem the student completes independently.",
-    example: "Here is why we subtract 3x from both sides — then try this one on your own.",
-    gate: "Never the first response, and never a silent solution",
+    title: "Worked method on a parallel problem, after repeated struggle",
+    body: "Only after documented struggle at the earlier levels does ARIA explain the method on a different problem. The student’s own answer is not the intended output. Replies are checked for answer leakage; the supplied scripted-run summary reports no revealed answers.",
+    example: "Here’s how this kind of step works on a different problem — now try yours.",
+    gate: "Never the first response, and never a silent solution.",
     tone: "coral",
   },
 ] as const;
@@ -86,33 +88,28 @@ const helpLevels = [
 const watchedStates = [
   {
     name: "Stuck",
-    signal: "Repeated attempts on the same step, backtracking, or no forward progress for an extended stretch.",
+    signal: "A step the math checker marks wrong, or no forward progress.",
     response: "A Level 1 prompt aimed at locating the exact step that broke down.",
   },
   {
-    name: "Confused",
-    signal: "A step that contradicts the previous one, or a message that misstates what the problem is asking.",
-    response: "A question that checks understanding of the goal before any hint is given.",
-  },
-  {
-    name: "Idle",
-    signal: "No input for a sustained period, with no partial work on screen — disengagement rather than thinking.",
-    response: "A low-pressure re-entry prompt, not a hint and not a nudge to hurry.",
-  },
-  {
-    name: "Struggling productively",
-    signal: "Slow but real progress — the student is testing approaches, self-correcting, and moving between steps.",
-    response: "Stay out of the way. Interrupting productive struggle is a failure mode, not a missed opportunity.",
-  },
-  {
-    name: "Rushing or misusing the system",
-    signal: "Answers submitted faster than they could be worked, or repeated requests that skip straight to Level 3.",
-    response: "Slow the loop down and ask the student to show one step before help continues.",
+    name: "Making progress",
+    signal: "Correct or partially correct steps.",
+    response: "ARIA shows a ‘watching’ badge and stays out of the way.",
   },
   {
     name: "Planning",
-    signal: "The student is setting up an approach before computing — the behavior we most want to strengthen.",
-    response: "Acknowledge and let it run. Prompting here is only useful if the plan is unstated.",
+    signal: "Restating or setting up the problem.",
+    response: "ARIA lets it run.",
+  },
+  {
+    name: "Confused / Frustrated",
+    signal: "Flags from the student’s words, layered on top of verified correctness. Help-seeking is also flagged.",
+    response: "These flags change the tone of help, never the correctness verdict.",
+  },
+  {
+    name: "Finished",
+    signal: "A correct final answer.",
+    response: "ARIA asks one reflection question.",
   },
 ] as const;
 
@@ -124,8 +121,14 @@ const roadmapPhases = [
     body: "Generate think-aloud examples to build and test a first version of the system. This shows the pipeline works end to end. It does not show that it works for real students.",
   },
   {
+    phase: "Offline replay",
+    status: "Complete",
+    title: "Offline replay on public student logs",
+    body: "Using 2009–10 ASSISTments logs (real students, no text), we tested when a simple intervention rule should stay quiet. With interruptions weighted three times as costly as delayed help, the rule intervened 52% less often than always-helping and missed 3.7% of help opportunities (95% CI 2.2–5.3%). With delayed help weighted more, the saving disappears. This is a replay, not a classroom study. Figures are from the supplied project summary; replay artifacts have not been independently verified during the website work.",
+  },
+  {
     phase: "Phase 2",
-    status: "Current",
+    status: "Planned",
     title: "Student interviews",
     body: "Structured interviews with students who struggle in math: where they get stuck, what help they have rejected, and how they want to interact. Findings replace our assumptions in the design.",
   },
@@ -184,6 +187,14 @@ const limitations = [
     body: "ARIA has not been shown to improve grades, retention, or transfer, and it is not a substitute for a teacher, a tutor, or an IEP support plan.",
   },
   {
+    heading: "Timing has been tested on logs, not on students.",
+    body: "The replay shows what a policy would have done; it does not show that helping at that moment works.",
+  },
+  {
+    heading: "ARIA currently works on typed math.",
+    body: "Handwriting and photo input are not supported in the current build.",
+  },
+  {
     heading: "Real-student evaluation is the next step.",
     body: "The claims on this site will change as that evidence arrives, including if it contradicts what we expected.",
   },
@@ -191,16 +202,24 @@ const limitations = [
 
 const inspirations = [
   {
-    title: "When a teacher steps in",
-    body: "Work on how experienced teachers decide when to intervene, and the recognition that help offered too early can cut short the struggle that produces learning. ARIA’s escalation model is an attempt to take that timing question seriously.",
+    title: "Koedinger & Aleven (2007)",
+    body: "Exploring the Assistance Dilemma in Experiments with Cognitive Tutors. Educational Psychology Review, 19, 239–264. Examines when to give or withhold assistance during learning.",
+    href: "https://pslcdatashop.web.cmu.edu/KDDCup/FAQ/Koedinger-Aleven-EPR-07.pdf",
   },
   {
-    title: "Engagement as changing states",
-    body: "Research describing learning as a sequence of states — engaged, confused, frustrated, disengaged — rather than one fixed measure of ability. This is why ARIA treats “stuck” and “struggling productively” as different situations.",
+    title: "Beck & Gong (2013)",
+    body: "Wheel-Spinning: Students Who Fail to Master a Skill. Artificial Intelligence in Education, 431–440. Distinguishes persistent practice from repeated effort without mastery.",
+    href: "https://doi.org/10.1007/978-3-642-39112-5_44",
   },
   {
-    title: "Who gets attention",
-    body: "Studies of how teacher attention distributes unevenly across a classroom, and how quiet students can go unnoticed for long stretches. It motivates watching for idle and silent states, not only for students who ask for help.",
+    title: "Corbett & Anderson (1995)",
+    body: "Knowledge Tracing: Modeling the Acquisition of Procedural Knowledge. User Modeling and User-Adapted Interaction, 4, 253–278. Models changing skill knowledge from students’ work.",
+    href: "https://doi.org/10.1007/BF01099821",
+  },
+  {
+    title: "Sweller (1988)",
+    body: "Cognitive Load During Problem Solving: Effects on Learning. Cognitive Science, 12, 257–285. Examines how problem-solving demands affect learning.",
+    href: "https://doi.org/10.1207/s15516709cog1202_4",
   },
 ] as const;
 
@@ -215,17 +234,17 @@ const workflow = [
   },
   {
     number: "02",
-    verb: "Ground",
-    title: "ARIA grounds itself in the step.",
-    body: "It marks visible reasoning moves and keeps the exact evidence beside each label, at the level of a single step rather than the whole problem.",
-    detail: "The label describes the message, not the student.",
+    verb: "Verify",
+    title: "ARIA checks the step.",
+    body: "A symbolic engine confirms whether the step is valid before ARIA decides to say anything. A correct step is never treated as stuck; a wrong step is never treated as progress.",
+    detail: "Verified correctness comes before language flags.",
     tone: "cyan",
   },
   {
     number: "03",
     verb: "Scaffold",
     title: "ARIA offers the smallest useful scaffold.",
-    body: "A prompt first, a narrowed hint only if that does not move the student, and a worked explanation only after repeated struggle.",
+    body: "A prompt first, a narrowed hint only if that does not move the student, and a worked explanation of the method on a similar problem only after repeated struggle. ARIA does not give the student’s own answer.",
     detail: "The student keeps ownership of the work.",
     tone: "coral",
   },
@@ -282,6 +301,8 @@ function CharacterMark({ small = false }: { small?: boolean }) {
 function Navigation() {
   const [open, setOpen] = useState(false);
   const [compact, setCompact] = useState(false);
+  const toggle = useRef<HTMLButtonElement>(null);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     const onScroll = () => setCompact(window.scrollY > 84);
@@ -295,6 +316,18 @@ function Navigation() {
     return () => document.body.classList.remove("menu-open");
   }, [open]);
 
+  useEffect(() => {
+    if (!open) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        toggle.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [open]);
+
   return (
     <header className={`site-header${compact ? " site-header--compact" : ""}`}>
       <a className="summit-banner" href="#summit">
@@ -303,8 +336,7 @@ function Navigation() {
       </a>
       <div className="site-nav shell">
         <a className="wordmark" href="#home" aria-label="ARIA home">
-          <span>ARIA</span>
-          <small>Research Initiative</small>
+          <AriaLogo />
         </a>
         <nav className="nav-links" aria-label="Main navigation">
           {navItems.map((item) => (
@@ -313,10 +345,11 @@ function Navigation() {
             </a>
           ))}
         </nav>
-        <a className="nav-cta" href="#join">
-          Join the research
+        <a className="nav-cta" href="/activity">
+          Try the preview
         </a>
         <button
+          ref={toggle}
           className="menu-button"
           type="button"
           aria-expanded={open}
@@ -335,8 +368,8 @@ function Navigation() {
             aria-label="Mobile navigation"
             initial={false}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2 }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
+            transition={{ duration: reduceMotion ? 0 : 0.2 }}
           >
             {navItems.map((item, index) => (
               <a key={item.href} href={item.href} onClick={() => setOpen(false)}>
@@ -344,9 +377,9 @@ function Navigation() {
                 {item.label}
               </a>
             ))}
-            <a href="#join" onClick={() => setOpen(false)}>
+            <a href="/activity" onClick={() => setOpen(false)}>
               <span>0{navItems.length + 1}</span>
-              Join the research
+              Try the preview
             </a>
           </motion.nav>
         )}
@@ -364,7 +397,7 @@ function ThoughtPlayground() {
     <div className="thought-playground">
       <div className="playground-top">
         <span className="live-label">Reasoning-move example</span>
-        <span>Tap a move to change ARIA’s question</span>
+        <span>Illustrative responses</span>
       </div>
       <div className="state-tabs" role="tablist" aria-label="Observable student reasoning moves">
         {(Object.keys(thoughtStates) as ThoughtState[]).map((key) => (
@@ -401,7 +434,7 @@ function ThoughtPlayground() {
           </div>
           <div className="aria-bubble">
             <div>
-              <CharacterMark small />
+              <img src="/aria-symbol.svg" width="28" height="28" alt="" />
               <span>ARIA asks</span>
             </div>
             <p>“{current.aria}”</p>
@@ -412,52 +445,68 @@ function ThoughtPlayground() {
         ARIA labels what is visible in the student’s words. It does not diagnose a hidden mental
         state, ability, emotion, or disability.
       </p>
+      <p className="playground-note">
+        In the current build, whether a step is right or wrong comes from the math checker.
+        Language is used only to notice uncertainty, frustration, and help-seeking.
+      </p>
     </div>
   );
 }
 
 function Hero() {
   return (
+    <>
     <section className="hero" id="home">
       <div className="shell hero-layout">
         <div className="hero-copy">
           <Reveal>
-            <p className="kicker">Math-first metacognitive tutoring · Research in progress</p>
+            <p className="kicker">A little guidance. Your own thinking.</p>
           </Reveal>
           <Reveal delay={0.06}>
             <h1>
-              What if a math tutor noticed <span className="highlight">how you think?</span>
+              <span className="hero-brand-name">ARIA</span> <span className="hero-category">AI math tutor</span>
             </h1>
           </Reveal>
           <Reveal delay={0.12}>
             <p className="hero-lede">
-              ARIA is designed to support reflection while a student works through a math problem.
-              It reads the reasoning rather than the final answer, then offers the smallest scaffold
-              that could move the student forward. We are evaluating whether that improves
-              persistence and clarity; current results are preliminary.
+              Work through algebra, trigonometry, and calculus one step at a time. ARIA checks
+              your math, gives you space to try, and offers a small prompt when you need support.
             </p>
           </Reveal>
           <Reveal className="hero-actions" delay={0.18}>
-            <a className="btn btn--pear" href="#roadmap">
-              See the research roadmap <span aria-hidden="true">↓</span>
+            <a className="btn btn--pear" href="/activity">
+              Try the preview <span aria-hidden="true">→</span>
             </a>
-            <a className="text-link" href="#research">
-              See the research status <span aria-hidden="true">→</span>
+            <a className="text-link" href="/participate">
+              For educators <span aria-hidden="true">→</span>
             </a>
           </Reveal>
           <Reveal className="hero-trust" delay={0.24}>
-            <span>Prompts before hints, answers last</span>
-            <span>Answers stay with the student</span>
-            <span>Human validation is still pending</span>
+            <span>Algebra</span>
+            <span>Trigonometry</span>
+            <span>Calculus</span>
           </Reveal>
+          <p className="hero-stage-note">Research prototype · Classroom pilots are not open yet. <a href="/researchers">See the evidence</a></p>
         </div>
-        <Reveal className="hero-demo" delay={0.14}>
-          <CharacterMark />
-          <ThoughtPlayground />
-        </Reveal>
       </div>
     </section>
+    <section className="demo-section" id="preview" aria-label="ARIA math examples">
+      <div className="shell"><Reveal delay={0.14}><MathPreview /></Reveal></div>
+    </section>
+    </>
   );
+}
+
+function SummitFollowUp() {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const now = Date.now();
+    setVisible(now >= Date.parse("2026-10-19T00:00:00-04:00") && now < Date.parse("2026-10-28T00:00:00-04:00"));
+  }, []);
+  if (!visible) return null;
+  return <aside className="summit-followup" aria-label="Summit follow-up">
+    <div className="shell"><strong>Met us at Khan Lab School?</strong><a href="#home">Explore the example</a><a href="/activity">Try the teacher activity</a><a href="/participate">Plan a classroom evaluation</a><a href="/researchers">See the evidence</a></div>
+  </aside>;
 }
 
 function About() {
@@ -467,7 +516,7 @@ function About() {
         <div className="idea-statement">
           <p className="kicker">About ARIA</p>
           <h2>
-            Built from personal experience with ADHD and research into today’s learning tools.
+            Built to help math students plan, check, and keep going.
             <span>We are studying how technology can strengthen independent thinking.</span>
           </h2>
         </div>
@@ -475,22 +524,22 @@ function About() {
           <Reveal>
             <article>
               <span>01</span>
-              <h3>It started with lived experience.</h3>
+              <h3>It started with a learning problem.</h3>
               <p>
-                Naren’s experience with ADHD made one problem clear: getting an answer is not the
-                same as learning how to plan, work through confusion, and recover when a strategy
-                fails.
+                A finished solution does not tell us how a student planned, worked through
+                confusion, or recovered when a strategy failed. ARIA focuses on those moments
+                across math learners, without requiring a diagnosis.
               </p>
             </article>
           </Reveal>
           <Reveal delay={0.08}>
             <article>
               <span>02</span>
-              <h3>Current tools often solve too much.</h3>
+              <h3>The next step matters.</h3>
               <p>
-                Our research into current tutoring tools found that many systems optimize for fast,
-                correct responses. They rarely make the student’s thinking process visible or help
-                students practice metacognition directly.
+                A worked solution can explain a method. Students also need room to choose a
+                step, notice an error, and try again. ARIA’s research asks when a prompt supports
+                that process and when staying quiet is the better choice.
               </p>
             </article>
           </Reveal>
@@ -558,8 +607,8 @@ function HelpModel() {
           <p className="kicker">The three-level help model</p>
           <h2>Help escalates only when the level before it did not work.</h2>
           <p>
-            The student always receives the least amount of help that could still move them forward.
-            An answer is the last resort, never the opening move.
+            The demo starts with a prompt and escalates after documented struggle. A worked method
+            on a parallel problem is the final level; the student keeps working on their own problem.
           </p>
         </div>
         <ol className="level-list">
@@ -593,9 +642,8 @@ function WatchedStates() {
             <h2>Quiet does not always mean stuck.</h2>
           </div>
           <p>
-            The same behavior can mean very different things. A student who is quiet because the
-            work is going well should not be interrupted the same way as a student who has quietly
-            given up.
+            ARIA decides whether to speak before it decides what to say. The state comes from
+            verified correctness first; the student’s words add flags on top.
           </p>
         </div>
         <div className="watched-grid">
@@ -640,15 +688,14 @@ function StudentFeedback() {
         <div className="feedback-layout">
           <Reveal className="feedback-copy">
             <p>
-              ARIA’s current model was trained on synthetic think-aloud examples: text generated to
+              ARIA’s language classifier was developed using synthetic think-aloud examples: text generated to
               imitate how students describe their reasoning. That was a practical way to build a
               working prototype, but synthetic data can only reflect what we already assumed
               students would say.
             </p>
             <p>
-              So the design is moving toward the students themselves. We are shifting to structured
-              interviews with students who struggle in math, including students with ADHD and
-              learning disabilities, asking what actually happens when they get stuck and what kind
+              So the design is moving toward the students themselves. We plan structured
+              interviews with math students, asking what actually happens when they get stuck and what kind
               of help has and has not worked for them.
             </p>
             <p>
@@ -691,7 +738,7 @@ function Roadmap() {
         <div className="section-intro section-intro--split">
           <div>
             <p className="kicker">Research roadmap</p>
-            <h2>Four phases, in order.</h2>
+            <h2>From synthetic checks to classroom evidence.</h2>
           </div>
           <p>
             Each phase has to hold up before the next one is worth running, and we are early in that
@@ -701,8 +748,7 @@ function Roadmap() {
         <ol className="phase-track">
           {roadmapPhases.map((phase) => (
             <li
-              className={`phase-card${phase.status === "Current" ? " phase-card--now" : ""}`}
-              aria-current={phase.status === "Current" ? "step" : undefined}
+              className="phase-card"
               key={phase.phase}
             >
               <div className="phase-card__meta">
@@ -780,7 +826,7 @@ function Inspiration() {
       <div className="shell">
         <div className="section-intro section-intro--split">
           <div>
-            <p className="kicker">Research inspiration</p>
+            <p className="kicker">References</p>
             <h2>Ideas this work draws on.</h2>
           </div>
           <p>
@@ -792,7 +838,7 @@ function Inspiration() {
           {inspirations.map((item, index) => (
             <Reveal key={item.title} delay={index * 0.06}>
               <article className="inspiration-card">
-                <h3>{item.title}</h3>
+                <h3><a href={item.href}>{item.title}</a></h3>
                 <p>{item.body}</p>
               </article>
             </Reveal>
@@ -801,7 +847,7 @@ function Inspiration() {
         <p className="inspiration-note">
           These are influences on our thinking, not endorsements or affiliations. We are not
           affiliated with the researchers or institutions behind this work, and nothing here should
-          be read as their validation of ARIA. A full reference list will accompany our paper.
+          be read as their validation of ARIA.
         </p>
       </div>
     </section>
@@ -876,15 +922,14 @@ function WorkflowVisual({ index }: { index: number }) {
 
 function Workflow() {
   return (
-    <section className="workflow section" id="how-it-works">
+    <section className="workflow section" id="workflow-details">
       <div className="shell">
         <div className="section-intro">
           <p className="kicker">How ARIA helps</p>
-          <h2>Step-by-step scaffolding, not answer-giving.</h2>
+          <h2>Start with the step in front of you.</h2>
           <p>
-            The cycle stays on the step in front of the student. ARIA notices what they actually
-            say, gives the smallest scaffold that could help, and looks for the support to become
-            unnecessary.
+            Write a step. ARIA checks it. If the work is moving forward, keep going. If there’s an
+            error or a request for help, ARIA starts with a question about the next move.
           </p>
         </div>
         <ol className="workflow-flow">
@@ -949,60 +994,9 @@ function Research() {
           ))}
         </div>
 
-        <Reveal className="results-sheet">
-          <div className="results-sheet__head">
-            <div>
-              <span>Development benchmark</span>
-              <h3>Useful for finding failures. Not evidence of learning.</h3>
-            </div>
-            <p>Synthetic examples · no human ground truth</p>
-          </div>
-          <div className="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th scope="col">Development check</th>
-                  <th scope="col">Current result</th>
-                  <th scope="col">Plain-language meaning</th>
-                  <th scope="col">Evidence level</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">Same-style synthetic recognition</th>
-                  <td>84.6%</td>
-                  <td>About 85 of 100 held-out simulated messages matched their designed label.</td>
-                  <td>Synthetic development test</td>
-                </tr>
-                <tr>
-                  <th scope="row">Balanced synthetic score</th>
-                  <td>0.837</td>
-                  <td>Performance summarized while giving each legacy state equal weight.</td>
-                  <td>Synthetic development test</td>
-                </tr>
-                <tr>
-                  <th scope="row">Writing-style stress test</th>
-                  <td>9.05-point gap</td>
-                  <td>Average accuracy changed when unfamiliar generators wrote the examples.</td>
-                  <td>Cross-generator stress test</td>
-                </tr>
-                <tr>
-                  <th scope="row">Independent human labels</th>
-                  <td>Pending</td>
-                  <td>Two trained annotators must label real student language before accuracy claims advance.</td>
-                  <td>No result yet</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div className="research-caveat">
-            <strong>Why the old headline changed.</strong>
-            <p>
-              Synthetic labels can test software, but they cannot show that ARIA understands real
-              students. The primary language target is now observable reasoning moves with exact
-              evidence spans and independent human validation.
-            </p>
-          </div>
+        <Reveal className="research-link-band">
+          <div><p className="kicker">Methods and results</p><h3>Read the evidence behind the prototype.</h3><p>Classifier benchmarks, replay assumptions, limitations, and specific collaboration needs.</p></div>
+          <a className="btn btn--ink" href="/researchers">For researchers <span aria-hidden="true">→</span></a>
         </Reveal>
 
         <Reveal className="method-summary">
@@ -1018,13 +1012,13 @@ function Research() {
             <li>
               <span>01</span>
               <p>
-                Have qualified educators independently review all <strong>100 task models</strong>.
+                Have qualified educators independently review all <strong>30 demo problems</strong>.
               </p>
             </li>
             <li>
               <span>02</span>
               <p>
-                Blindly rate <strong>five paired response conditions</strong> for grounding,
+                Blindly rate <strong>paired response conditions</strong> for grounding,
                 actionability, learner ownership, and answer leakage.
               </p>
             </li>
@@ -1083,6 +1077,7 @@ function Summit() {
           <a className="btn btn--ink" href={summitTicketsUrl} target="_blank" rel="noreferrer">
             Get summit tickets <span aria-hidden="true">↗</span>
           </a>
+          <div className="summit-next-links"><a href="/activity">Try the two-minute teacher preview →</a><a href="/participate">Plan a school partnership →</a><a href="/researchers">Review the research →</a><a href="/privacy">Privacy and data →</a></div>
         </div>
       </div>
     </section>
@@ -1095,10 +1090,11 @@ function Founders() {
       <div className="shell">
         <div className="section-intro">
           <p className="kicker">Founders</p>
-          <h2>Built from lived experience. Tested with care.</h2>
+          <h2>Student builders, focused on independent thinking.</h2>
           <p>
-            ARIA began with a question shaped by experience with ADHD: what if a tutor paid
-            attention to how a student was thinking instead of simply producing the next answer?
+            Naren Saravanan and Karthik Malireddy are building ARIA for math learners who need
+            help planning, checking, and recovering from mistakes. The work is not limited to a
+            particular diagnosis or learner profile.
           </p>
         </div>
         <div className="team-list">
@@ -1106,7 +1102,7 @@ function Founders() {
             <Reveal className="team-person" key={member.name} delay={index * 0.08}>
               <div className="person-mark person-mark--photo" aria-hidden="true">
                 <img
-                  src={index === 0 ? "/naren-saravanan.jpg" : "/karthick-mallireddy.jpg"}
+                  src={index === 0 ? "/naren-saravanan.jpg" : "/karthik-malireddy.jpg"}
                   alt=""
                 />
               </div>
@@ -1125,6 +1121,7 @@ function Founders() {
             </Reveal>
           ))}
         </div>
+        <div className="team-context"><p><strong>Based in:</strong> Waxhaw, North Carolina · Eastern Time. School partnerships may involve remote support, agreed before any sessions.</p><p><strong>Advisory collaboration:</strong> We welcome educators and researchers to review the study design and consent process. <a href="/researchers">See where we need help →</a></p></div>
       </div>
     </section>
   );
@@ -1133,19 +1130,22 @@ function Founders() {
 function Join() {
   const groups = [
     {
-      label: "Teachers + research advisors",
-      text: "Interested in reviewing our study design? We would rather have it critiqued now than defend a flawed one later. Tell us which outcomes are worth measuring, and help us evaluate ARIA with real students.",
-      cta: "Review our study design",
+      label: "Educators + school partners",
+      text: "Help define the tasks, session format, and measures for a reviewed classroom evaluation. Pilot enrollment remains closed until readiness checks and school approval are complete.",
+      cta: "Start planning",
+      href: "/participate",
     },
     {
       label: "Students",
-      text: "Have you struggled with math tutoring tools? Share your experience: where you get stuck, which tools you stopped using, and whether you would type, tap, or speak. You do not need to be good at math to help.",
-      cta: "Share your experience",
+      text: "What kind of math help would you actually use? Answer three optional questions and download your preferences. No contact details or student work are requested.",
+      cta: "Student experience questions",
+      href: "/students",
     },
     {
       label: "Researchers + developers",
-      text: "Help with real think-aloud datasets, human annotation, study design, or interface work for low-effort, privacy-aware input.",
-      cta: "Start a conversation",
+      text: "Review our consent protocol, label permissioned reasoning transcripts, challenge the replay assumptions, or help design a school study.",
+      cta: "Research collaboration",
+      href: "/researchers",
     },
   ];
 
@@ -1153,9 +1153,9 @@ function Join() {
     <section className="join section" id="join">
       <div className="shell">
         <div className="join-lead">
-          <h2>ARIA needs more than a model. It needs people who know learning up close.</h2>
-          <a className="btn btn--pear" href="mailto:11narensara11@gmail.com?subject=ARIA%20research%20collaboration">
-            Contact the team <span aria-hidden="true">→</span>
+          <h2>Help shape what comes next.</h2>
+          <a className="btn btn--pear" href="/participate">
+            Plan a school study <span aria-hidden="true">→</span>
           </a>
         </div>
         <div className="join-paths">
@@ -1165,9 +1165,7 @@ function Join() {
               <h3>{group.label}</h3>
               <p>{group.text}</p>
               <a
-                href={`mailto:11narensara11@gmail.com?subject=${encodeURIComponent(
-                  `ARIA | ${group.label} collaboration`,
-                )}`}
+                href={group.href}
               >
                 {group.cta} <span aria-hidden="true">↗</span>
               </a>
@@ -1178,7 +1176,7 @@ function Join() {
           <div>
             <span>Research updates</span>
           </div>
-          <h3>Follow the honest version of the story.</h3>
+          <h3>Stay close to the work.</h3>
           <p>New evidence, limitations, demos, and ways to participate, sent only when there is something useful to share.</p>
           <a
             className="btn btn--cyan"
@@ -1192,6 +1190,21 @@ function Join() {
   );
 }
 
+function CommonQuestions() {
+  return <section className="common-questions section" id="questions">
+    <div className="shell">
+      <div className="section-intro"><p className="kicker">Before you try it</p><h2>A few practical questions.</h2></div>
+      <div className="faq-list">
+        <details><summary>Who is ARIA for?</summary><p>ARIA is a research prototype for math learners working through algebra, trigonometry, and calculus. The current demo bank has 30 problems. It is not limited to students with a particular diagnosis.</p></details>
+        <details><summary>Can I use the tutor on this website?</summary><p>This website offers scripted examples and an eight-moment teacher activity. The tutor itself is a separate application. The preview shows logged behavior from a pre-freeze build; it is not a live tutoring session.</p></details>
+        <details><summary>Will ARIA give away the answer?</summary><p>The demo is designed to start with prompts and small hints. After repeated struggle, it can explain the method using a parallel problem. Scripted checks have found no answer leaks; real-student evaluation is still pending.</p></details>
+        <details><summary>Can my class try ARIA?</summary><p>We are planning school partnerships, but pilot enrollment is not open. Offline checks, teacher summaries, consent review, and school approval must come first. <a href="/participate">Help shape the proposed study →</a></p></details>
+        <details><summary>What happens to my responses?</summary><p>The teacher preview keeps responses in browser memory and downloads a CSV only when you request it. It does not upload your answers. The educator planning form prepares an email that you review and send yourself. <a href="/privacy">Read the privacy page →</a></p></details>
+      </div>
+    </div>
+  </section>;
+}
+
 function Footer() {
   return (
     <footer>
@@ -1203,16 +1216,51 @@ function Footer() {
       </div>
       <div className="shell footer-meta">
         <a className="footer-wordmark" href="#home">
-          ARIA
+          <AriaLogo />
         </a>
         <p>Research by Naren Saravanan and Karthik Malireddy · 2026</p>
         <div>
-          <a href="#research">Research</a>
+          <a href="/researchers">Research</a>
+          <a href="/privacy">Privacy and data</a>
           <a href="mailto:11narensara11@gmail.com">Contact</a>
         </div>
       </div>
     </footer>
   );
+}
+
+function ResearchNotes({ children }: { children: ReactNode }) {
+  const [ready, setReady] = useState(false);
+  const disclosure = useRef<HTMLDetailsElement>(null);
+
+  useEffect(() => setReady(true), []);
+
+  useEffect(() => {
+    if (!ready) return;
+    const revealAnchor = () => {
+      let id: string;
+      try {
+        id = decodeURIComponent(window.location.hash.slice(1));
+      } catch {
+        return;
+      }
+      const target = document.getElementById(id);
+      if (target && disclosure.current?.contains(target)) {
+        disclosure.current.open = true;
+        target.scrollIntoView({ block: "start" });
+      }
+    };
+    revealAnchor();
+    window.addEventListener("hashchange", revealAnchor);
+    return () => window.removeEventListener("hashchange", revealAnchor);
+  }, [ready]);
+
+  // Browsers reveal fragment targets inside details before React hydrates.
+  // Delay those targets so the server and initial client markup stay identical.
+  return <details className="research-notes" ref={disclosure}>
+    <summary><span className="shell">Research roadmap, evidence, and limitations</span></summary>
+    {ready ? children : null}
+  </details>;
 }
 
 export default function AriaExperience() {
@@ -1226,21 +1274,29 @@ export default function AriaExperience() {
       </a>
       <motion.div className="page-progress" style={{ scaleX: progress }} />
       <Navigation />
+      <SummitFollowUp />
       <main id="main">
         <Hero />
-        <About />
-        <WhyMath />
-        <Workflow />
+        <StudentValue />
         <HelpModel />
-        <WatchedStates />
-        <StudentFeedback />
-        <Roadmap />
-        <Research />
-        <Limitations />
-        <TestingNext />
-        <Inspiration />
+        <section className="section reasoning-examples"><div className="shell"><div className="section-intro"><p className="kicker">Language signals</p><h2>Different moments. Different questions.</h2></div><ThoughtPlayground /></div></section>
+        <EducatorSection />
+        <EvidenceSummary />
         <Summit />
+        <About />
         <Founders />
+        <CommonQuestions />
+        <ResearchNotes>
+          <WhyMath />
+          <Workflow />
+          <WatchedStates />
+          <StudentFeedback />
+          <Roadmap />
+          <Research />
+          <Limitations />
+          <TestingNext />
+          <Inspiration />
+        </ResearchNotes>
         <Join />
       </main>
       <Footer />

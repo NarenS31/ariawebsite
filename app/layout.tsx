@@ -1,21 +1,23 @@
 import type { Metadata } from "next";
 import "../src/hallmark.css";
+import "../src/editorial.css";
 
 export const metadata: Metadata = {
-  title: "ARIA | Math-First Metacognitive AI Research",
+  icons: { icon: "/aria-symbol.svg", apple: "/aria-symbol.svg" },
+  title: "ARIA Math Tutor | Room to Think",
   description:
-    "ARIA is a student-led research initiative testing a math-first metacognitive tutor that helps learners plan, check, and recover without taking over the work. Current results are preliminary.",
+    "Meet ARIA, a math tutoring prototype that checks typed steps and offers small prompts while students keep thinking. Explore examples or help plan a school study.",
   applicationName: "ARIA Research Initiative",
   openGraph: {
     type: "website",
-    title: "ARIA | Math-First Metacognitive AI Research",
+    title: "ARIA Math Tutor | Room to Think",
     description:
       "Testing a math-first tutor that responds to observable student reasoning with scaffolded questions, not answers.",
     siteName: "ARIA Research Initiative",
   },
   twitter: {
     card: "summary",
-    title: "ARIA | Math-First Metacognitive AI Research",
+    title: "ARIA Math Tutor | Room to Think",
     description:
       "Testing a math-first tutor that responds to observable student reasoning with scaffolded questions, not answers.",
   },
