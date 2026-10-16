@@ -2,22 +2,22 @@ import type { Metadata } from "next";
 import "../src/hallmark.css";
 
 export const metadata: Metadata = {
-  title: "ARIA | Math-First Metacognitive AI Research",
+  title: "ARIA | When should a math tutor step in?",
   description:
-    "ARIA is a student-led research initiative testing a math-first metacognitive tutor that helps learners plan, check, and recover without taking over the work. Current results are preliminary.",
+    "ARIA is a student-led research initiative studying when a math tutor should intervene and when it should stay quiet. Each step is verified symbolically; a timing model fit on real student logs decides whether to help. Results are from log replay, not classroom studies.",
   applicationName: "ARIA Research Initiative",
   openGraph: {
     type: "website",
-    title: "ARIA | Math-First Metacognitive AI Research",
+    title: "ARIA | When should a math tutor step in?",
     description:
-      "Testing a math-first tutor that responds to observable student reasoning with scaffolded questions, not answers.",
+      "A research prototype that verifies each math step and decides when to offer the smallest scaffold. Evaluated on real student logs; no classroom claims.",
     siteName: "ARIA Research Initiative",
   },
   twitter: {
     card: "summary",
-    title: "ARIA | Math-First Metacognitive AI Research",
+    title: "ARIA | When should a math tutor step in?",
     description:
-      "Testing a math-first tutor that responds to observable student reasoning with scaffolded questions, not answers.",
+      "A research prototype that verifies each math step and decides when to offer the smallest scaffold. Evaluated on real student logs; no classroom claims.",
   },
 };
 

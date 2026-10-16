@@ -1,6 +1,6 @@
 # ARIA Research Website
 
-The public research website for ARIA, an open initiative investigating metacognitive AI for students with ADHD and learning disabilities.
+The public research website for ARIA, a student-led research initiative studying when a math tutor should intervene and when it should stay quiet.
 
 ## Stack
 
