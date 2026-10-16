@@ -8,12 +8,56 @@ const summitTicketsUrl =
   "https://www.eventbrite.com/e/ai-in-education-summit-2026-khan-lab-school-tickets-1988581168807?aff=oddtdtcreator";
 
 const navItems = [
-  { label: "About", href: "#about" },
-  { label: "Why math", href: "#why-math" },
-  { label: "How it helps", href: "#how-it-works" },
-  { label: "Roadmap", href: "#roadmap" },
-  { label: "Research status", href: "#research" },
   { label: "ARIA-Pace", href: "/pace" },
+  { label: "About", href: "/about" },
+  { label: "Method", href: "/method" },
+  { label: "Research", href: "/research" },
+  { label: "Roadmap", href: "/roadmap" },
+] as const;
+
+const overviewCards = [
+  {
+    href: "/pace",
+    kicker: "The timing model",
+    title: "ARIA-Pace",
+    body: "A knowledge-tracing model fit on logs from 4,163 real students, with a rule for when to stay quiet. Under a high interruption cost it intervened 52% less often than always helping and missed 3.7% of students who went on to get stuck, on a held-out test read once.",
+    cta: "Results and protocol",
+  },
+  {
+    href: "/about",
+    kicker: "Motivation and scope",
+    title: "About",
+    body: "Why the question is timing, why the study is limited to mathematics, and what the project does and does not claim.",
+    cta: "Read more",
+  },
+  {
+    href: "/method",
+    kicker: "How the tutor works",
+    title: "Method",
+    body: "Notice, verify, scaffold, step back. A symbolic engine checks every step; help escalates in three levels and never gives the student’s answer; the policy distinguishes progress from being stuck.",
+    cta: "Read more",
+  },
+  {
+    href: "/research",
+    kicker: "Evidence so far",
+    title: "Research",
+    body: "Software checks on synthetic text, an offline replay of real student logs, the limitations of each, and the open questions the current evidence cannot answer.",
+    cta: "Results and limitations",
+  },
+  {
+    href: "/roadmap",
+    kicker: "Where the work is",
+    title: "Roadmap",
+    body: "Five phases, in order, with the current one marked. Student interviews and classroom evaluation are planned and gated on ethics review.",
+    cta: "See the phases",
+  },
+  {
+    href: "/collaborate",
+    kicker: "Teachers, students, researchers",
+    title: "Collaborate",
+    body: "Review the study design, host a small offline pilot, share your experience with tutoring tools, or critique the methods. Criticism now is worth more than defence later.",
+    cta: "Get in touch",
+  },
 ] as const;
 
 const thoughtStates = {
@@ -291,7 +335,7 @@ function CharacterMark({ small = false }: { small?: boolean }) {
   );
 }
 
-function Navigation() {
+export function Navigation() {
   const [open, setOpen] = useState(false);
   const [compact, setCompact] = useState(false);
 
@@ -309,12 +353,12 @@ function Navigation() {
 
   return (
     <header className={`site-header${compact ? " site-header--compact" : ""}`}>
-      <a className="summit-banner" href="#summit">
+      <a className="summit-banner" href="/roadmap#summit">
         <span>ARIA is presenting at the Khan Lab School AI in Education Summit</span>
         <strong>October 24 · Mountain View</strong>
       </a>
       <div className="site-nav shell">
-        <a className="wordmark" href="#home" aria-label="ARIA home">
+        <a className="wordmark" href="/" aria-label="ARIA home">
           <span>ARIA</span>
           <small>Research Initiative</small>
         </a>
@@ -325,7 +369,7 @@ function Navigation() {
             </a>
           ))}
         </nav>
-        <a className="nav-cta" href="#join">
+        <a className="nav-cta" href="/collaborate">
           Collaborate
         </a>
         <button
@@ -356,7 +400,7 @@ function Navigation() {
                 {item.label}
               </a>
             ))}
-            <a href="#join" onClick={() => setOpen(false)}>
+            <a href="/collaborate" onClick={() => setOpen(false)}>
               <span>0{navItems.length + 1}</span>
               Collaborate
             </a>
@@ -429,7 +473,7 @@ function ThoughtPlayground() {
   );
 }
 
-function Hero() {
+export function Hero() {
   return (
     <section className="hero" id="home">
       <div className="shell hero-layout">
@@ -475,7 +519,7 @@ function Hero() {
   );
 }
 
-function About() {
+export function About() {
   return (
     <section className="idea-section section" id="about">
       <div className="shell idea-layout">
@@ -526,7 +570,7 @@ function About() {
   );
 }
 
-function WhyMath() {
+export function WhyMath() {
   return (
     <section className="why-math section" id="why-math">
       <div className="shell">
@@ -565,7 +609,7 @@ function WhyMath() {
   );
 }
 
-function HelpModel() {
+export function HelpModel() {
   return (
     <section className="help-model section" id="help-model">
       <div className="shell">
@@ -598,7 +642,7 @@ function HelpModel() {
   );
 }
 
-function WatchedStates() {
+export function WatchedStates() {
   return (
     <section className="watched section" id="states">
       <div className="shell">
@@ -644,7 +688,7 @@ function WatchedStates() {
   );
 }
 
-function StudentFeedback() {
+export function StudentFeedback() {
   return (
     <section className="feedback section" id="student-feedback">
       <div className="shell">
@@ -699,7 +743,7 @@ function StudentFeedback() {
   );
 }
 
-function Roadmap() {
+export function Roadmap() {
   return (
     <section className="roadmap section" id="roadmap">
       <div className="shell">
@@ -739,7 +783,7 @@ function Roadmap() {
   );
 }
 
-function Limitations() {
+export function Limitations() {
   return (
     <section className="limitations section" id="limitations">
       <div className="shell">
@@ -766,7 +810,7 @@ function Limitations() {
   );
 }
 
-function TestingNext() {
+export function TestingNext() {
   return (
     <section className="testing-next section" id="testing-next">
       <div className="shell">
@@ -794,7 +838,7 @@ function TestingNext() {
   );
 }
 
-function Inspiration() {
+export function Inspiration() {
   return (
     <section className="inspiration section" id="inspiration">
       <div className="shell">
@@ -895,7 +939,7 @@ function WorkflowVisual({ index }: { index: number }) {
   );
 }
 
-function Workflow() {
+export function Workflow() {
   return (
     <section className="workflow section" id="how-it-works">
       <div className="shell">
@@ -939,7 +983,7 @@ function Workflow() {
   );
 }
 
-function Research() {
+export function Research({ compact = false }: { compact?: boolean }) {
   return (
     <section className="research section" id="research">
       <div className="shell">
@@ -971,6 +1015,18 @@ function Research() {
           ))}
         </div>
 
+        {compact ? (
+          <div className="hero-actions">
+            <a className="btn btn--ink" href="/pace">
+              ARIA-Pace results and protocol <span aria-hidden="true">→</span>
+            </a>
+            <a className="text-link" href="/research">
+              All results and limitations <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        ) : null}
+
+        {compact ? null : (
         <Reveal className="results-sheet">
           <div className="results-sheet__head">
             <div>
@@ -1028,7 +1084,9 @@ function Research() {
             </p>
           </div>
         </Reveal>
+        )}
 
+        {compact ? null : (
         <Reveal className="method-summary">
           <div className="method-summary__intro">
             <p className="kicker">Evidence gates</p>
@@ -1076,12 +1134,13 @@ function Research() {
             ARIA-Pace results and protocol <span aria-hidden="true">→</span>
           </a>
         </Reveal>
+        )}
       </div>
     </section>
   );
 }
 
-function Summit() {
+export function Summit() {
   return (
     <section className="summit section" id="summit">
       <div className="shell summit-layout">
@@ -1120,7 +1179,7 @@ function Summit() {
   );
 }
 
-function Researchers() {
+export function Researchers() {
   return (
     <section className="team section" id="founders">
       <div className="shell">
@@ -1163,7 +1222,7 @@ function Researchers() {
   );
 }
 
-function Join() {
+export function Join() {
   const groups = [
     {
       label: "Teachers and advisors",
@@ -1225,11 +1284,11 @@ function Join() {
   );
 }
 
-function Footer() {
+export function Footer() {
   return (
     <footer>
       <div className="shell footer-meta">
-        <a className="footer-wordmark" href="#home">
+        <a className="footer-wordmark" href="/">
           ARIA
         </a>
         <p>Research by Naren Saravanan and Karthik Malireddy · Last updated October 2026</p>
@@ -1244,35 +1303,88 @@ function Footer() {
   );
 }
 
-export default function AriaExperience() {
-  const { scrollYProgress } = useScroll();
-  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 28, mass: 0.22 });
+export function Overview() {
+  return (
+    <section className="why-math section" id="overview">
+      <div className="shell">
+        <div className="section-intro section-intro--split">
+          <div>
+            <p className="kicker">Overview</p>
+            <h2>The project in six parts.</h2>
+          </div>
+          <p>
+            This page is a summary. Each part below has its own page with the full detail, and the
+            ARIA-Pace page carries every number with its source.
+          </p>
+        </div>
+        <div className="why-math-grid overview-grid">
+          {overviewCards.map((card, index) => (
+            <Reveal key={card.href} delay={index * 0.05}>
+              <a className={`why-math-card overview-card${index === 0 ? " overview-card--pace" : ""}`} href={card.href}>
+                <span>{card.kicker}</span>
+                <h3>{card.title}</h3>
+                <p>{card.body}</p>
+                <em className="text-link">
+                  {card.cta} <span aria-hidden="true">→</span>
+                </em>
+              </a>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
 
+export function PageIntro({
+  kicker,
+  title,
+  children,
+}: {
+  kicker: string;
+  title: string;
+  children?: ReactNode;
+}) {
+  return (
+    <section className="page-intro section">
+      <div className="shell">
+        <p className="kicker">{kicker}</p>
+        <h1>{title}</h1>
+        {children ? <p className="hero-lede">{children}</p> : null}
+      </div>
+    </section>
+  );
+}
+
+export function SitePage({ children, progress = false }: { children: ReactNode; progress?: boolean }) {
   return (
     <>
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      <motion.div className="page-progress" style={{ scaleX: progress }} />
+      {progress ? <ScrollProgress /> : null}
       <Navigation />
-      <main id="main">
-        <Hero />
-        <About />
-        <WhyMath />
-        <Workflow />
-        <HelpModel />
-        <WatchedStates />
-        <StudentFeedback />
-        <Roadmap />
-        <Research />
-        <Limitations />
-        <TestingNext />
-        <Inspiration />
-        <Summit />
-        <Researchers />
-        <Join />
-      </main>
+      <main id="main">{children}</main>
       <Footer />
     </>
+  );
+}
+
+function ScrollProgress() {
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 28, mass: 0.22 });
+  return <motion.div className="page-progress" style={{ scaleX: progress }} />;
+}
+
+export default function AriaExperience() {
+  return (
+    <SitePage progress>
+      <Hero />
+      <Overview />
+      <Research compact />
+      <Roadmap />
+      <Summit />
+      <Join />
+    </SitePage>
   );
 }

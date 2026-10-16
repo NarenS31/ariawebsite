@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Footer, Navigation } from "@/src/AriaExperience";
 
 export const metadata: Metadata = {
   title: "ARIA-Pace | ARIA Research Initiative",
@@ -102,15 +103,9 @@ const references = [
 
 export default function PacePage() {
   return (
+    <>
+    <Navigation />
     <main className="methodology-page">
-      <header className="methodology-nav">
-        <a className="methodology-wordmark" href="/">
-          ARIA <span>Research Initiative</span>
-        </a>
-        <a className="text-link" href="/#roadmap">
-          Back to the roadmap <span aria-hidden="true">←</span>
-        </a>
-      </header>
 
       <article className="methodology-note">
         <header className="methodology-hero">
@@ -443,5 +438,7 @@ export default function PacePage() {
         </footer>
       </article>
     </main>
+    <Footer />
+    </>
   );
 }
