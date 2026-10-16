@@ -13,6 +13,7 @@ const navItems = [
   { label: "How it helps", href: "#how-it-works" },
   { label: "Roadmap", href: "#roadmap" },
   { label: "Research status", href: "#research" },
+  { label: "ARIA-Pace", href: "/pace" },
 ] as const;
 
 const thoughtStates = {
@@ -126,17 +127,24 @@ const roadmapPhases = [
   {
     phase: "Phase 2",
     status: "Current",
-    title: "Student interviews",
-    body: "Structured interviews with students who struggle in math: where they get stuck, what help they have rejected, and how they want to interact. Findings replace our assumptions in the design.",
+    title: "Timing model on real student logs",
+    body: "ARIA-Pace: a knowledge-tracing model fit on public logs from thousands of real students, with a rule for when to stay quiet. First held-out test done; a second-dataset test is pending. A replay of logs, not a classroom study.",
+    href: "/pace",
   },
   {
     phase: "Phase 3",
-    status: "Next",
+    status: "Planned",
+    title: "Student interviews",
+    body: "Structured interviews with students who struggle in math: where they get stuck, what help they have rejected, and how they want to interact. Requires ethics review and consent first.",
+  },
+  {
+    phase: "Phase 4",
+    status: "Planned",
     title: "Formative prototype testing",
     body: "Small sessions where students use the prototype on real math work while we observe. The goal is to find where prompts misfire, annoy, or get ignored, and revise before any outcome claims.",
   },
   {
-    phase: "Phase 4",
+    phase: "Phase 5",
     status: "Planned",
     title: "Classroom and teacher-informed evaluation",
     body: "Evaluation designed with teachers, in real instructional settings, using measures they consider meaningful. Only at this stage would it be reasonable to discuss learning outcomes.",
@@ -691,7 +699,7 @@ function Roadmap() {
         <div className="section-intro section-intro--split">
           <div>
             <p className="kicker">Research roadmap</p>
-            <h2>Four phases, in order.</h2>
+            <h2>Five phases, in order.</h2>
           </div>
           <p>
             Each phase has to hold up before the next one is worth running, and we are early in that
@@ -711,6 +719,11 @@ function Roadmap() {
               </div>
               <h3>{phase.title}</h3>
               <p>{phase.body}</p>
+              {"href" in phase && (
+                <a className="text-link" href={phase.href}>
+                  Read the results <span aria-hidden="true">→</span>
+                </a>
+              )}
             </li>
           ))}
         </ol>
