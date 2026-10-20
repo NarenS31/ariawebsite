@@ -175,7 +175,7 @@ const roadmapPhases = [
     phase: "Phase 2",
     status: "Current",
     title: "Timing model on real student logs",
-    body: "ARIA-Pace: a knowledge-tracing model fit on public logs from thousands of real students, with a rule for when to stay quiet. First held-out test done; a second-dataset test is pending. A replay of logs, not a classroom study.",
+    body: "ARIA-Pace: a knowledge-tracing model fit on public logs from thousands of real students, with a rule for when to stay quiet. Evaluated once on a locked 2009–10 split and once on a locked 2012–13 split; the 2012–13 numbers are held until the dataset terms are confirmed. A replay of logs, not a classroom study.",
     href: "/pace",
   },
   {
@@ -267,6 +267,11 @@ const inspirations = [
     title: "Knowledge tracing",
     href: "https://doi.org/10.1007/BF01099821",
     body: "Corbett and Anderson’s (1995) Bayesian Knowledge Tracing estimates mastery from a sequence of right and wrong answers. It is the risk model ARIA-Pace currently runs on; two neural successors we trained did not improve the timing decision.",
+  },
+  {
+    title: "Cognitive load",
+    href: "https://doi.org/10.1207/s15516709cog1202_4",
+    body: "Sweller (1988) examined how the demands of solving a problem can use up the working memory that learning needs. It informs our choice to keep each scaffold as small as possible, as described on the Method page; it is a design influence, not evidence that ARIA works.",
   },
 ] as const;
 
@@ -604,9 +609,10 @@ export function About() {
               <span>01</span>
               <h3>Origin</h3>
               <p>
-                The question came from Naren&rsquo;s own experience with ADHD: help that arrives
-                too fast removes the chance to plan, work through confusion, and recover when a
-                strategy fails. That experience motivates the study; it is not evidence for it.
+                The question came from wanting to understand why tutors interrupt students who are
+                mid-thought: help that arrives too fast removes the chance to plan, work through
+                confusion, and recover when a strategy fails. That motivates the study; it is not
+                evidence for it.
               </p>
             </article>
           </Reveal>
@@ -686,7 +692,9 @@ export function HelpModel() {
           <h2>Help escalates only when the level before it did not work.</h2>
           <p>
             Once ARIA has decided to speak, the student receives the least help that could still
-            move them forward. The student&rsquo;s own answer is never given at any level.
+            move them forward. The student&rsquo;s own answer is never given at any level. Keeping
+            each scaffold small is a design choice informed by work on cognitive load during problem
+            solving (Sweller, 1988); it is a design influence, not evidence that ARIA works.
           </p>
         </div>
         <ol className="level-list">
@@ -1171,14 +1179,16 @@ export function Research({ compact = false }: { compact?: boolean }) {
               <span>01</span>
               <p>
                 <strong>Done:</strong> timing policy evaluated once on a locked held-out split of
-                real student logs, with the specification committed before modeling.
+                2009–10 student logs and once on a locked 2012–13 split (those numbers are held
+                until the dataset terms are confirmed, as on the ARIA-Pace page), with the
+                specification committed before modeling.
               </p>
             </li>
             <li>
               <span>02</span>
               <p>
-                <strong>Pending:</strong> cross-dataset test on a second year of logs; educator
-                review of the problem bank; teacher judgments on when to intervene.
+                <strong>Pending:</strong> educator review of the problem bank; teacher judgments on
+                when to intervene.
               </p>
             </li>
             <li>
@@ -1263,8 +1273,8 @@ export function Researchers() {
           <h2>Who is doing the work.</h2>
           <p>
             ARIA is a student-led project at Marvin Ridge High School. The question came from
-            Naren&rsquo;s experience with ADHD; the protocol is what keeps that motivation from
-            becoming a claim. We are looking for a teacher or researcher to review the study design
+            wanting to understand why tutors interrupt students who are mid-thought; the protocol is
+            what keeps that motivation from becoming a claim. We are looking for a teacher or researcher to review the study design
             as an advisor.
           </p>
         </div>
@@ -1311,7 +1321,7 @@ export function Join() {
   const groups = [
     {
       label: "Teachers and advisors",
-      text: "Review the study design, tell us which outcomes are worth measuring, or host a small classroom pilot: two or three sessions, offline, no student accounts, no student text leaving the device. We would rather have the design criticised now than defended later.",
+      text: "Review the study design, tell us which outcomes are worth measuring, or host a small classroom pilot: two or three sessions, offline, no student accounts. The pilot is designed so that student text stays on the device, but that is not yet promised (see the privacy page). We would rather have the design criticised now than defended later.",
       cta: "Review the study design",
       detail: { href: "/participate", label: "Classroom planning form" },
     },

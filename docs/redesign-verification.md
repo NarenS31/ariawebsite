@@ -67,3 +67,10 @@ Merge of `origin/codex/website-copy-updates` into `origin/main` (content from ma
 - Text and link diff against `origin/main` per route: the only main text no longer present is the unverified 100 / 13 / 5 counts and the two
   ADHD lines on the methodology page (removed on purpose), the old text wordmark ("Research Initiative" under ARIA, now the logo image),
   and the playground, which moved from the home page to /method.
+
+### Follow-up edits (2026-10-20, after review)
+
+- ADHD wording on About and Researchers replaced by a neutral motivation; cross-dataset wording on the home tile, roadmap, and evidence-gates list now matches /pace;
+  the activity's draft consent says answers stay in the browser and nothing is sent; the Join card promises less than the privacy page; "Research Initiative"
+  restored next to the logo; Sweller (1988) restored with an in-text citation; harness results cited to `results/demo_harness_summit_pace.json`.
+- Summit follow-up band: all four links resolve; it shows on Oct 19 to 27 (Eastern) and not before or after (tested with a fixed browser clock).

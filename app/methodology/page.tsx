@@ -47,7 +47,7 @@ const evidenceRows = [
     layer: "Response quality",
     status: "0 answer leaks, 0 math errors, 0 crashes in scripted harness runs on the 8 featured problems",
     meaning: "Independent human evaluation remains pending.",
-    claim: "A scripted test of the software on chosen inputs, not a student study.",
+    claim: "A scripted test of the software on chosen inputs, not a student study. Results file: results/demo_harness_summit_pace.json in the aria.kls repository (branch summit-pace-mac).",
   },
   {
     layer: "Intervention timing",

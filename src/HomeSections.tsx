@@ -103,7 +103,7 @@ export function CommonQuestions() {
             <p>
               The tutor is designed to start with prompts and small hints, and every reply is
               checked for the answer before it is shown. In scripted runs on the eight featured
-              problems no reply revealed an answer; real-student evaluation is still pending.
+              problems no reply revealed an answer (results/demo_harness_summit_pace.json in the aria.kls repository); real-student evaluation is still pending.
             </p>
           </details>
           <details>

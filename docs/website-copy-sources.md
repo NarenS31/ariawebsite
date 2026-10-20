@@ -8,7 +8,9 @@ Updated 2026-10-15 from the supplied section-by-section edit list.
 
 ## Summit participation update
 
-- The audience is math learners broadly; prominent ADHD positioning was removed.
+- The audience is math learners broadly; prominent ADHD positioning was removed. On the merged site the motivation is stated without any
+  diagnosis ("wanting to understand why tutors interrupt students who are mid-thought"). The only remaining mention is the exclusion
+  statement on /pace ("not trained on any data about ADHD, anxiety, or disability").
 - `/participate` is a planning request with an explicit email-review handoff,
   not open pilot enrollment or a backend lead database.
 - `/activity` contains the eight moments and the draft consent. It is a local-only preview, not active research
@@ -24,7 +26,8 @@ Updated 2026-10-15 from the supplied section-by-section edit list.
   intervention happens only on verified mathematical errors.
 - `/students` is an optional three-question design-feedback worksheet with a
   local download, not a human-subject study or a survey submission backend.
-- The summit follow-up band is date-gated to October 19–27, 2026 (Eastern Time).
+- The summit follow-up band is date-gated to October 19–27, 2026 (Eastern Time). Cross-dataset wording on every page matches /pace: run once on a
+  locked 2012–13 split, numbers held until the dataset terms are confirmed.
 - The adult advisor, offline check, teacher summaries, frozen-build video, and
   public replay specification/results links remain pending confirmation.
 
@@ -56,7 +59,8 @@ All against NarenS31/aria.kls:
   `eval/data/eval/eval_heuristic_350.json` (`state_detection`, lines 5, 6, 125); mean cross-generator gap 9.05 points:
   `eval/data/eval/cross_generator_heuristic.json` (`generalization_gap.mean_points`, line 542).
 - 30 demo problems: `data/demo_problems.json`. 0 answer leaks / 0 math errors / 0 crashes on the 8 featured problems in scripted harness
-  runs: `scripts/demo_harness.py --featured --strict` (branch `summit-pace-mac`); `docs/DEMO_RUNBOOK.md` section 5 for the full-bank run.
+  runs: `results/demo_harness_summit_pace.json` (branch `summit-pace-mac`, commit `945516e`; both the original summit build `e09218c` and the
+  ARIA-Pace build `498882c`), produced by `scripts/demo_harness.py --featured --strict`; `docs/DEMO_RUNBOOK.md` section 5 for the full-bank run.
 - Home-page "prompt from the demo" example (alg-08 wrong answer): reproduced on the tag build `summit-2026-10-24`.
 - Not found: handwriting/photo input (only a text box exists in `ui/demo_app.py`); the site says only that the summit demo works on typed math.
 
@@ -68,4 +72,4 @@ All against NarenS31/aria.kls:
 - Corbett & Anderson: https://doi.org/10.1007/BF01099821
   (The requested 1995 citation is widely used; the publisher lists the issue
   date as December 1994 and a revision date in 1995.)
-- Sweller (1988): https://doi.org/10.1207/s15516709cog1202_4
+- Sweller (1988): https://doi.org/10.1207/s15516709cog1202_4 (cited in the text of the intervention-design section and listed in the references)

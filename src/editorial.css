@@ -21,7 +21,9 @@ h3 { font-size: 23px; line-height: 1.3; }
 .wordmark > small { font-family: var(--font-body); font-size: 10px; letter-spacing: 0; text-transform: none; }
 .aria-logo { display: inline-flex; align-items: center; gap: 10px; line-height: 1; }
 .aria-logo img { flex-shrink: 0; display: block; }
+.aria-logo__sub { font-family: var(--font-body); font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--color-ink-2); padding-inline-start: 10px; border-inline-start: 1px solid var(--color-rule-dark); line-height: 1.2; white-space: nowrap; }
 .wordmark > .aria-logo { font-family: var(--font-body); }
+@media (max-width: 379px) { .site-nav .aria-logo__sub { display: none; } }
 .methodology-wordmark .aria-logo { margin: 0; }
 .reasoning-examples .thought-playground { max-width: 760px; margin-inline: auto; border-radius: 8px; box-shadow: none; }
 .reasoning-examples .section-intro { max-width: 760px; margin-inline: auto; }
