@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Join, PageIntro, Researchers, SitePage } from "@/src/AriaExperience";
+import { CommonQuestions } from "@/src/HomeSections";
 
 export const metadata: Metadata = {
   title: "Collaborate | ARIA Research Initiative",
@@ -17,6 +18,7 @@ export default function CollaboratePage() {
       </PageIntro>
       <Researchers />
       <Join />
+      <CommonQuestions />
     </SitePage>
   );
 }
