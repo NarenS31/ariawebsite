@@ -1,8 +1,11 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
-import { useEffect, useId, useState, type ReactNode } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { metrics, team } from "./data";
+import AriaLogo from "./AriaLogo";
+import MathPreview from "./MathPreview";
+import { EducatorSection, EvidenceSummary } from "./HomeSections";
 
 const summitTicketsUrl =
   "https://www.eventbrite.com/e/ai-in-education-summit-2026-khan-lab-school-tickets-1988581168807?aff=oddtdtcreator";
@@ -172,7 +175,7 @@ const roadmapPhases = [
     phase: "Phase 2",
     status: "Current",
     title: "Timing model on real student logs",
-    body: "ARIA-Pace: a knowledge-tracing model fit on public logs from thousands of real students, with a rule for when to stay quiet. First held-out test done; a second-dataset test is pending. A replay of logs, not a classroom study.",
+    body: "ARIA-Pace: a knowledge-tracing model fit on public logs from thousands of real students, with a rule for when to stay quiet. Evaluated once on a locked 2009–10 split and once on a locked 2012–13 split; the 2012–13 numbers are held until the dataset terms are confirmed. A replay of logs, not a classroom study.",
     href: "/pace",
   },
   {
@@ -240,6 +243,10 @@ const limitations = [
     body: "ARIA has not been shown to improve grades, retention, or transfer, and it is not a substitute for a teacher, a tutor, or an IEP support plan.",
   },
   {
+    heading: "The summit demo works on typed math.",
+    body: "Handwriting and photo input are not supported in the build shown at the summit.",
+  },
+  {
     heading: "Real-student evaluation is the next step.",
     body: "The claims on this site will change as that evidence arrives, including if it contradicts what we expected.",
   },
@@ -248,15 +255,23 @@ const limitations = [
 const inspirations = [
   {
     title: "The assistance dilemma",
+    href: "https://pslcdatashop.web.cmu.edu/KDDCup/FAQ/Koedinger-Aleven-EPR-07.pdf",
     body: "Koedinger and Aleven (2007) framed the question directly: when does giving help aid learning, and when does withholding it? ARIA-Pace treats that as a decision with an explicit cost for each kind of mistake.",
   },
   {
     title: "Wheel-spinning",
+    href: "https://doi.org/10.1007/978-3-642-39112-5_44",
     body: "Beck and Gong (2013) described students who keep attempting a skill without ever mastering it. It is the outcome ARIA-Pace predicts, using the operationalisation of later ASSISTments work, and it can be read directly from logs without hand labelling.",
   },
   {
     title: "Knowledge tracing",
+    href: "https://doi.org/10.1007/BF01099821",
     body: "Corbett and Anderson’s (1995) Bayesian Knowledge Tracing estimates mastery from a sequence of right and wrong answers. It is the risk model ARIA-Pace currently runs on; two neural successors we trained did not improve the timing decision.",
+  },
+  {
+    title: "Cognitive load",
+    href: "https://doi.org/10.1207/s15516709cog1202_4",
+    body: "Sweller (1988) examined how the demands of solving a problem can use up the working memory that learning needs. It informs our choice to keep each scaffold as small as possible, as described on the Method page; it is a design influence, not evidence that ARIA works.",
   },
 ] as const;
 
@@ -338,6 +353,8 @@ function CharacterMark({ small = false }: { small?: boolean }) {
 export function Navigation() {
   const [open, setOpen] = useState(false);
   const [compact, setCompact] = useState(false);
+  const toggle = useRef<HTMLButtonElement>(null);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     const onScroll = () => setCompact(window.scrollY > 84);
@@ -351,6 +368,18 @@ export function Navigation() {
     return () => document.body.classList.remove("menu-open");
   }, [open]);
 
+  useEffect(() => {
+    if (!open) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        toggle.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [open]);
+
   return (
     <header className={`site-header${compact ? " site-header--compact" : ""}`}>
       <a className="summit-banner" href="/roadmap#summit">
@@ -359,8 +388,7 @@ export function Navigation() {
       </a>
       <div className="site-nav shell">
         <a className="wordmark" href="/" aria-label="ARIA home">
-          <span>ARIA</span>
-          <small>Research Initiative</small>
+          <AriaLogo />
         </a>
         <nav className="nav-links" aria-label="Main navigation">
           {navItems.map((item) => (
@@ -373,6 +401,7 @@ export function Navigation() {
           Collaborate
         </a>
         <button
+          ref={toggle}
           className="menu-button"
           type="button"
           aria-expanded={open}
@@ -391,8 +420,8 @@ export function Navigation() {
             aria-label="Mobile navigation"
             initial={false}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.2 }}
+            exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: -8 }}
+            transition={{ duration: reduceMotion ? 0 : 0.2 }}
           >
             {navItems.map((item, index) => (
               <a key={item.href} href={item.href} onClick={() => setOpen(false)}>
@@ -457,7 +486,7 @@ function ThoughtPlayground() {
           </div>
           <div className="aria-bubble">
             <div>
-              <CharacterMark small />
+              <img src="/aria-symbol.svg" width="28" height="28" alt="" />
               <span>ARIA asks</span>
             </div>
             <p>“{current.aria}”</p>
@@ -473,8 +502,23 @@ function ThoughtPlayground() {
   );
 }
 
+export function LanguageSignals() {
+  return (
+    <section className="section reasoning-examples" id="language-signals">
+      <div className="shell">
+        <div className="section-intro">
+          <p className="kicker">Language signals</p>
+          <h2>Different moments. Different questions.</h2>
+        </div>
+        <ThoughtPlayground />
+      </div>
+    </section>
+  );
+}
+
 export function Hero() {
   return (
+    <>
     <section className="hero" id="home">
       <div className="shell hero-layout">
         <div className="hero-copy">
@@ -497,7 +541,7 @@ export function Hero() {
             </p>
           </Reveal>
           <Reveal className="hero-actions" delay={0.18}>
-            <a className="btn btn--pear" href="#research">
+            <a className="btn btn--pear" href="#evidence">
               Results to date <span aria-hidden="true">↓</span>
             </a>
             <a className="text-link" href="/pace">
@@ -509,13 +553,42 @@ export function Hero() {
             <span>Evaluated on logs, not yet with students</span>
             <span>The student&rsquo;s answer is never revealed</span>
           </Reveal>
+          <p className="hero-stage-note">
+            Classroom pilots are not open yet. <a href="/research">See the evidence</a>
+          </p>
         </div>
-        <Reveal className="hero-demo" delay={0.14}>
-          <CharacterMark />
-          <ThoughtPlayground />
+      </div>
+    </section>
+    <section className="demo-section" id="preview" aria-label="Example tutoring moments">
+      <div className="shell">
+        <Reveal delay={0.14}>
+          <MathPreview />
         </Reveal>
       </div>
     </section>
+    </>
+  );
+}
+
+export function SummitFollowUp() {
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const now = Date.now();
+    setVisible(
+      now >= Date.parse("2026-10-19T00:00:00-04:00") && now < Date.parse("2026-10-28T00:00:00-04:00"),
+    );
+  }, []);
+  if (!visible) return null;
+  return (
+    <aside className="summit-followup" aria-label="Summit follow-up">
+      <div className="shell">
+        <strong>Met us at Khan Lab School?</strong>
+        <a href="#preview">See the examples</a>
+        <a href="/activity">Try the teacher activity</a>
+        <a href="/participate">Plan a classroom evaluation</a>
+        <a href="/pace">See the evidence</a>
+      </div>
+    </aside>
   );
 }
 
@@ -536,9 +609,10 @@ export function About() {
               <span>01</span>
               <h3>Origin</h3>
               <p>
-                The question came from Naren&rsquo;s own experience with ADHD: help that arrives
-                too fast removes the chance to plan, work through confusion, and recover when a
-                strategy fails. That experience motivates the study; it is not evidence for it.
+                The question came from wanting to understand why tutors interrupt students who are
+                mid-thought: help that arrives too fast removes the chance to plan, work through
+                confusion, and recover when a strategy fails. That motivates the study; it is not
+                evidence for it.
               </p>
             </article>
           </Reveal>
@@ -618,7 +692,9 @@ export function HelpModel() {
           <h2>Help escalates only when the level before it did not work.</h2>
           <p>
             Once ARIA has decided to speak, the student receives the least help that could still
-            move them forward. The student&rsquo;s own answer is never given at any level.
+            move them forward. The student&rsquo;s own answer is never given at any level. Keeping
+            each scaffold small is a design choice informed by work on cognitive load during problem
+            solving (Sweller, 1988); it is a design influence, not evidence that ARIA works.
           </p>
         </div>
         <ol className="level-list">
@@ -857,7 +933,7 @@ export function Inspiration() {
           {inspirations.map((item, index) => (
             <Reveal key={item.title} delay={index * 0.06}>
               <article className="inspiration-card">
-                <h3>{item.title}</h3>
+                <h3><a href={item.href}>{item.title}</a></h3>
                 <p>{item.body}</p>
               </article>
             </Reveal>
@@ -941,7 +1017,7 @@ function WorkflowVisual({ index }: { index: number }) {
 
 export function Workflow() {
   return (
-    <section className="workflow section" id="how-it-works">
+    <section className="workflow section" id="workflow-details">
       <div className="shell">
         <div className="section-intro">
           <p className="kicker">Method</p>
@@ -984,6 +1060,7 @@ export function Workflow() {
 }
 
 export function Research({ compact = false }: { compact?: boolean }) {
+  if (compact) return <EvidenceSummary />;
   return (
     <section className="research section" id="research">
       <div className="shell">
@@ -1102,14 +1179,16 @@ export function Research({ compact = false }: { compact?: boolean }) {
               <span>01</span>
               <p>
                 <strong>Done:</strong> timing policy evaluated once on a locked held-out split of
-                real student logs, with the specification committed before modeling.
+                2009–10 student logs and once on a locked 2012–13 split (those numbers are held
+                until the dataset terms are confirmed, as on the ARIA-Pace page), with the
+                specification committed before modeling.
               </p>
             </li>
             <li>
               <span>02</span>
               <p>
-                <strong>Pending:</strong> cross-dataset test on a second year of logs; educator
-                review of the problem bank; teacher judgments on when to intervene.
+                <strong>Pending:</strong> educator review of the problem bank; teacher judgments on
+                when to intervene.
               </p>
             </li>
             <li>
@@ -1173,6 +1252,12 @@ export function Summit() {
           <a className="text-link" href={summitTicketsUrl} target="_blank" rel="noreferrer">
             Event details <span aria-hidden="true">↗</span>
           </a>
+          <div className="summit-next-links">
+            <a href="/activity">Try the two-minute teacher activity →</a>
+            <a href="/participate">Plan a school partnership →</a>
+            <a href="/pace">Review the research →</a>
+            <a href="/privacy">Privacy and data →</a>
+          </div>
         </div>
       </div>
     </section>
@@ -1188,8 +1273,8 @@ export function Researchers() {
           <h2>Who is doing the work.</h2>
           <p>
             ARIA is a student-led project at Marvin Ridge High School. The question came from
-            Naren&rsquo;s experience with ADHD; the protocol is what keeps that motivation from
-            becoming a claim. We are looking for a teacher or researcher to review the study design
+            wanting to understand why tutors interrupt students who are mid-thought; the protocol is
+            what keeps that motivation from becoming a claim. We are looking for a teacher or researcher to review the study design
             as an advisor.
           </p>
         </div>
@@ -1198,7 +1283,7 @@ export function Researchers() {
             <Reveal className="team-person" key={member.name} delay={index * 0.08}>
               <div className="person-mark person-mark--photo" aria-hidden="true">
                 <img
-                  src={index === 0 ? "/naren-saravanan.jpg" : "/karthick-mallireddy.jpg"}
+                  src={index === 0 ? "/naren-saravanan.jpg" : "/karthik-malireddy.jpg"}
                   alt=""
                 />
               </div>
@@ -1217,6 +1302,16 @@ export function Researchers() {
             </Reveal>
           ))}
         </div>
+        <div className="team-context">
+          <p>
+            <strong>Based in:</strong> Waxhaw, North Carolina · Eastern Time. School partnerships
+            may involve remote support, agreed before any sessions.
+          </p>
+          <p>
+            <strong>Advisor:</strong> open. We welcome educators and researchers to review the
+            study design and consent process. <a href="/collaborate">See where we need help →</a>
+          </p>
+        </div>
       </div>
     </section>
   );
@@ -1226,18 +1321,21 @@ export function Join() {
   const groups = [
     {
       label: "Teachers and advisors",
-      text: "Review the study design, tell us which outcomes are worth measuring, or host a small classroom pilot: two or three sessions, offline, no student accounts, no student text leaving the device. We would rather have the design criticised now than defended later.",
+      text: "Review the study design, tell us which outcomes are worth measuring, or host a small classroom pilot: two or three sessions, offline, no student accounts. The pilot is designed so that student text stays on the device, but that is not yet promised (see the privacy page). We would rather have the design criticised now than defended later.",
       cta: "Review the study design",
+      detail: { href: "/participate", label: "Classroom planning form" },
     },
     {
       label: "Students",
       text: "If you have struggled with math tutoring tools, tell us where you get stuck, which tools you stopped using, and whether you would type, tap, or speak. You do not need to be good at math to help.",
       cta: "Share your experience",
+      detail: { href: "/students", label: "Three optional questions" },
     },
     {
       label: "Researchers",
       text: "Real student transcripts with permission to use them, independent annotation, review of the consent and ethics protocol, or methods critique of the ARIA-Pace study.",
       cta: "Discuss data or methods",
+      detail: { href: "/researchers", label: "What we need from researchers" },
     },
   ];
 
@@ -1255,7 +1353,12 @@ export function Join() {
             <article key={group.label}>
               <span>0{index + 1}</span>
               <h3>{group.label}</h3>
-              <p>{group.text}</p>
+              <div className="join-path-body">
+                <p>{group.text}</p>
+                <a className="text-link" href={group.detail.href}>
+                  {group.detail.label} <span aria-hidden="true">→</span>
+                </a>
+              </div>
               <a
                 href={`mailto:11narensara11@gmail.com?subject=${encodeURIComponent(
                   `ARIA | ${group.label} collaboration`,
@@ -1288,13 +1391,18 @@ export function Footer() {
   return (
     <footer>
       <div className="shell footer-meta">
-        <a className="footer-wordmark" href="/">
-          ARIA
+        <a className="footer-wordmark" href="/" aria-label="ARIA home">
+          <AriaLogo />
         </a>
         <p>Research by Naren Saravanan and Karthik Malireddy · Last updated October 2026</p>
         <div>
-          <a href="/methodology">Methodology</a>
           <a href="/pace">ARIA-Pace</a>
+          <a href="/methodology">Methodology</a>
+          <a href="/activity">Teacher activity</a>
+          <a href="/participate">For educators</a>
+          <a href="/students">For students</a>
+          <a href="/researchers">For researchers</a>
+          <a href="/privacy">Privacy and data</a>
           <a href="https://github.com/NarenS31/aria.kls">Code and results</a>
           <a href="mailto:11narensara11@gmail.com">Contact</a>
         </div>
@@ -1379,9 +1487,11 @@ function ScrollProgress() {
 export default function AriaExperience() {
   return (
     <SitePage progress>
+      <SummitFollowUp />
       <Hero />
       <Overview />
       <Research compact />
+      <EducatorSection />
       <Roadmap />
       <Summit />
       <Join />

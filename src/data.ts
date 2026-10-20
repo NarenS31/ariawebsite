@@ -29,7 +29,7 @@ export const metrics: Metric[] = [
     value: "4,163",
     label: "Students whose logs trained and tested the model",
     description:
-      "Public, de-identified logs. No student data was collected by us. A second file of 46,674 students is reserved for a cross-dataset test that has not yet been run.",
+      "Public, de-identified logs. No student data was collected by us. A second file of 46,674 students was used for a cross-dataset test, run once on a locked split; its numbers are held until the dataset terms are confirmed.",
     technical: "Split by student · train 2,498 · validation 833 · test 832",
   },
   {

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { HelpModel, PageIntro, SitePage, WatchedStates, Workflow } from "@/src/AriaExperience";
+import { HelpModel, LanguageSignals, PageIntro, SitePage, WatchedStates, Workflow } from "@/src/AriaExperience";
+import { StudentValue } from "@/src/HomeSections";
 
 export const metadata: Metadata = {
   title: "Method | ARIA Research Initiative",
@@ -15,9 +16,11 @@ export default function MethodPage() {
         Everything here describes the live tutor as built for the October 2026 demonstration; the
         timing model behind the policy is documented on the ARIA-Pace page.
       </PageIntro>
+      <StudentValue />
       <Workflow />
       <HelpModel />
       <WatchedStates />
+      <LanguageSignals />
     </SitePage>
   );
 }
