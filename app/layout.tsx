@@ -12,14 +12,14 @@ export const metadata: Metadata = {
     type: "website",
     title: "ARIA | When should a math tutor step in?",
     description:
-      "A research prototype that verifies each math step and decides when to offer the smallest scaffold. Evaluated on real student logs; no classroom claims.",
+      "A research prototype that verifies each math step and decides when to offer a hint. Evaluated on real student logs; no classroom claims.",
     siteName: "ARIA Research Initiative",
   },
   twitter: {
     card: "summary",
     title: "ARIA | When should a math tutor step in?",
     description:
-      "A research prototype that verifies each math step and decides when to offer the smallest scaffold. Evaluated on real student logs; no classroom claims.",
+      "A research prototype that verifies each math step and decides when to offer a hint. Evaluated on real student logs; no classroom claims.",
   },
 };
 

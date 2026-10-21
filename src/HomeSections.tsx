@@ -11,7 +11,7 @@ export function StudentValue() {
         </div>
         <div className="value-rows">
           <article><span className="value-number">01</span><div><h3>Space to keep going.</h3><p>A valid step does not need another question. When the math is progressing, ARIA stays quiet.</p></div><p className="value-example"><span>Valid step</span>3x − 3 = 9<strong>Watching. No interruption.</strong></p></article>
-          <article><span className="value-number">02</span><div><h3>A small prompt when it matters.</h3><p>A wrong step or request for help can trigger support. It begins with a question, then a more focused hint if needed.</p></div><p className="value-example"><span>Prompt from the demo</span>“Write (x + 3)(x + 3) and multiply each term. What do you get?”</p></article>
+          <article><span className="value-number">02</span><div><h3>A small hint when it matters.</h3><p>A wrong step or a request for help can trigger one hint that points at the next step, never the answer.</p></div><p className="value-example"><span>Hint from the demo</span>“Write (x + 3)(x + 3) and multiply each term. What do you get?”</p></article>
           <article><span className="value-number">03</span><div><h3>Practice the thinking, too.</h3><p>Explain a plan, notice an error, and choose a next move. The research question is whether that support helps students persist independently.</p></div><p className="value-example"><span>The goal</span>Plan. Check. Revise.<strong>Learning outcomes still need a student study.</strong></p></article>
         </div>
       </div>
@@ -101,7 +101,7 @@ export function CommonQuestions() {
           <details>
             <summary>Will ARIA give away the answer?</summary>
             <p>
-              The tutor is designed to start with prompts and small hints, and every reply is
+              The tutor gives hints that point at the next step, never the answer, and every reply is
               checked for the answer before it is shown. In scripted runs on the eight featured
               problems no reply revealed an answer (results/demo_harness_summit_pace.json in the aria.kls repository); real-student evaluation is still pending.
             </p>

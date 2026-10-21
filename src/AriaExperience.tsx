@@ -23,7 +23,7 @@ const overviewCards = [
     href: "/pace",
     kicker: "The timing model",
     title: "ARIA-Pace",
-    body: "A knowledge-tracing model fit on logs from 4,163 real students, with a rule for when to stay quiet. Under a high interruption cost it intervened 52% less often than always helping and missed 3.7% of students who went on to get stuck, on a held-out test read once.",
+    body: "A knowledge-tracing model fit on logs from 4,163 real students, with a rule for when to stay quiet. Under a high interruption cost, and the 3-correct-in-a-row mastery definition, it intervened 52% less often than always helping and missed 3.7% of students who went on to get stuck, on a held-out test read once.",
     cta: "Results and protocol",
   },
   {
@@ -37,7 +37,7 @@ const overviewCards = [
     href: "/method",
     kicker: "How the tutor works",
     title: "Method",
-    body: "Notice, verify, scaffold, step back. A symbolic engine checks every step; help escalates in three levels and never gives the student’s answer; the policy distinguishes progress from being stuck.",
+    body: "Notice, verify, scaffold, step back. A symbolic engine checks every step; a hint points at the next step and never gives the student’s answer; the policy distinguishes progress from being stuck.",
     cta: "Read more",
   },
   {
@@ -106,27 +106,30 @@ const mathReasons = [
 
 const helpLevels = [
   {
+    mark: "Built",
     level: "01",
-    title: "Metacognitive prompt",
-    body: "A question that returns attention to the student’s own reasoning. No mathematical content is given — the goal is for the student to state the plan or locate the breakdown themselves.",
-    example: "What are you trying to find, and what is the first step you would try?",
-    gate: "Escalates if the student stays stuck or idle after responding",
+    title: "One hint after a verified wrong step",
+    body: "When a step is verified wrong, ARIA gives one hint that points at the next authored step of the problem that the student has not yet produced. The wording comes from a few templates and rotates, so consecutive replies differ: some are a plain question, some name the step, and some also name that step’s result. The student’s final answer is never given, and every reply is checked for it before it is shown.",
+    example: "Try this: apply the power rule to 3x^4. What do you get?",
+    gate: "In the summit demo",
     tone: "pear",
   },
   {
+    mark: "Built",
     level: "02",
-    title: "Guided hint or similar problem",
-    body: "A narrowed hint about the specific step, or a simpler parallel problem that uses the same idea. The student still performs every step of their own problem; the hint only reduces the search space.",
-    example: "Both sides still have an x. What could you do to get the x terms on one side?",
-    gate: "Escalates only after repeated attempts at this level",
+    title: "A counter picks the next step, not a higher level",
+    body: "Each hint moves a counter forward, so the next hint points at the next authored step the student has not produced yet. When every authored step is done, the hint falls back to a general question. There is no fixed sequence of levels: nothing moves from a question to an explanation.",
+    example: "What is the smallest useful next step?",
+    gate: "In the summit demo",
     tone: "cyan",
   },
   {
+    mark: "Future work",
     level: "03",
-    title: "Worked method on a parallel problem, after repeated struggle",
-    body: "Only after documented struggle at the earlier levels does ARIA show how the step works, on a different problem that uses the same idea. The student’s own answer is never given, and every reply is checked for answer leaks before it is shown.",
-    example: "Here is how this kind of step works on a different problem — now try yours.",
-    gate: "Never the first response, and never the student’s own answer",
+    title: "A three-level scaffold is an idea, not a feature",
+    body: "A gate with three levels (silence, a prompt with no mathematical content, an execution hint) could be built on the same checks. It has not been built or tested, no offline data can set its thresholds, and ARIA does not generate a worked example on a different problem. It needs a reviewed study with students first.",
+    example: "",
+    gate: "Design note only: docs/aria_pace/SCAFFOLD_LEVELS.md in the aria.kls repository",
     tone: "coral",
   },
 ] as const;
@@ -145,7 +148,7 @@ const watchedStates = [
   {
     name: "Stuck",
     signal: "A step the math engine marks wrong, or a stall after a verified error.",
-    response: "The smallest scaffold that fits: a prompt first, then a hint aimed at the step that broke down.",
+    response: "One hint aimed at the next step the student has not produced. From the third attempt, a profile with a high bar may show a short note first and hold the hint until the risk is high enough.",
   },
   {
     name: "Frustrated or confused",
@@ -155,7 +158,7 @@ const watchedStates = [
   {
     name: "Asking for the answer",
     signal: "A direct request to be told the result.",
-    response: "ARIA declines and offers the next smallest scaffold. Every reply is checked so the answer cannot leak.",
+    response: "ARIA declines to give the answer and gives a hint toward the first step. Every reply is checked so the answer cannot leak.",
   },
   {
     name: "Finished",
@@ -236,7 +239,11 @@ const limitations = [
   },
   {
     heading: "The interaction design is not yet validated.",
-    body: "Prompt wording, escalation thresholds, and timing are informed judgments. Student interviews and prototype testing are how they get corrected.",
+    body: "Hint wording and timing are informed judgments. Student interviews and prototype testing are how they get corrected.",
+  },
+  {
+    heading: "The headline saving depends on how “stuck” is defined, and the checks cover BKT only.",
+    body: "The 52% is under the 3-correct-in-a-row mastery definition. Stricter rules shrink it (exploratory, validation only), and that sensitivity analysis used BKT as the risk score only; the other risk models were not re-run.",
   },
   {
     heading: "We are not claiming classroom-validated learning gains.",
@@ -266,12 +273,12 @@ const inspirations = [
   {
     title: "Knowledge tracing",
     href: "https://doi.org/10.1007/BF01099821",
-    body: "Corbett and Anderson’s (1995) Bayesian Knowledge Tracing estimates mastery from a sequence of right and wrong answers. It is the risk model ARIA-Pace currently runs on; two neural successors we trained did not improve the timing decision.",
+    body: "Corbett and Anderson’s (1995) Bayesian Knowledge Tracing estimates mastery from a sequence of right and wrong answers. It is the risk model ARIA-Pace currently runs on; four neural models we trained, two single-skill and two that also see earlier attempts on other skills, did not improve the wheel-spinning ranking.",
   },
   {
     title: "Cognitive load",
     href: "https://doi.org/10.1207/s15516709cog1202_4",
-    body: "Sweller (1988) examined how the demands of solving a problem can use up the working memory that learning needs. It informs our choice to keep each scaffold as small as possible, as described on the Method page; it is a design influence, not evidence that ARIA works.",
+    body: "Sweller (1988) examined how the demands of solving a problem can use up the working memory that learning needs. It informs our choice to keep each hint to one step, as described on the Method page; it is a design influence, not evidence that ARIA works.",
   },
 ] as const;
 
@@ -295,8 +302,8 @@ const workflow = [
   {
     number: "03",
     verb: "Scaffold",
-    title: "ARIA offers the smallest useful scaffold, or none.",
-    body: "While the student is making progress, ARIA stays quiet and shows that it is watching. After a verified error: a prompt first, a narrowed hint if that does not move the student, and a worked method on a parallel problem only after repeated struggle.",
+    title: "ARIA offers one hint, or none.",
+    body: "While the student is making progress, ARIA stays quiet and shows that it is watching. After a verified wrong step it gives one hint that points at the next authored step, or a short note without a hint while the risk is still below the profile’s bar. The student’s own answer is never given.",
     detail: "The student keeps ownership of the work.",
     tone: "coral",
   },
@@ -534,8 +541,8 @@ export function Hero() {
             <p className="hero-lede">
               ARIA is a research prototype of a math tutor that decides when to intervene and when
               to stay quiet. A symbolic engine checks each step a student writes; a timing model fit
-              on public logs from thousands of real students decides whether to offer the smallest
-              useful scaffold. We study whether choosing <em>when</em> to help, not only what to
+              on public logs from thousands of real students decides whether to offer a hint.
+              We study whether choosing <em>when</em> to help, not only what to
               say, changes how students persist. Results so far come from software tests and from
               offline replay of student logs, not from classroom studies.
             </p>
@@ -689,25 +696,25 @@ export function HelpModel() {
       <div className="shell">
         <div className="section-intro">
           <p className="kicker">Intervention design</p>
-          <h2>Help escalates only when the level before it did not work.</h2>
+          <h2>One hint at a time, aimed at the next step.</h2>
           <p>
-            Once ARIA has decided to speak, the student receives the least help that could still
-            move them forward. The student&rsquo;s own answer is never given at any level. Keeping
-            each scaffold small is a design choice informed by work on cognitive load during problem
-            solving (Sweller, 1988); it is a design influence, not evidence that ARIA works.
+            Once ARIA has decided to speak after a verified wrong step, it gives one hint at a time.
+            The student&rsquo;s own answer is never given. Keeping each hint to one step is a design
+            choice informed by work on cognitive load during problem solving (Sweller, 1988); it is
+            a design influence, not evidence that ARIA works.
           </p>
         </div>
         <ol className="level-list">
           {helpLevels.map((item) => (
             <li className={`level-card level-card--${item.tone}`} key={item.level}>
               <div className="level-card__mark">
-                <span>Level</span>
+                <span>{item.mark}</span>
                 <strong>{item.level}</strong>
               </div>
               <div className="level-card__body">
                 <h3>{item.title}</h3>
                 <p>{item.body}</p>
-                <blockquote>“{item.example}”</blockquote>
+                {item.example ? <blockquote>“{item.example}”</blockquote> : null}
                 <small>{item.gate}</small>
               </div>
             </li>
@@ -788,7 +795,7 @@ export function StudentFeedback() {
             </p>
             <p>
               What we learn is meant to change the system, not just the write-up: which situations
-              the policy distinguishes, how prompts are worded, when help escalates, and what the
+              the policy distinguishes, how hints are worded and chosen, and what the
               interface asks of a student who is already frustrated.
             </p>
           </Reveal>

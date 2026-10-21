@@ -74,3 +74,9 @@ Merge of `origin/codex/website-copy-updates` into `origin/main` (content from ma
   the activity's draft consent says answers stay in the browser and nothing is sent; the Join card promises less than the privacy page; "Research Initiative"
   restored next to the logo; Sweller (1988) restored with an in-text citation; harness results cited to `results/demo_harness_summit_pace.json`.
 - Summit follow-up band: all four links resolve; it shows on Oct 19 to 27 (Eastern) and not before or after (tested with a fixed browser clock).
+
+### Help-claim and sensitivity follow-up (2026-10-20)
+
+- The live tutor's help is described as the code does it (one hint per verified wrong step, pointing at the next authored step; a counter; rotating templates; no level escalation, no parallel-problem generator). The three-level scaffold appears only as future work (`docs/aria_pace/SCAFFOLD_LEVELS.md` in aria.kls). Evidence with file:line is in the PR description.
+- The 52% is stated with its mastery definition everywhere it appears; `/pace` has a "How sensitive is this?" section; the neural-model, affect and limitation text follows `aria_pace/RESULTS_v3.md`. The 2012 test number in the affect paragraph is inside the `showCrossDataset` gate, which stays false.
+- `npm run build` passes; 26 route/width captures (1280 and 390) have no horizontal scroll, no console errors, and content below the fixed header.

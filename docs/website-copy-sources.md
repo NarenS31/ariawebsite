@@ -52,7 +52,7 @@ Updated 2026-10-15 from the supplied section-by-section edit list.
 
 All against NarenS31/aria.kls:
 
-- 52% fewer interventions, 3.7% missed (95% CI 2.2–5.3%), 597 test students, 4,163 students in the splits: `docs/aria_pace/RESULTS.md`
+- 52% fewer interventions (under the 3-correct-in-a-row mastery definition), 3.7% missed (95% CI 2.2–5.3%), 597 test students, 4,163 students in the splits: `docs/aria_pace/RESULTS.md`
   (branch `aria-pace`) lines 9–11 and 20; `aria_pace/results/test_results.json` (`main.variants.frozen`, `main.scope`).
 - Supportive cost setting: 3% fewer, difference to always-help includes zero: `RESULTS.md` line 11–13 and 72.
 - Classifier benchmark: 84.6% (0.8457) and macro-F1 0.837 on 350 synthetic messages, seven states:
