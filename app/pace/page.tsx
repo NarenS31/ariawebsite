@@ -307,7 +307,7 @@ export default function PacePage() {
           <p>
             The saving also depends on the mastery definition itself: stricter definitions shrink
             it (exploratory, validation only; see{" "}
-            <a href={`${repoUrl}/blob/aria-pace-v3/docs/aria_pace/MASTERY_SENSITIVITY.md`}>
+            <a href={`${repoUrl}/blob/aria-pace/docs/aria_pace/MASTERY_SENSITIVITY.md`}>
               MASTERY_SENSITIVITY.md
             </a>{" "}
             and the next section).
@@ -423,7 +423,7 @@ export default function PacePage() {
             zero at both checkpoints) neither is promoted, so BKT stays. Better next-answer
             prediction did not translate into a better timing decision here
             (validation only; see{" "}
-            <a href={`${repoUrl}/blob/aria-pace-v3/docs/aria_pace/MULTISKILL.md`}>MULTISKILL.md</a>).
+            <a href={`${repoUrl}/blob/aria-pace/docs/aria_pace/MULTISKILL.md`}>MULTISKILL.md</a>).
           </p>
         </section>
 
