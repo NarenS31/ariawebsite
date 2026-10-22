@@ -228,7 +228,7 @@ const openQuestions = [
 const limitations = [
   {
     heading: "The language classifier is built on synthetic think-aloud examples.",
-    body: "That text was generated to imitate student reasoning. It was not collected from students in classrooms, and it has not been validated against human labels.",
+    body: "That text was generated to imitate student reasoning. It was not collected from students in classrooms, and it has not been validated against human labels; it was evaluated only on synthetic messages, and accuracy fell when a different generator wrote them. The live tutor\u2019s timing decision does not depend on it: in the demo it only adds optional flags that need an explicit feeling word and never overrides correctness.",
   },
   {
     heading: "The timing results come from replaying logs, not from students using ARIA.",
@@ -236,7 +236,11 @@ const limitations = [
   },
   {
     heading: "The cost settings are weights we chose.",
-    body: "Quiet, balanced, and supportive are explicit trade-offs between interruption and delayed help. Nothing shows that any group of learners corresponds to them.",
+    body: "Quiet, balanced, and supportive are explicit trade-offs between interruption and delayed help. The cost of an interruption is an assumed weight in an offline simulation, not a measured harm: whether the quiet setting reduces frustration or preserves working memory has not been measured, and that needs a live comparison with students. Nothing shows that any group of learners corresponds to the settings.",
+  },
+  {
+    heading: "The timing model was fitted on math logs, not calculus.",
+    body: "Its parameters come from ASSISTments skill-builder math logs (grade level not stated). The demo applies them unchanged to algebra, trigonometry and calculus problems; they need re-calibration on the target domain before any deployment.",
   },
   {
     heading: "The interaction design is not yet validated.",
@@ -244,7 +248,7 @@ const limitations = [
   },
   {
     heading: "The headline saving depends on how “stuck” is defined, and the checks cover BKT only.",
-    body: "The 52% is under the 3-correct-in-a-row mastery definition. Stricter rules shrink it (exploratory, validation only), and that sensitivity analysis used BKT as the risk score only; the other risk models were not re-run.",
+    body: "The 52% is under the 3-correct-in-a-row mastery definition, which is the ASSISTments skill-builder\u2019s own completion rule. Under four other definitions the quiet saving fell to between 8.6% and 45.4% (exploratory, validation only), and that sensitivity analysis used BKT as the risk score only; the other risk models were not re-run.",
   },
   {
     heading: "We are not claiming classroom-validated learning gains.",

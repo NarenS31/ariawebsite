@@ -281,6 +281,10 @@ export default function MethodologyPage() {
             <li>The observable-move baseline has not yet been tested against real human labels.</li>
             <li>The paired response conditions have not yet received locked, blinded ratings.</li>
             <li>Timing has been tested on logs, not on students. Replay does not show that helping at that moment works.</li>
+            <li>The cost of an interruption is an assumed weight in an offline simulation, not a measured harm or benefit.</li>
+            <li>The 52% is under the ASSISTments 3-correct-in-a-row definition and shrinks under other definitions we tested.</li>
+            <li>The timing model was fitted on ASSISTments math logs (grade level not stated), not calculus, and needs re-calibration before deployment.</li>
+            <li>The language analyzer was evaluated only on synthetic messages; the live tutor&rsquo;s timing decision does not depend on it.</li>
             <li>ARIA currently works on typed math, not handwriting or photos.</li>
             <li>No student study has established usability, learning, retention, or transfer.</li>
             <li>Synthetic benchmark performance does not establish real-student understanding.</li>
