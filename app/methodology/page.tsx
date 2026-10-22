@@ -57,7 +57,7 @@ const evidenceRows = [
   },
   {
     layer: "Synthetic stress test",
-    status: "84.6% same-style accuracy",
+    status: "84.6% same-generator synthetic accuracy",
     meaning: "The balanced score is 0.837; the cross-generator gap is 9.05 points.",
     claim: "Useful for debugging only.",
   },

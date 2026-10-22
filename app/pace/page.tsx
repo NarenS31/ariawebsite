@@ -558,9 +558,8 @@ export default function PacePage() {
               entirely on assumed parameters.
             </li>
             <li>
-              Grade level is not stated for either data file. ARIA&rsquo;s live tutor targets
-              algebra through calculus; ASSISTments skill builders are mostly middle-school
-              mathematics.
+              The 2009 data are ASSISTments skill-builder math logs (grade level not stated),
+              not calculus. ARIA&rsquo;s live tutor targets algebra through calculus.
             </li>
             <li>
               The live tutor&rsquo;s symbolic step checker was not evaluated in the replay; the
