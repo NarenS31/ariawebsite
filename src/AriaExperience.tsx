@@ -418,7 +418,7 @@ export function Navigation() {
         <strong>October 24 · Mountain View</strong>
       </a>
       <div className="site-nav shell">
-        <a className="wordmark" href="/" aria-label="ARIA home">
+        <a className="wordmark" href="/" aria-label="ARIA">
           <AriaLogo />
         </a>
         <nav className="nav-links" aria-label="Main navigation">
@@ -1453,7 +1453,7 @@ export function Footer() {
   return (
     <footer>
       <div className="shell footer-meta">
-        <a className="footer-wordmark" href="/" aria-label="ARIA home">
+        <a className="footer-wordmark" href="/" aria-label="ARIA">
           <AriaLogo />
         </a>
         <p>Research by Naren Saravanan and Karthik Malireddy · Last updated October 2026</p>
