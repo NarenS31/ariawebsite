@@ -282,7 +282,8 @@ export default function MethodologyPage() {
             <li>The paired response conditions have not yet received locked, blinded ratings.</li>
             <li>Timing has been tested on logs, not on students. Replay does not show that helping at that moment works.</li>
             <li>The cost of an interruption is an assumed weight in an offline simulation, not a measured harm or benefit.</li>
-            <li>The 52% is under the ASSISTments 3-correct-in-a-row definition and shrinks under other definitions we tested.</li>
+            <li>The 52% is under the ASSISTments 3-correct-in-a-row definition. Cross-validated, the quiet saving is 7.1% to 41.6% under the four other definitions we tested (50.1% under 3-correct-in-a-row, with 6.2% missed help; missed help is about 4 to 6%, 3.7% on the locked test).</li>
+            <li>The live demo uses one pooled parameter set rather than the per-skill parameters the evaluated policy used; on validation this changes about 14% of Quiet wrong-step decisions, so the demo approximates the evaluated policy. Response time was tested and did not clear the pre-registered bar.</li>
             <li>The timing model was fitted on ASSISTments math logs (grade level not stated), not calculus, and needs re-calibration before deployment.</li>
             <li>The language analyzer was evaluated only on synthetic messages; the ARIA-Pace gate and its published results do not depend on it. In the demo its flags (they need an explicit feeling word) can add an affect-based reply or prompt a reply to a words-only message, but never override correctness.</li>
             <li>ARIA currently works on typed math, not handwriting or photos.</li>
