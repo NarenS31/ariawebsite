@@ -14,28 +14,9 @@ export const metadata: Metadata = {
 
 const repoUrl = "https://github.com/NarenS31/aria.kls";
 
-// The 2012–13 cross-dataset test has been run once (aria-pace, RESULTS_v2.md).
-// Its numbers are held off the public page until the ASSISTments team confirms
-// the dataset terms. Flip this to true to publish the block below.
+// 2012-13 results held pending dataset terms; restore from private copy.
+// Flip this to true only after the held block has been restored.
 const showCrossDataset = false;
-
-const crossDatasetRows = [
-  {
-    profile: "Quiet (interruption costs 3× a delayed hint)",
-    y2009: "52% fewer · 3.7% missed (CI 2.2–5.3)",
-    y2012: "56.8% fewer · 5.9% missed (CI 5.2–6.6)",
-  },
-  {
-    profile: "Balanced (equal costs)",
-    y2009: "15% fewer · 0.2% missed",
-    y2012: "16.9% fewer · 0.2% missed",
-  },
-  {
-    profile: "Supportive (delayed hint costs 3× an interruption)",
-    y2009: "3% fewer · difference includes zero",
-    y2012: "4.1% fewer · slightly worse than always-help (+0.056 per student, CI 0.011–0.103)",
-  },
-];
 
 const stageRows = [
   {
@@ -154,7 +135,7 @@ export default function PacePage() {
             <strong>Two held-out tests complete</strong>
             <small>
               {showCrossDataset
-                ? "Evaluated once on 2009–10 data and once, with thresholds frozen, on 2012–13 data. No learning-outcome or clinical claim is made."
+                ? "" // 2012-13 results held pending dataset terms; restore from private copy
                 : "Evaluated once on 2009–10 data and once on 2012–13 data. The second set of numbers is held until the dataset terms are confirmed. No learning-outcome or clinical claim is made."}
             </small>
           </div>
@@ -462,46 +443,8 @@ export default function PacePage() {
             frozen from 2009. The lock file was written before the test rows were read. Students
             appearing in both years were removed first.
           </p>
-          {showCrossDataset ? (
-            <>
-              <div className="methodology-table-wrap">
-                <table>
-                  <thead>
-                    <tr>
-                      <th scope="col">Cost setting</th>
-                      <th scope="col">2009–10 test (597 students)</th>
-                      <th scope="col">2012–13 test, thresholds frozen from 2009</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {crossDatasetRows.map((row) => (
-                      <tr key={row.profile}>
-                        <th scope="row">{row.profile}</th>
-                        <td>{row.y2009}</td>
-                        <td>{row.y2012}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <p>
-                The quiet-setting result holds in direction and size on students the model never
-                saw, from a different school year. The share of missed help is higher on 2012–13
-                (5.9% against 3.7%); the two intervals overlap slightly, so we call the rise
-                suggestive rather than settled. The likely reason is calibration drift: the
-                2009-trained mastery model overestimates risk on the 2012 data (calibration
-                intercept −0.65, slope 0.73 after three attempts), so frozen thresholds sit in a
-                slightly different place. We did not isolate that cause. The supportive setting,
-                indistinguishable from always helping on 2009, is slightly worse than always
-                helping on 2012.
-              </p>
-              <p>
-                The two neural sequence models again failed to beat the 1995 model on the timing
-                target. Between 14.6% and 17.2% of the 2012 sequences involve a skill the 2009
-                model never saw; those use pooled parameters.
-              </p>
-            </>
-          ) : (
+          {/* 2012-13 results held pending dataset terms; restore from private copy */}
+          {showCrossDataset ? null : (
             <div className="methodology-status" style={{ gridColumn: "auto", gridRow: "auto" }}>
               <span>Evaluated · numbers held</span>
               <strong>Cross-dataset test complete</strong>
