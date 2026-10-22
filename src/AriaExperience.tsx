@@ -228,7 +228,7 @@ const openQuestions = [
 const limitations = [
   {
     heading: "The language classifier is built on synthetic think-aloud examples.",
-    body: "That text was generated to imitate student reasoning. It was not collected from students in classrooms, and it has not been validated against human labels; it was evaluated only on synthetic messages, and accuracy fell when a different generator wrote them. The live tutor\u2019s timing decision does not depend on it: in the demo it only adds optional flags that need an explicit feeling word and never overrides correctness.",
+    body: "That text was generated to imitate student reasoning. It was not collected from students in classrooms, and it has not been validated against human labels; it was evaluated only on synthetic messages, and accuracy fell when a different generator wrote them. The ARIA-Pace gate and its published results do not depend on it. In the demo its flags (they need an explicit feeling word) can add an affect-based reply or prompt a reply to a words-only message, but never override correctness.",
   },
   {
     heading: "The timing results come from replaying logs, not from students using ARIA.",
@@ -1176,7 +1176,7 @@ export function Research({ compact = false }: { compact?: boolean }) {
               <span>Language classifier · development benchmark</span>
               <h3>Useful for finding failures. Not evidence of learning.</h3>
             </div>
-            <p>Synthetic examples · no human ground truth · the timing decision does not depend on it</p>
+            <p>Synthetic examples · no human ground truth · the ARIA-Pace gate does not depend on it</p>
           </div>
           <div className="table-wrap">
             <table>
@@ -1221,9 +1221,10 @@ export function Research({ compact = false }: { compact?: boolean }) {
             <p>
               They test the language classifier on text written by language models in the same
               style as its training data. They cannot show that ARIA understands real students. In
-              the current tutor, whether to step in is decided by verified correctness and the
-              timing model, not by this classifier; it only adds flags for frustration, confusion,
-              and requests for help.
+              the current tutor, whether to step in after a wrong step is decided by verified
+              correctness and the timing model, not by this classifier. Its flags (they need an
+              explicit feeling word) can add an affect-based reply or prompt a reply to a
+              words-only message, but never override correctness.
             </p>
           </div>
         </Reveal>

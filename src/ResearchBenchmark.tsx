@@ -5,7 +5,8 @@ export default function ResearchBenchmark() {
       <h2 id="benchmark-title">Language classification under stress.</h2>
       <p>
         These numbers describe the language classifier on synthetic examples. The demo’s decision
-        to step in or stay quiet comes from the math checker, not these labels.
+        to step in after a wrong step comes from the math checker and the timing model, not these
+        labels; the labels can only add optional flags that need an explicit feeling word.
       </p>
       <div className="methodology-table-wrap">
         <table>

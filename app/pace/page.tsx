@@ -449,7 +449,7 @@ export default function PacePage() {
               <span>Evaluated · numbers held</span>
               <strong>Cross-dataset test complete</strong>
               <small>
-                The evaluation has been run once and the results file is committed. The numbers
+                The evaluation has been run once; the results are held pending dataset terms. The numbers
                 are not shown here until the ASSISTments team confirms the terms for the 2012–13
                 file. They will appear with confidence intervals, whatever they show.
               </small>
@@ -497,9 +497,10 @@ export default function PacePage() {
               fitted parameters unchanged, so they need re-calibration before any deployment.
             </li>
             <li>
-              The language analyzer was evaluated only on synthetic messages. The timing rule does
-              not depend on it; in the demo it only adds optional flags that need an explicit
-              feeling word and never overrides correctness.
+              The language analyzer was evaluated only on synthetic messages. The ARIA-Pace gate and
+              its published results do not depend on it. In the demo its flags (they need an
+              explicit feeling word) can add an affect-based reply or prompt a reply to a
+              words-only message, but never override correctness.
             </li>
             <li>
               The live tutor&rsquo;s symbolic step checker was not evaluated in the replay; the
@@ -547,9 +548,10 @@ export default function PacePage() {
             <h2>Every number comes from a file.</h2>
           </div>
           <p>
-            Specification, amendments, splits, frozen thresholds, results, and lock files are
-            committed in the{" "}
-            <a href={repoUrl}>aria.kls repository</a> on the <code>aria-pace</code> branch. The raw
+            Specification, amendments, frozen thresholds, the 2009&ndash;10 results, and lock files
+            are committed in the{" "}
+            <a href={repoUrl}>aria.kls repository</a> on the <code>aria-pace</code> branch. The
+            student-id splits and the second-dataset results are held pending dataset terms. The raw
             ASSISTments files are not redistributed; download steps and checksums are documented
             instead.
           </p>
