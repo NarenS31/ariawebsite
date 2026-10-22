@@ -97,6 +97,14 @@ const modelRows = [
   { model: "SAKT-style attention", k3: "0.805", k5: "0.792", k8: "0.911", logloss: "0.568" },
 ];
 
+const sensitivityRows = [
+  { rule: "3 correct in a row within 10 attempts (the pre-registered rule)", stuck: "17.2%", tau: "0.57", saving: "49.8% (46.5–53.2)", missed: "4.8% (3.0–7.0)" },
+  { rule: "4 correct in a row within 10 attempts", stuck: "31.9%", tau: "0.45", saving: "8.6% (7.0–10.4)", missed: "0.2% (0.0–0.7)" },
+  { rule: "5 correct in a row within 15 attempts", stuck: "19.3%", tau: "0.44", saving: "32.2% (28.6–35.6)", missed: "5.5% (3.5–7.8)" },
+  { rule: "5 correct in a row within 20 attempts", stuck: "10.7%", tau: "0.27", saving: "45.4% (41.4–49.6)", missed: "8.1% (5.0–12.0)" },
+  { rule: "A running average of answers at or above 80% for 3 attempts in a row, within 10", stuck: "75.9%", tau: "0.69", saving: "9.0% (7.2–10.9)", missed: "0.4% (0.1–0.9)" },
+];
+
 const references = [
   {
     cite: "Koedinger, K. R., & Aleven, V. (2007). Exploring the assistance dilemma in experiments with Cognitive Tutors. Educational Psychology Review.",
@@ -179,7 +187,7 @@ export default function PacePage() {
                 <h3>Estimate mastery.</h3>
                 <p>
                   Bayesian Knowledge Tracing, fit per skill on the training students, estimates the
-                  chance the next step is right. We also trained two neural sequence models to
+                  chance the next step is right. We also trained four neural sequence models to
                   replace it; see below for why it stayed.
                 </p>
               </div>
@@ -242,13 +250,14 @@ export default function PacePage() {
             Evaluated once on 597 test students (3,468 skill sequences, 570 of them wheel-spinning).
             Interventions are per student, ARIA-Pace versus always helping after every wrong step.
             &ldquo;Missed help&rdquo; is the share of wheel-spinning students the rule never
-            helped before their tenth attempt.
+            helped before their tenth attempt. Wheel-spinning is defined by a mastery rule fixed in
+            advance: not getting three correct answers in a row within ten attempts.
           </p>
           <div className="methodology-result-grid">
             <article>
               <strong>52%</strong>
               <h3>Fewer interruptions</h3>
-              <p>Under the quiet setting, compared with helping after every wrong step.</p>
+              <p>Under the quiet setting and the 3-correct-in-a-row mastery definition, compared with helping after every wrong step.</p>
             </article>
             <article>
               <strong>3.7%</strong>
@@ -295,6 +304,72 @@ export default function PacePage() {
             to 0.85 and missed help rises to 12.4% (95% CI 9.4–15.5). The 3.7% figure holds under
             the primary assumption about those students, not under every assumption.
           </p>
+          <p>
+            The saving also depends on the mastery definition itself: stricter definitions shrink
+            it (exploratory, validation only; see{" "}
+            <a href={`${repoUrl}/blob/aria-pace/docs/aria_pace/MASTERY_SENSITIVITY.md`}>
+              MASTERY_SENSITIVITY.md
+            </a>{" "}
+            and the next section).
+          </p>
+        </section>
+
+        <section className="methodology-section" id="sensitivity">
+          <p className="kicker">Sensitivity · exploratory, validation only</p>
+          <h2>How sensitive is this?</h2>
+          <p>
+            <strong>Definition of &ldquo;stuck&rdquo;.</strong> We re-ran the validation pipeline
+            (labels, risk model, calibration, threshold choice) under four other mastery rules.
+            The first row reproduces the frozen validation result exactly. The rules label very
+            different shares of students as stuck, and the best quiet threshold and the saving move
+            with them. Under two stricter rules (four in a row; a running-average rule) the quiet
+            saving is about 9%, not 50%.
+          </p>
+          <div className="methodology-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Mastery rule</th>
+                  <th scope="col">Students counted as stuck</th>
+                  <th scope="col">Quiet threshold</th>
+                  <th scope="col">Quiet-setting saving (95% CI)</th>
+                  <th scope="col">Missed help (95% CI)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {sensitivityRows.map((row) => (
+                  <tr key={row.rule}>
+                    <th scope="row">{row.rule}</th>
+                    <td>{row.stuck}</td>
+                    <td>{row.tau}</td>
+                    <td>{row.saving}</td>
+                    <td>{row.missed}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p>
+            Validation numbers are optimistic because the threshold was chosen on the same
+            students (the first row gives 49.8% on validation against 52% on the test). Nothing
+            here touched the test split, no alternative rule has a test number, and the published
+            52% belongs to the first rule. The analysis covers BKT as the risk score only; the
+            other risk models were not re-run.
+          </p>
+          <p>
+            <strong>What if helping and interrupting have real effects?</strong> A small simulation
+            (no real students, no language model) gives simulated students a hidden known or
+            unknown state and assumes three things: how much help speeds learning, how much an
+            interruption distracts, and how likely a stuck student who is left alone is to give up.
+            With the thresholds frozen, the quiet policy beats always helping when giving up is
+            assumed unlikely (below roughly 9 to 10% per unaided wrong step) and loses when it is
+            more likely; for the balanced setting the break-even is roughly 2%. The help effect
+            and the interruption cost move the result little in this model, and the supportive
+            setting makes the same decisions as always helping. In short: the policy pays off only
+            if leaving a stuck student alone is cheap. This is an assumption-dependent sensitivity
+            analysis, not evidence of effect; replay cannot measure that cost, and only a study
+            with students could.
+          </p>
         </section>
 
         <section className="methodology-section">
@@ -305,7 +380,8 @@ export default function PacePage() {
             style of Deep Knowledge Tracing and an attention model in the style of SAKT. Both
             predict the next answer better than BKT. Neither ranks wheel-spinning risk any better,
             which is the quantity the decision rule actually uses. By the rule we committed in
-            advance, BKT stays.
+            advance, BKT stays. A second pair of the same two kinds also saw the student&rsquo;s
+            earlier attempts on other skills (see below).
           </p>
           <div className="methodology-table-wrap">
             <table>
@@ -334,37 +410,57 @@ export default function PacePage() {
           <p>
             The paired differences from BKT at three and five attempts are within ±0.01 AUC and
             their confidence intervals include zero for the LSTM; the attention model is
-            significantly worse. Both neural models are simplified relative to the published ones:
-            each sequence carries a single skill, as BKT does. Better student modelling did not
-            translate into better timing here.
+            significantly worse. The first two models are simplified relative to the published ones:
+            each sequence carries a single skill, as BKT does.
+          </p>
+          <p>
+            The second pair removes that restriction. They predict the next answer slightly better
+            than BKT (the LSTM&rsquo;s log-loss is lower by 0.017, interval 0.013 to 0.022; the
+            attention model&rsquo;s difference is 0.0015 and its interval includes zero), but they
+            did not improve the wheel-spinning ranking: at three and five attempts the AUC
+            differences from BKT are between &minus;0.011 and &minus;0.004, and every interval
+            includes zero. Under the rule fixed in advance (at least +0.01 with the interval above
+            zero at both checkpoints) neither is promoted, so BKT stays. Better next-answer
+            prediction did not translate into a better timing decision here
+            (validation only; see{" "}
+            <a href={`${repoUrl}/blob/aria-pace/docs/aria_pace/MULTISKILL.md`}>MULTISKILL.md</a>).
           </p>
         </section>
 
         <section className="methodology-section">
           <p className="kicker">Result · validation, 2012–13 data</p>
-          <h2>Do emotion signals improve the timing decision?</h2>
+          <h2>Does detector-predicted affect improve the timing decision?</h2>
           <p>
-            The 2012–13 ASSISTments release (6.1 million rows, 46,674 students) carries four affect
-            columns: boredom, confusion, frustration, and engaged concentration. They are predictions
-            from detectors that Ryan Baker&rsquo;s group trained on human classroom observations of
-            real students. We asked whether adding them to the risk model improves wheel-spinning
-            prediction, using 13,953 training and 4,651 validation students from that file.
+            The 2012–13 ASSISTments release (6.1 million rows, 46,674 students) carries four numeric
+            columns for boredom, confusion, frustration, and engaged concentration. They are outputs
+            of ASSISTments&rsquo; own sensor-free affect detectors, computed from interaction-log
+            features such as errors, correct answers, hints, and timing, not from anything a
+            student wrote. They are predictions, not observations: the detector version is unknown
+            and the file contains no human labels. We asked whether adding them to the risk model
+            (the last value, the running mean, and the running maximum of each, rank-transformed)
+            improves wheel-spinning prediction, using 13,953 training and 4,651 validation students
+            from that file.
           </p>
           <p>
             The gain is small and early. With affect features, AUC after three attempts rises by
             0.006 (95% CI 0.004 to 0.008). After five and eight attempts the difference is
             indistinguishable from zero. Averaged over the three checkpoints the gain is 0.002,
             below the 0.005 threshold we set in advance. Shuffling the affect columns removes the
-            gain, so it is not an artefact of extra parameters. The reading we take: emotion signals
-            carry a little information when there is almost no behaviour to go on, and the
-            correctness history carries the rest.
+            gain, so it is not an artefact of extra parameters. We find no evidence that this
+            detector adds decision-relevant information beyond the response history here. That is
+            a statement about this detector, this data, and this decision, not a claim that affect
+            is irrelevant to tutoring; and because the detectors read the same interaction logs the
+            risk model already uses, overlap with the response history is expected. Other signals,
+            such as keystroke dynamics, response latency used directly, or gaze, could be tested
+            against the same pre-registered gate.
           </p>
           {showCrossDataset ? (
             <p>
-              On the locked 2012–13 test students the result is the same size: the with-affect
-              model gains 0.002 AUC averaged over the three checkpoints (95% CI 0.001 to 0.003),
-              again at three attempts only, again below the 0.005 bar. The lagged version, which
-              uses only rows before the decision point, gives 0.002 as well.
+              On the locked 2012–13 test students the mean AUC difference over three, five, and
+              eight attempts is +0.0022 (95% CI +0.0013 to +0.0031), below the pre-registered
+              0.005 bar; the lagged version, which uses only rows before the decision point, gives
+              +0.0024. Choosing the threshold separately for each model changed no policy outcome
+              measurably.
             </p>
           ) : null}
         </section>
@@ -454,6 +550,12 @@ export default function PacePage() {
               The affect columns are detector outputs of unknown version, rank-transformed; the
               detectors were built from interaction features that overlap with our model&rsquo;s
               inputs.
+            </li>
+            <li>
+              The mastery-definition sensitivity and the multi-skill comparison use validation
+              students only and are exploratory. The mastery sensitivity covered BKT as the risk
+              score only; the other risk models were not re-run. The closed-loop simulation rests
+              entirely on assumed parameters.
             </li>
             <li>
               Grade level is not stated for either data file. ARIA&rsquo;s live tutor targets

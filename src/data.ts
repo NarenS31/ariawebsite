@@ -21,7 +21,7 @@ export const metrics: Metric[] = [
     value: "52%",
     label: "Fewer interruptions",
     description:
-      "Under the quiet cost setting, ARIA-Pace intervened 52% less often than helping after every wrong step, and missed 3.7% of students who went on to get stuck (95% CI 2.2–5.3).",
+      "Under the quiet cost setting and the 3-correct-in-a-row mastery definition, ARIA-Pace intervened 52% less often than helping after every wrong step, and missed 3.7% of students who went on to get stuck (95% CI 2.2–5.3).",
     technical: "ASSISTments 2009–10 · 597 test students · evaluated once, then locked",
   },
   {

@@ -51,7 +51,7 @@ const evidenceRows = [
   },
   {
     layer: "Intervention timing",
-    status: "52% fewer interventions in offline replay (Quiet cost setting)",
+    status: "52% fewer interventions in offline replay (Quiet cost setting, 3-correct-in-a-row mastery definition)",
     meaning: "ASSISTments 2009–10 logs, a held-out test of 597 students evaluated once. Interruptions weighted three times as costly as delayed help; with the weights reversed the saving shrinks to 3%.",
     claim: "Missed 3.7% of students who went on to get stuck (95% CI 2.2–5.3%). Results and protocol are on the ARIA-Pace page. Replay does not establish that an intervention works.",
   },
