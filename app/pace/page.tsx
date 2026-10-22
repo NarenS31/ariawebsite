@@ -470,8 +470,11 @@ export default function PacePage() {
               skill without logged help. The logs contain no real interventions to compare against.
             </li>
             <li>
-              The three cost settings are weights we chose (3:1, 1:1, 1:3). Nothing here shows that
-              any group of learners corresponds to them.
+              The three cost settings are weights we chose (3:1, 1:1, 1:3). The cost of an
+              interruption is an assumed weight in an offline simulation, not a measured harm;
+              whether the quiet setting reduces frustration or preserves working memory has not
+              been measured and needs a live comparison with students. Nothing here shows that any
+              group of learners corresponds to the settings.
             </li>
             <li>
               The risk model is BKT from 1995. The contribution is the decision rule, the evaluation
@@ -490,7 +493,13 @@ export default function PacePage() {
             </li>
             <li>
               The 2009 data are ASSISTments skill-builder math logs (grade level not stated),
-              not calculus. ARIA&rsquo;s live tutor targets algebra through calculus.
+              not calculus. ARIA&rsquo;s live tutor targets algebra through calculus and applies the
+              fitted parameters unchanged, so they need re-calibration before any deployment.
+            </li>
+            <li>
+              The language analyzer was evaluated only on synthetic messages. The timing rule does
+              not depend on it; in the demo it only adds optional flags that need an explicit
+              feeling word and never overrides correctness.
             </li>
             <li>
               The live tutor&rsquo;s symbolic step checker was not evaluated in the replay; the
