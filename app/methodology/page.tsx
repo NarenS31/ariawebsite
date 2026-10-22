@@ -284,7 +284,7 @@ export default function MethodologyPage() {
             <li>The cost of an interruption is an assumed weight in an offline simulation, not a measured harm or benefit.</li>
             <li>The 52% is under the ASSISTments 3-correct-in-a-row definition and shrinks under other definitions we tested.</li>
             <li>The timing model was fitted on ASSISTments math logs (grade level not stated), not calculus, and needs re-calibration before deployment.</li>
-            <li>The language analyzer was evaluated only on synthetic messages; the live tutor&rsquo;s timing decision does not depend on it.</li>
+            <li>The language analyzer was evaluated only on synthetic messages; the ARIA-Pace gate and its published results do not depend on it. In the demo its flags (they need an explicit feeling word) can add an affect-based reply or prompt a reply to a words-only message, but never override correctness.</li>
             <li>ARIA currently works on typed math, not handwriting or photos.</li>
             <li>No student study has established usability, learning, retention, or transfer.</li>
             <li>Synthetic benchmark performance does not establish real-student understanding.</li>
