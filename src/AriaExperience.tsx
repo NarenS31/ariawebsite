@@ -6,6 +6,7 @@ import { metrics, team } from "./data";
 import AriaLogo from "./AriaLogo";
 import MathPreview from "./MathPreview";
 import { EducatorSection, EvidenceSummary } from "./HomeSections";
+import EducatorIntake from "./EducatorIntake";
 
 const summitTicketsUrl =
   "https://www.eventbrite.com/e/ai-in-education-summit-2026-khan-lab-school-tickets-1988581168807?aff=oddtdtcreator";
@@ -279,6 +280,29 @@ const inspirations = [
     title: "Cognitive load",
     href: "https://doi.org/10.1207/s15516709cog1202_4",
     body: "Sweller (1988) examined how the demands of solving a problem can use up the working memory that learning needs. It informs our choice to keep each hint to one step, as described on the Method page; it is a design influence, not evidence that ARIA works.",
+  },
+] as const;
+
+const ideas = [
+  {
+    title: "Learning with a more capable other",
+    cite: "Vygotsky (1978), Mind in Society, Harvard University Press (a book; no DOI).",
+    motive: "Vygotsky described the gap between what a learner can do alone and what they can do with a little guidance. It motivates ARIA\u2019s question of how much help is enough.",
+    limit: "ARIA does not test it: we measure when a tutor speaks in old logs, not what a student can do with or without help.",
+  },
+  {
+    title: "Metacognition",
+    cite: "Flavell (1979), American Psychologist 34(10), 906\u2013911.",
+    doi: "https://doi.org/10.1037/0003-066X.34.10.906",
+    motive: "Flavell described people monitoring their own thinking. It motivates the idea that a student should get a chance to notice a wrong step before the tutor speaks.",
+    limit: "ARIA does not test it: nothing here measures whether a student monitors their own thinking.",
+  },
+  {
+    title: "Productive failure",
+    cite: "Kapur (2008), Cognition and Instruction 26(3), 379\u2013424.",
+    doi: "https://doi.org/10.1080/07370000802212669",
+    motive: "Kapur studied learners who struggle with a problem before being shown the method. It motivates asking whether early help is always better.",
+    limit: "ARIA does not test it: we have no learning outcomes, so we cannot say whether staying quiet helps students learn.",
   },
 ] as const;
 
@@ -701,7 +725,8 @@ export function HelpModel() {
             Once ARIA has decided to speak after a verified wrong step, it gives one hint at a time.
             The student&rsquo;s own answer is never given. Keeping each hint to one step is a design
             choice informed by work on cognitive load during problem solving (Sweller, 1988); it is
-            a design influence, not evidence that ARIA works.
+            a design influence, not evidence that ARIA works.{" "}
+            <a href="/research#ideas">Ideas this builds on</a>.
           </p>
         </div>
         <ol className="level-list">
@@ -921,6 +946,36 @@ export function TestingNext() {
   );
 }
 
+export function IdeasBuildOn() {
+  return (
+    <section className="inspiration section" id="ideas">
+      <div className="shell">
+        <div className="section-intro section-intro--split">
+          <div>
+            <p className="kicker">Background</p>
+            <h2>Ideas this builds on.</h2>
+          </div>
+          <p>
+            These ideas motivated the question. Each one is listed with what ARIA does not test, so
+            none of them should be read as support for a result. Cognitive load (Sweller, 1988) is
+            described in the related-work cards below.
+          </p>
+        </div>
+        <div className="inspiration-grid">
+          {ideas.map((item) => (
+            <article className="inspiration-card" key={item.title}>
+              <h3>{item.title}</h3>
+              <p>{item.motive}</p>
+              <p><strong>{item.limit}</strong></p>
+              <p><small>{item.cite}{"doi" in item ? <> <a href={item.doi}>DOI</a></> : null}</small></p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function Inspiration() {
   return (
     <section className="inspiration section" id="inspiration">
@@ -1131,9 +1186,9 @@ export function Research({ compact = false }: { compact?: boolean }) {
               </thead>
               <tbody>
                 <tr>
-                  <th scope="row">Same-style synthetic recognition</th>
+                  <th scope="row">Same-generator synthetic recognition</th>
                   <td>84.6%</td>
-                  <td>About 85 of 100 held-out simulated messages matched their designed label.</td>
+                  <td>About 85 of 100 held-out simulated messages from the same generator matched their designed label; no human ground truth.</td>
                   <td>Synthetic development test</td>
                 </tr>
                 <tr>
@@ -1499,6 +1554,7 @@ export default function AriaExperience() {
       <Overview />
       <Research compact />
       <EducatorSection />
+      <EducatorIntake />
       <Roadmap />
       <Summit />
       <Join />

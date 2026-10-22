@@ -3514,3 +3514,7 @@ footer {
     transform: none;
   }
 }
+.intake-roles { border: 0; padding: 0; margin: var(--space-lg) 0 0; min-width: 0; }
+.intake-roles legend { font-weight: 600; padding: 0; }
+.intake-roles [role="alert"] { color: var(--color-ink, inherit); font-weight: 600; margin-block: var(--space-sm); }
+.educator-intake .participation-form { max-width: 48rem; margin-block-start: var(--space-xl); }

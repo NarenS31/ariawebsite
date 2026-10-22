@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import {
+  IdeasBuildOn,
   Inspiration,
   Limitations,
   PageIntro,
@@ -25,6 +26,7 @@ export default function ResearchPage() {
       <Research />
       <Limitations />
       <TestingNext />
+      <IdeasBuildOn />
       <Inspiration />
     </SitePage>
   );
