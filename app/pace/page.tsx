@@ -429,7 +429,7 @@ export default function PacePage() {
         </section>
 
         <section className="methodology-section">
-          <p className="kicker">Result · validation, 2012–13 data</p>
+          <p className="kicker">Result · affect signals, 2012–13 data (numbers held)</p>
           <h2>Does detector-predicted affect improve the timing decision?</h2>
           <p>
             The 2012–13 ASSISTments release carries four numeric
@@ -439,31 +439,18 @@ export default function PacePage() {
             student wrote. They are predictions, not observations: the detector version is unknown
             and the file contains no human labels. We asked whether adding them to the risk model
             (the last value, the running mean, and the running maximum of each, rank-transformed)
-            improves wheel-spinning prediction, using the training and validation students from that
-            file.
+            improves wheel-spinning prediction.
           </p>
           <p>
-            The gain is small and early. With affect features, AUC after three attempts rises by
-            0.006 (95% CI 0.004 to 0.008). After five and eight attempts the difference is
-            indistinguishable from zero. Averaged over the three checkpoints the gain is 0.002,
-            below the 0.005 threshold we set in advance. Shuffling the affect columns removes the
-            gain, so it is not an artefact of extra parameters. We find no evidence that this
-            detector adds decision-relevant information beyond the response history here. That is
-            a statement about this detector, this data, and this decision, not a claim that affect
-            is irrelevant to tutoring; and because the detectors read the same interaction logs the
-            risk model already uses, overlap with the response history is expected. Other signals,
-            such as keystroke dynamics, response latency used directly, or gaze, could be tested
-            against the same pre-registered gate.
+            A published log-based affect detector (frustration, confusion, concentration, boredom
+            outputs) did not add enough information to clear our pre-registered bar. The numbers
+            are held until the dataset terms are confirmed. The bar was fixed before any of that
+            data was read. This is a statement about this detector, this data, and this decision,
+            not a claim that affect is irrelevant to tutoring; and because the detectors read the
+            same interaction logs the risk model already uses, overlap with the response history
+            is expected. Other signals, such as keystroke dynamics, response latency used
+            directly, or gaze, could be tested against the same pre-registered gate.
           </p>
-          {showCrossDataset ? (
-            <p>
-              On the locked 2012–13 test students the mean AUC difference over three, five, and
-              eight attempts is +0.0022 (95% CI +0.0013 to +0.0031), below the pre-registered
-              0.005 bar; the lagged version, which uses only rows before the decision point, gives
-              +0.0024. Choosing the threshold separately for each model changed no policy outcome
-              measurably.
-            </p>
-          ) : null}
         </section>
 
         <section className="methodology-section">
