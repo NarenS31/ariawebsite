@@ -79,11 +79,11 @@ const modelRows = [
 ];
 
 const sensitivityRows = [
-  { rule: "3 correct in a row within 10 attempts (the pre-registered rule)", stuck: "17.2%", tau: "0.57", saving: "49.8% (46.5–53.2)", missed: "4.8% (3.0–7.0)" },
-  { rule: "4 correct in a row within 10 attempts", stuck: "31.9%", tau: "0.45", saving: "8.6% (7.0–10.4)", missed: "0.2% (0.0–0.7)" },
-  { rule: "5 correct in a row within 15 attempts", stuck: "19.3%", tau: "0.44", saving: "32.2% (28.6–35.6)", missed: "5.5% (3.5–7.8)" },
-  { rule: "5 correct in a row within 20 attempts", stuck: "10.7%", tau: "0.27", saving: "45.4% (41.4–49.6)", missed: "8.1% (5.0–12.0)" },
-  { rule: "A running average of answers at or above 80% for 3 attempts in a row, within 10", stuck: "75.9%", tau: "0.69", saving: "9.0% (7.2–10.9)", missed: "0.4% (0.1–0.9)" },
+  { rule: "3 correct in a row within 10 attempts (the pre-registered rule)", tau: "0.51–0.60", saving: "50.1% (48.5–51.6)", missed: "6.2% (5.2–7.2)" },
+  { rule: "4 correct in a row within 10 attempts", tau: "0.43–0.52", saving: "8.3% (7.5–9.2)", missed: "0.2% (0.1–0.3)" },
+  { rule: "5 correct in a row within 15 attempts", tau: "0.31–0.44", saving: "26.4% (24.7–28.2)", missed: "4.3% (3.4–5.3)" },
+  { rule: "5 correct in a row within 20 attempts", tau: "0.24–0.40", saving: "41.6% (39.2–43.8)", missed: "10.4% (8.1–12.7)" },
+  { rule: "A running average of answers at or above 80% for 3 attempts in a row, within 10", tau: "0.52–0.77", saving: "7.1% (6.2–8.0)", missed: "0.3% (0.2–0.5)" },
 ];
 
 const references = [
@@ -287,8 +287,9 @@ export default function PacePage() {
             the primary assumption about those students, not under every assumption.
           </p>
           <p>
-            The saving also depends on the mastery definition itself: stricter definitions shrink
-            it (exploratory, validation only; see{" "}
+            The saving also depends on the mastery definition itself: the four other definitions
+            shrink it to 7.1% to 41.6% (cross-validated; exploratory, validation only; the earlier
+            single-split version is in{" "}
             <a href={`${repoUrl}/blob/aria-pace/docs/aria_pace/MASTERY_SENSITIVITY.md`}>
               MASTERY_SENSITIVITY.md
             </a>{" "}
@@ -300,20 +301,22 @@ export default function PacePage() {
           <p className="kicker">Sensitivity · exploratory, validation only</p>
           <h2>How sensitive is this?</h2>
           <p>
-            <strong>Definition of &ldquo;stuck&rdquo;.</strong> We re-ran the validation pipeline
-            (labels, risk model, calibration, threshold choice) under four other mastery rules.
-            The first row reproduces the frozen validation result exactly. The rules label very
-            different shares of students as stuck, and the best quiet threshold and the saving move
-            with them. Under two stricter rules (four in a row; a running-average rule) the quiet
-            saving is about 9%, not 50%.
+            <strong>Definition of &ldquo;stuck&rdquo;.</strong> We re-ran the pipeline (labels,
+            risk model, calibration, threshold choice) under four other mastery rules, with
+            five-fold cross-validation over the training and validation students: in each fold the
+            threshold and calibration were chosen on separate students and then scored on held-out
+            ones. Under the pre-registered 3-correct-in-a-row rule the quiet saving is 50.1%
+            (95% CI 48.5 to 51.6) with 6.2% missed help; under the four other rules it is 7.1% to
+            41.6%. Missed help under the pre-registered rule is about 4 to 6% (3.7% on the locked
+            test, 4.8% in the single-split validation, 6.2% cross-validated). The best quiet
+            threshold also moves with the rule (last column), by more than 0.10 in several folds.
           </p>
           <div className="methodology-table-wrap">
             <table>
               <thead>
                 <tr>
                   <th scope="col">Mastery rule</th>
-                  <th scope="col">Students counted as stuck</th>
-                  <th scope="col">Quiet threshold</th>
+                  <th scope="col">Quiet threshold (range over five folds)</th>
                   <th scope="col">Quiet-setting saving (95% CI)</th>
                   <th scope="col">Missed help (95% CI)</th>
                 </tr>
@@ -322,7 +325,6 @@ export default function PacePage() {
                 {sensitivityRows.map((row) => (
                   <tr key={row.rule}>
                     <th scope="row">{row.rule}</th>
-                    <td>{row.stuck}</td>
                     <td>{row.tau}</td>
                     <td>{row.saving}</td>
                     <td>{row.missed}</td>
@@ -332,11 +334,13 @@ export default function PacePage() {
             </table>
           </div>
           <p>
-            Validation numbers are optimistic because the threshold was chosen on the same
-            students (the first row gives 49.8% on validation against 52% (3-correct-in-a-row) on the test). Nothing
-            here touched the test split, no alternative rule has a test number, and the published
-            52% (3-correct-in-a-row) belongs to the first rule. The analysis covers BKT as the risk score only; the
-            other risk models were not re-run.
+            Cross-validation removes the optimism of choosing the threshold on the same students,
+            but these rows are still exploratory and use validation students only (compare 52%
+            (3-correct-in-a-row) on the locked test). Nothing here touched the test split, no
+            alternative rule has a test number, and the published 52% (3-correct-in-a-row) belongs
+            to the first rule. The analysis covers BKT as the risk score only; the other risk
+            models were not re-run. Full tables:{" "}
+            <a href={`${repoUrl}/blob/aria-pace/aria_pace/RESULTS_v4.md`}>RESULTS_v4.md</a>.
           </p>
           <p>
             <strong>What if helping and interrupting have real effects?</strong> A small simulation
@@ -406,6 +410,13 @@ export default function PacePage() {
             prediction did not translate into a better timing decision here
             (validation only; see{" "}
             <a href={`${repoUrl}/blob/aria-pace/docs/aria_pace/MULTISKILL.md`}>MULTISKILL.md</a>).
+          </p>
+          <p>
+            We also tested a per-turn model for every attempt from 1 to 9 that adds how long the
+            first response took. Response time was tested and did not clear the pre-registered
+            bar: the gain over BKT was +0.0072 AUC at three attempts and +0.0034 at five, against
+            the required +0.01 (validation only; see{" "}
+            <a href={`${repoUrl}/blob/aria-pace/aria_pace/RESULTS_v4.md`}>RESULTS_v4.md</a>).
           </p>
         </section>
 
@@ -490,6 +501,18 @@ export default function PacePage() {
               students only and are exploratory. The mastery sensitivity covered BKT as the risk
               score only; the other risk models were not re-run. The closed-loop simulation rests
               entirely on assumed parameters.
+            </li>
+            <li>
+              The live demo uses one pooled parameter set rather than the per-skill parameters the
+              evaluated policy used; on validation this changes about 14% of Quiet wrong-step
+              decisions, so the demo approximates the evaluated policy (Quiet saving 49.8% with
+              per-skill parameters, 43.9% pooled; see{" "}
+              <a href={`${repoUrl}/blob/aria-pace/aria_pace/RESULTS_v4.md`}>RESULTS_v4.md</a>).
+            </li>
+            <li>
+              The &ldquo;Would you step in?&rdquo; moments test ARIA&rsquo;s default rule and do not
+              distinguish the three profiles: ARIA makes the same decision on all eight under Quiet,
+              Balanced and Supportive.
             </li>
             <li>
               The 2009 data are ASSISTments skill-builder math logs (grade level not stated),

@@ -240,7 +240,7 @@ const limitations = [
   },
   {
     heading: "The timing model was fitted on math logs, not calculus.",
-    body: "Its parameters come from ASSISTments skill-builder math logs (grade level not stated). The demo applies them unchanged to algebra, trigonometry and calculus problems; they need re-calibration on the target domain before any deployment.",
+    body: "Its parameters come from ASSISTments skill-builder math logs (grade level not stated). The demo applies them unchanged to algebra, trigonometry and calculus problems; they need re-calibration on the target domain before any deployment. The demo also uses one pooled parameter set rather than the per-skill parameters the evaluated policy used; on validation this changes about 14% of Quiet wrong-step decisions, so the demo approximates the evaluated policy. Response time was tested and did not clear the pre-registered bar.",
   },
   {
     heading: "The interaction design is not yet validated.",
@@ -248,7 +248,7 @@ const limitations = [
   },
   {
     heading: "The headline saving depends on how “stuck” is defined, and the checks cover BKT only.",
-    body: "The 52% is under the 3-correct-in-a-row mastery definition, which is the ASSISTments skill-builder\u2019s own completion rule. Under four other definitions the quiet saving fell to between 8.6% and 45.4% (exploratory, validation only), and that sensitivity analysis used BKT as the risk score only; the other risk models were not re-run.",
+    body: "The 52% is under the 3-correct-in-a-row mastery definition, which is the ASSISTments skill-builder\u2019s own completion rule. Cross-validated on training and validation students, the quiet saving is 50.1% (95% CI 48.5 to 51.6) with 6.2% missed help under that rule and 7.1% to 41.6% under the four other definitions (exploratory, validation only). Missed help is about 4 to 6% (3.7% on the locked test). The analysis used BKT as the risk score only; the other risk models were not re-run.",
   },
   {
     heading: "We are not claiming classroom-validated learning gains.",
