@@ -270,6 +270,7 @@ export default function PacePage() {
               <p>Every threshold was frozen on validation first. A lock file prevents a second run.</p>
             </article>
           </div>
+          <p>All figures in this table are under the 3-correct-in-a-row mastery definition.</p>
           <div className="methodology-table-wrap">
             <table>
               <thead>
@@ -351,9 +352,9 @@ export default function PacePage() {
           </div>
           <p>
             Validation numbers are optimistic because the threshold was chosen on the same
-            students (the first row gives 49.8% on validation against 52% on the test). Nothing
+            students (the first row gives 49.8% on validation against 52% (3-correct-in-a-row) on the test). Nothing
             here touched the test split, no alternative rule has a test number, and the published
-            52% belongs to the first rule. The analysis covers BKT as the risk score only; the
+            52% (3-correct-in-a-row) belongs to the first rule. The analysis covers BKT as the risk score only; the
             other risk models were not re-run.
           </p>
           <p>
@@ -431,15 +432,15 @@ export default function PacePage() {
           <p className="kicker">Result · validation, 2012–13 data</p>
           <h2>Does detector-predicted affect improve the timing decision?</h2>
           <p>
-            The 2012–13 ASSISTments release (6.1 million rows, 46,674 students) carries four numeric
+            The 2012–13 ASSISTments release carries four numeric
             columns for boredom, confusion, frustration, and engaged concentration. They are outputs
             of ASSISTments&rsquo; own sensor-free affect detectors, computed from interaction-log
             features such as errors, correct answers, hints, and timing, not from anything a
             student wrote. They are predictions, not observations: the detector version is unknown
             and the file contains no human labels. We asked whether adding them to the risk model
             (the last value, the running mean, and the running maximum of each, rank-transformed)
-            improves wheel-spinning prediction, using 13,953 training and 4,651 validation students
-            from that file.
+            improves wheel-spinning prediction, using the training and validation students from that
+            file.
           </p>
           <p>
             The gain is small and early. With affect features, AUC after three attempts rises by
@@ -469,7 +470,7 @@ export default function PacePage() {
           <p className="kicker">Result · held-out test, 2012–13 data</p>
           <h2>Does it hold on a second year of students?</h2>
           <p>
-            A locked 20% of the 2012–13 skill-builder students (4,651 of 23,255) was reserved for
+            A locked 20% of the 2012–13 skill-builder students was reserved for
             one evaluation of the 2009-trained models and the three policies, with every threshold
             frozen from 2009. The lock file was written before the test rows were read. Students
             appearing in both years were removed first.
@@ -482,7 +483,7 @@ export default function PacePage() {
                     <tr>
                       <th scope="col">Cost setting</th>
                       <th scope="col">2009–10 test (597 students)</th>
-                      <th scope="col">2012–13 test (4,651 students), thresholds frozen from 2009</th>
+                      <th scope="col">2012–13 test, thresholds frozen from 2009</th>
                     </tr>
                   </thead>
                   <tbody>
