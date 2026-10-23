@@ -3,7 +3,6 @@ export interface Metric {
   value: string;
   label: string;
   description: string;
-  technical: string;
 }
 
 export interface TeamMember {
@@ -22,23 +21,20 @@ export const metrics: Metric[] = [
     label: "Fewer interruptions",
     description:
       "Under the quiet cost setting and the 3-correct-in-a-row mastery definition, ARIA-Pace intervened 52% less often than helping after every wrong step, and missed 3.7% of students who went on to get stuck (95% CI 2.2–5.3).",
-    technical: "ASSISTments 2009–10 · 597 test students · evaluated once, then locked",
   },
   {
     eyebrow: "Real students in the data",
     value: "4,163",
     label: "Students whose logs trained and tested the model",
     description:
-      "Public, de-identified logs. No student data was collected by us. A second file was used for a cross-dataset test, run once on a locked split; its numbers are held until the dataset terms are confirmed.",
-    technical: "Split by student · train 2,498 · validation 833 · test 832",
+      "We trained and tested the model using public, de-identified student logs. We did not collect any student data ourselves. We also ran a cross-dataset test, but its results will remain unpublished until the dataset terms are confirmed.",
   },
   {
     eyebrow: "Demo problem bank",
     value: "30",
     label: "Problems with answers re-derived in code",
     description:
-      "Algebra, trigonometry, and calculus. Every answer is recomputed by a symbolic engine when the bank loads; a problem that fails the check does not load.",
-    technical: "8 featured for the summit demo · educator review is next",
+      "The problem bank covers algebra, trigonometry, and calculus. A symbolic engine recomputes every answer when the bank loads and excludes any problem that fails the check.",
   },
   {
     eyebrow: "Classroom evidence",
@@ -46,7 +42,6 @@ export const metrics: Metric[] = [
     label: "Learning results",
     description:
       "No study with students has been run, so we are not claiming that ARIA improves learning, retention, transfer, or outcomes for any group of learners.",
-    technical: "A reviewed student study is still required",
   },
 ];
 

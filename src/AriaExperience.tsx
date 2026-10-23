@@ -5,8 +5,7 @@ import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { metrics, team } from "./data";
 import AriaLogo from "./AriaLogo";
 import MathPreview from "./MathPreview";
-import { EducatorSection, EvidenceSummary } from "./HomeSections";
-import EducatorIntake from "./EducatorIntake";
+import { ConferenceInvitation, ConferenceResearch, EvidenceSummary, StudentValue } from "./HomeSections";
 
 const summitTicketsUrl =
   "https://www.eventbrite.com/e/ai-in-education-summit-2026-khan-lab-school-tickets-1988581168807?aff=oddtdtcreator";
@@ -24,35 +23,35 @@ const overviewCards = [
     href: "/pace",
     kicker: "The timing model",
     title: "ARIA-Pace",
-    body: "A knowledge-tracing model fit on logs from 4,163 real students, with a rule for when to stay quiet. Under a high interruption cost, and the 3-correct-in-a-row mastery definition, it intervened 52% less often than always helping and missed 3.7% of students who went on to get stuck, on a held-out test read once.",
+    body: "ARIA-Pace combines a knowledge-tracing model fitted on logs from 4,163 students with a rule for when to offer help. Under a high interruption cost and the three-correct-in-a-row mastery definition, it intervened 52% less often than always helping after a wrong step and missed 3.7% of students who went on to get stuck.",
     cta: "Results and protocol",
   },
   {
     href: "/about",
     kicker: "Motivation and scope",
     title: "About",
-    body: "Why the question is timing, why the study is limited to mathematics, and what the project does and does not claim.",
+    body: "Learn why we study the timing of help, why we focus on mathematics, and what the project does and does not claim.",
     cta: "Read more",
   },
   {
     href: "/method",
     kicker: "How the tutor works",
     title: "Method",
-    body: "Notice, verify, scaffold, step back. A symbolic engine checks every step; a hint points at the next step and never gives the student’s answer; the policy distinguishes progress from being stuck.",
+    body: "A symbolic engine checks each step before the policy decides whether to offer help. Each hint points toward the next step rather than giving the student’s final answer.",
     cta: "Read more",
   },
   {
     href: "/research",
     kicker: "Evidence so far",
     title: "Research",
-    body: "Software checks on synthetic text, an offline replay of real student logs, the limitations of each, and the open questions the current evidence cannot answer.",
+    body: "Explore our software checks and offline replay of real student logs, along with their limitations and the questions they cannot answer.",
     cta: "Results and limitations",
   },
   {
     href: "/roadmap",
     kicker: "Where the work is",
     title: "Roadmap",
-    body: "Five phases, in order, with the current one marked. Student interviews and classroom evaluation are planned and gated on ethics review.",
+    body: "Our roadmap follows five phases and identifies the current stage. Student interviews and classroom evaluation are planned, subject to ethics review.",
     cta: "See the phases",
   },
   {
@@ -138,7 +137,7 @@ const helpLevels = [
 const watchedStates = [
   {
     name: "Making progress",
-    signal: "A correct or partially correct step, verified by the math engine.",
+    signal: "The math engine verifies that the step is correct or partially correct.",
     response: "Stay quiet and show a “watching” indicator. Interrupting productive work is treated as an error, not a missed opportunity.",
   },
   {
@@ -148,23 +147,23 @@ const watchedStates = [
   },
   {
     name: "Stuck",
-    signal: "A step the math engine marks wrong, or a stall after a verified error.",
-    response: "One hint aimed at the next step the student has not produced. From the third attempt, a profile with a high bar may show a short note first and hold the hint until the risk is high enough.",
+    signal: "The math engine marks a step wrong, or the student stalls after a verified error.",
+    response: "ARIA can offer one hint aimed at the next step the student has not produced. From the third attempt, a profile with a high bar may show a short note first and hold the hint until the risk is high enough.",
   },
   {
     name: "Frustrated or confused",
-    signal: "Explicit words in the student’s message. These are flags on top of the state, never a substitute for checking the math.",
+    signal: "The student uses explicit words to express frustration or confusion. These language flags never replace the mathematical correctness check.",
     response: "The tone of the help changes. The correctness verdict does not.",
   },
   {
     name: "Asking for the answer",
-    signal: "A direct request to be told the result.",
+    signal: "The student directly asks to be told the result.",
     response: "ARIA declines to give the answer and gives a hint toward the first step. Every reply is checked so the answer cannot leak.",
   },
   {
     name: "Finished",
-    signal: "A correct final answer.",
-    response: "One short reflection question, then nothing more.",
+    signal: "The student gives a correct final answer.",
+    response: "ARIA asks one short reflection question and then stops prompting.",
   },
 ] as const;
 
@@ -179,26 +178,26 @@ const roadmapPhases = [
     phase: "Phase 2",
     status: "Current",
     title: "Timing model on real student logs",
-    body: "ARIA-Pace: a knowledge-tracing model fit on public logs from thousands of real students, with a rule for when to stay quiet. Evaluated once on a locked 2009–10 split and once on a locked 2012–13 split; the 2012–13 numbers are held until the dataset terms are confirmed. A replay of logs, not a classroom study.",
+    body: "ARIA-Pace combines a knowledge-tracing model fitted on public student logs with a timing rule. We evaluated it on locked splits from 2009–10 and 2012–13. The second set of results remains unpublished until the dataset terms are confirmed. These evaluations replay historical logs rather than testing the tutor in a classroom.",
     href: "/pace",
   },
   {
     phase: "Phase 3",
     status: "Planned",
     title: "Student interviews",
-    body: "Structured interviews with students who struggle in math: where they get stuck, what help they have rejected, and how they want to interact. Requires ethics review and consent first.",
+    body: "We plan to interview students about where they get stuck in math, what help they have rejected, and how they want to interact. Ethics review and consent must come first.",
   },
   {
     phase: "Phase 4",
     status: "Planned",
     title: "Formative prototype testing",
-    body: "Small sessions where students use the prototype on real math work while we observe. The goal is to find where prompts misfire, annoy, or get ignored, and revise before any outcome claims.",
+    body: "We plan to observe small sessions where students use the prototype on math work. We will use these sessions to identify prompts that misfire, annoy, or get ignored and revise them before making outcome claims.",
   },
   {
     phase: "Phase 5",
     status: "Planned",
     title: "Classroom and teacher-informed evaluation",
-    body: "Evaluation designed with teachers, in real instructional settings, using measures they consider meaningful. Only at this stage would it be reasonable to discuss learning outcomes.",
+    body: "We plan to design an evaluation with teachers in real instructional settings, using measures they consider meaningful. This stage would allow us to begin investigating learning outcomes.",
   },
 ] as const;
 
@@ -221,7 +220,7 @@ const openQuestions = [
   {
     number: "04",
     title: "What input do students actually prefer?",
-    body: "Text, tappable choices, or voice, and under what conditions. We expect preference to depend heavily on setting, especially whether a student is working near peers.",
+    body: "We will investigate when students prefer text, tappable choices, or voice. We expect preferences to depend on the setting, especially whether students are working near peers.",
   },
 ] as const;
 
@@ -432,8 +431,8 @@ export function Navigation() {
             </a>
           ))}
         </nav>
-        <a className="nav-cta" href="/collaborate">
-          Collaborate
+        <a className="nav-cta" href="/activity">
+          Teacher activity
         </a>
         <button
           ref={toggle}
@@ -464,9 +463,9 @@ export function Navigation() {
                 {item.label}
               </a>
             ))}
-            <a href="/collaborate" onClick={() => setOpen(false)}>
+            <a href="/activity" onClick={() => setOpen(false)}>
               <span>0{navItems.length + 1}</span>
-              Collaborate
+              Teacher activity
             </a>
           </motion.nav>
         )}
@@ -558,39 +557,28 @@ export function Hero() {
       <div className="shell hero-layout">
         <div className="hero-copy">
           <Reveal>
-            <p className="kicker">Student-led research initiative · Mathematics · 2026</p>
+            <p className="kicker">Built for independent thinking</p>
           </Reveal>
           <Reveal delay={0.06}>
             <h1>
-              When should a math tutor <span className="highlight">step in?</span>
+              <span className="highlight">ARIA</span> math tutor
             </h1>
           </Reveal>
           <Reveal delay={0.12}>
             <p className="hero-lede">
-              ARIA is a research prototype of a math tutor that decides when to intervene and when
-              to stay quiet. A symbolic engine checks each step a student writes; a timing model fit
-              on public logs from thousands of real students decides whether to offer a hint.
-              We study whether choosing <em>when</em> to help, not only what to
-              say, changes how students persist. Results so far come from software tests and from
-              offline replay of student logs, not from classroom studies.
+              Work through math one step at a time. ARIA checks your work and offers hints while
+              you work toward your own answer. Explore the examples, then tell us when you would
+              step in to help.
             </p>
           </Reveal>
           <Reveal className="hero-actions" delay={0.18}>
-            <a className="btn btn--pear" href="#evidence">
-              Results to date <span aria-hidden="true">↓</span>
+            <a className="btn btn--pear" href="/activity">
+              Try the 2-minute activity <span aria-hidden="true">→</span>
             </a>
-            <a className="text-link" href="/pace">
-              ARIA-Pace, the timing model <span aria-hidden="true">→</span>
+            <a className="text-link" href="#preview">
+              See ARIA in action <span aria-hidden="true">↓</span>
             </a>
           </Reveal>
-          <Reveal className="hero-trust" delay={0.24}>
-            <span>Research prototype, not a product</span>
-            <span>Evaluated on logs, not yet with students</span>
-            <span>The student&rsquo;s answer is never revealed</span>
-          </Reveal>
-          <p className="hero-stage-note">
-            Classroom pilots are not open yet. <a href="/research">See the evidence</a>
-          </p>
         </div>
       </div>
     </section>
@@ -1153,7 +1141,6 @@ export function Research({ compact = false }: { compact?: boolean }) {
               <strong>{metric.value}</strong>
               <h3>{metric.label}</h3>
               <p>{metric.description}</p>
-              <small>{metric.technical}</small>
             </Reveal>
           ))}
         </div>
@@ -1176,7 +1163,7 @@ export function Research({ compact = false }: { compact?: boolean }) {
               <span>Language classifier · development benchmark</span>
               <h3>Useful for finding failures. Not evidence of learning.</h3>
             </div>
-            <p>Synthetic examples · no human ground truth · the ARIA-Pace gate does not depend on it</p>
+            <p>This benchmark uses synthetic examples without independent human labels. The ARIA-Pace gate does not depend on this classifier.</p>
           </div>
           <div className="table-wrap">
             <table>
@@ -1198,7 +1185,7 @@ export function Research({ compact = false }: { compact?: boolean }) {
                 <tr>
                   <th scope="row">Balanced synthetic score</th>
                   <td>0.837</td>
-                  <td>Performance summarized while giving each legacy state equal weight.</td>
+                  <td>This score summarizes performance while giving each legacy state equal weight.</td>
                   <td>Synthetic development test</td>
                 </tr>
                 <tr>
@@ -1245,7 +1232,7 @@ export function Research({ compact = false }: { compact?: boolean }) {
             <li>
               <span>01</span>
               <p>
-                <strong>Done:</strong> timing policy evaluated once on a locked held-out split of
+                <strong>Done:</strong> We evaluated the timing policy once on a locked held-out split of
                 2009–10 student logs and once on a locked 2012–13 split (those numbers are held
                 until the dataset terms are confirmed, as on the ARIA-Pace page), with the
                 specification committed before modeling.
@@ -1254,8 +1241,8 @@ export function Research({ compact = false }: { compact?: boolean }) {
             <li>
               <span>02</span>
               <p>
-                <strong>Pending:</strong> educator review of the problem bank; teacher judgments on
-                when to intervene.
+                <strong>Pending:</strong> Educators still need to review the problem bank and judge
+                when the tutor should intervene.
               </p>
             </li>
             <li>
@@ -1331,18 +1318,18 @@ export function Summit() {
   );
 }
 
-export function Researchers() {
+export function Researchers({ compact = false }: { compact?: boolean }) {
   return (
     <section className="team section" id="founders">
       <div className="shell">
         <div className="section-intro">
           <p className="kicker">Researchers</p>
-          <h2>Who is doing the work.</h2>
+          <h2>{compact ? "Meet the people behind ARIA." : "Who is doing the work."}</h2>
           <p>
-            ARIA is a student-led project at Marvin Ridge High School. The question came from
+            {compact ? "We are Naren Saravanan and Karthik Malireddy, student researchers at Marvin Ridge High School. We built ARIA to explore how a tutor can support students without taking over their work." : <>ARIA is a student-led project at Marvin Ridge High School. The question came from
             wanting to understand why tutors interrupt students who are mid-thought; the protocol is
             what keeps that motivation from becoming a claim. We are looking for a teacher or researcher to review the study design
-            as an advisor.
+            as an advisor.</>}
           </p>
         </div>
         <div className="team-list">
@@ -1363,13 +1350,13 @@ export function Researchers() {
               </div>
               <p>
                 {index === 0
-                  ? "Research direction, the timing-model study, and the question at the center of ARIA."
-                  : "Co-research, system development, and evaluation of the tutor."}
+                  ? "Naren leads the research direction and timing-model study."
+                  : "Karthik contributes to the research, system development, and tutor evaluation."}
               </p>
             </Reveal>
           ))}
         </div>
-        <div className="team-context">
+        {compact ? <div className="evidence-links"><a href="/collaborate">Work with us →</a><a href="mailto:11narensara11@gmail.com">Email the team →</a></div> : <div className="team-context">
           <p>
             <strong>Based in:</strong> Waxhaw, North Carolina · Eastern Time. School partnerships
             may involve remote support, agreed before any sessions.
@@ -1378,7 +1365,7 @@ export function Researchers() {
             <strong>Advisor:</strong> open. We welcome educators and researchers to review the
             study design and consent process. <a href="/collaborate">See where we need help →</a>
           </p>
-        </div>
+        </div>}
       </div>
     </section>
   );
@@ -1400,7 +1387,7 @@ export function Join() {
     },
     {
       label: "Researchers",
-      text: "Real student transcripts with permission to use them, independent annotation, review of the consent and ethics protocol, or methods critique of the ARIA-Pace study.",
+      text: "Researchers can contribute permissioned student transcripts, independently annotate examples, review our consent and ethics protocol, or critique the methods of the ARIA-Pace study.",
       cta: "Discuss data or methods",
       detail: { href: "/researchers", label: "What we need from researchers" },
     },
@@ -1441,7 +1428,7 @@ export function Join() {
             <span>Research updates</span>
           </div>
           <h3>Occasional updates when there is new evidence.</h3>
-          <p>Results, limitations, and ways to participate. Sent only when something has changed, including when a result goes against the design.</p>
+          <p>We share results, limitations, and ways to participate when something changes, including when a result goes against the design.</p>
           <a
             className="btn btn--cyan"
             href="mailto:11narensara11@gmail.com?subject=Add%20me%20to%20ARIA%20research%20updates"
@@ -1554,15 +1541,11 @@ function ScrollProgress() {
 export default function AriaExperience() {
   return (
     <SitePage progress>
-      <SummitFollowUp />
       <Hero />
-      <Overview />
-      <Research compact />
-      <EducatorSection />
-      <EducatorIntake />
-      <Roadmap />
-      <Summit />
-      <Join />
+      <StudentValue />
+      <ConferenceInvitation />
+      <ConferenceResearch />
+      <Researchers compact />
     </SitePage>
   );
 }
