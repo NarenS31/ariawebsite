@@ -7,16 +7,34 @@ export function StudentValue() {
         <div className="value-heading">
           <p className="kicker">For the learner</p>
           <h2>A next step that is still yours.</h2>
-          <p>Planning, checking, trying again. ARIA is built around the moments that make up mathematical thinking.</p>
+          <p>ARIA supports mathematical thinking by giving students room to plan, check their work, and try again.</p>
         </div>
         <div className="value-rows">
-          <article><span className="value-number">01</span><div><h3>Space to keep going.</h3><p>A valid step does not need another question. When the math is progressing, ARIA stays quiet.</p></div><p className="value-example"><span>Valid step</span>3x − 3 = 9<strong>Watching. No interruption.</strong></p></article>
+          <article><span className="value-number">01</span><div><h3>Space to keep going.</h3><p>A valid step does not need another question. When the math is progressing, ARIA stays quiet.</p></div><p className="value-example"><span>Valid step</span>3x − 3 = 9<strong>ARIA watches without interrupting.</strong></p></article>
           <article><span className="value-number">02</span><div><h3>A small hint when it matters.</h3><p>A wrong step or a request for help can trigger one hint that points at the next step, never the answer.</p></div><p className="value-example"><span>Hint from the demo</span>“Write (x + 3)(x + 3) and multiply each term. What do you get?”</p></article>
-          <article><span className="value-number">03</span><div><h3>Practice the thinking, too.</h3><p>Explain a plan, notice an error, and choose a next move. The research question is whether that support helps students persist independently.</p></div><p className="value-example"><span>The goal</span>Plan. Check. Revise.<strong>Learning outcomes still need a student study.</strong></p></article>
+          <article><span className="value-number">03</span><div><h3>Keep the thinking yours.</h3><p>Explain a plan, notice an error, and choose your next move. ARIA is designed to support that process rather than complete the problem for you.</p></div><p className="value-example"><span>The goal</span>Students plan, check their work, and revise their approach.</p></article>
         </div>
       </div>
     </section>
   );
+}
+
+export function ConferenceInvitation() {
+  return <section className="educator-section section" id="educators">
+    <div className="shell educator-layout">
+      <div><p className="kicker">For educators</p><h2>When would you step in?</h2><p>Look at eight moments from a student&rsquo;s math work. Choose when you would offer help, then compare your decisions with ARIA&rsquo;s.</p><div className="educator-actions"><a className="btn btn--ink" href="/activity">Try the teacher activity <span aria-hidden="true">→</span></a></div></div>
+      <div className="conference-invite-note"><h3>Bring your classroom perspective.</h3><p>The activity takes about two minutes. Your responses stay in your browser unless you choose to download and share them.</p><p>Interested in helping shape a classroom evaluation? We would like to hear what you would want to test.</p><a className="text-link" href="/participate">Start a conversation →</a></div>
+    </div>
+  </section>;
+}
+
+export function ConferenceResearch() {
+  return <section className="section conference-research" id="evidence">
+    <div className="shell educator-layout">
+      <div><p className="kicker">Behind the tutor</p><h2>Good help is also about timing.</h2></div>
+      <div><p>ARIA-Pace explores the tradeoff between offering a hint too early and leaving a student waiting too long. Our research compares timing policies using historical student logs.</p><div className="evidence-links"><a href="/pace">Explore the timing research →</a><a href="/method">See how ARIA works →</a></div></div>
+    </div>
+  </section>;
 }
 
 export function EducatorSection() {
@@ -26,7 +44,7 @@ export function EducatorSection() {
         <div><p className="kicker">Built with educators</p><h2>You know when a student needs a little help.</h2><p>Help us study those moments. Try eight examples, compare your judgment with ARIA’s logged decisions, or help shape a classroom evaluation.</p><div className="educator-actions"><a className="btn btn--ink" href="/activity">Try the teacher preview <span aria-hidden="true">→</span></a><a className="text-link" href="/participate">Help plan a classroom study →</a></div></div>
         <div className="study-outline">
           <span className="kicker">A proposed study, planned together</span>
-          <dl><div><dt>2–3 sessions</dt><dd>30–45 minutes each; format agreed with your school.</dd></div><div><dt>Algebra through calculus</dt><dd>Typed mathematics, with tasks and measures chosen together.</dd></div><div><dt>A teacher-informed direction</dt><dd>Session summaries and classroom visibility are planned, not available features.</dd></div></dl>
+          <dl><div><dt>2–3 sessions</dt><dd>Each session would last 30–45 minutes, with the format agreed with your school.</dd></div><div><dt>Algebra through calculus</dt><dd>Students would type their mathematics, with tasks and measures chosen together.</dd></div><div><dt>A teacher-informed direction</dt><dd>Session summaries and classroom visibility are planned but are not yet available.</dd></div></dl>
           <p className="study-gate"><strong>Planning stage.</strong> Pilot enrollment follows offline checks, teacher-summary tests, release checks, consent review, and school approval.</p>
         </div>
       </div>
@@ -57,7 +75,6 @@ export function EvidenceSummary() {
               <div>
                 <h3>{metric.label}</h3>
                 <p>{metric.description}</p>
-                <small>{metric.technical}</small>
               </div>
             </article>
           ))}

@@ -89,27 +89,27 @@ const sensitivityRows = [
 const references = [
   {
     cite: "Koedinger, K. R., & Aleven, V. (2007). Exploring the assistance dilemma in experiments with Cognitive Tutors. Educational Psychology Review.",
-    why: "The formal question ARIA-Pace addresses: when should a tutor give help, and when should it withhold it?",
+    why: "This work frames the question ARIA-Pace addresses: when should a tutor give help, and when should it withhold it?",
   },
   {
     cite: "Beck, J. E., & Gong, Y. (2013). Wheel-spinning: students who fail to master a skill. Artificial Intelligence in Education.",
-    why: "The outcome we predict. We use the operationalisation of Wang et al. and Kai et al., which follows Beck and Gong.",
+    why: "This work defines the outcome we predict. We use the operationalisation of Wang et al. and Kai et al., which follows Beck and Gong.",
   },
   {
     cite: "Corbett, A. T., & Anderson, J. R. (1995). Knowledge tracing: modeling the acquisition of procedural knowledge. User Modeling and User-Adapted Interaction.",
-    why: "The risk model ARIA-Pace currently runs on.",
+    why: "This paper introduces the risk model that ARIA-Pace currently uses.",
   },
   {
     cite: "Piech, C., et al. (2015). Deep Knowledge Tracing. arXiv:1506.05908.",
-    why: "The sequence model we trained and compared. Our version is simplified: one skill per sequence.",
+    why: "This paper introduces a sequence model that we trained and compared. Our simplified version uses one skill per sequence.",
   },
   {
     cite: "Pandey, S., & Karypis, G. (2019). A Self-Attentive model for Knowledge Tracing. arXiv:1907.06837.",
-    why: "The attention model we trained and compared, with the same simplification.",
+    why: "This paper introduces an attention model that we trained and compared using the same single-skill simplification.",
   },
   {
     cite: "Ocumpaugh, J., et al. (2014). Population validity for educational data mining models. Sensor-free affect detectors trained on BROMP classroom observations.",
-    why: "The source of the affect signals in the 2012–13 ASSISTments data. The public columns are detector predictions, not the human observations.",
+    why: "This work describes the source of the affect signals in the 2012–13 ASSISTments data. The public columns contain detector predictions, not human observations.",
   },
 ];
 
@@ -121,7 +121,6 @@ export default function PacePage() {
 
       <article className="methodology-note">
         <header className="methodology-hero">
-          <p className="kicker">Research note 02 · Updated October 2026</p>
           <h1>ARIA-Pace: a model for when to stay quiet.</h1>
           <p>
             Most tutoring software responds to every step. ARIA-Pace is the part of ARIA that
@@ -228,7 +227,7 @@ export default function PacePage() {
           <p className="kicker">Result · held-out test, 2009–10 data</p>
           <h2>Quieter when quiet is what you asked for.</h2>
           <p>
-            Evaluated once on 597 test students (3,468 skill sequences, 570 of them wheel-spinning).
+            We evaluated the policy once on 597 test students (3,468 skill sequences, 570 of them wheel-spinning).
             Interventions are per student, ARIA-Pace versus always helping after every wrong step.
             &ldquo;Missed help&rdquo; is the share of wheel-spinning students the rule never
             helped before their tenth attempt. Wheel-spinning is defined by a mastery rule fixed in
@@ -238,12 +237,12 @@ export default function PacePage() {
             <article>
               <strong>52%</strong>
               <h3>Fewer interruptions</h3>
-              <p>Under the quiet setting and the 3-correct-in-a-row mastery definition, compared with helping after every wrong step.</p>
+              <p>Under the Quiet setting and the three-correct-in-a-row mastery definition, ARIA-Pace intervened less often than helping after every wrong step.</p>
             </article>
             <article>
               <strong>3.7%</strong>
               <h3>Missed help</h3>
-              <p>95% confidence interval 2.2% to 5.3%, bootstrapped over students.</p>
+              <p>The 95% confidence interval is 2.2% to 5.3%, calculated by bootstrapping over students.</p>
             </article>
             <article>
               <strong>1</strong>

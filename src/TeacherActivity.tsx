@@ -39,7 +39,7 @@ export default function TeacherActivity() {
 
   if (!started) return <section className="methodology-section">
     <h2>Before you begin.</h2>
-    <p>Eight student moments, about two minutes. Decide whether you would help at the final line shown. ARIA’s logged decisions stay hidden until you finish. This is your judgment, not a test with a correct score.</p>
+    <p>This activity presents eight student moments and takes about two minutes. Decide whether you would help at the final line shown. ARIA’s logged decisions stay hidden until you finish. This is your judgment, not a test with a correct score.</p>
     <details className="consent-draft"><summary>Draft consent · not yet reviewed by an adult (a teacher or the organizers)</summary><p><strong>Draft.</strong> In this version your answers stay in your browser and nothing is sent. This two-minute activity asks when you would step in to help a student working on a math problem. We do not collect names or emails. We ask only your role, years teaching, and grade band, and you can leave any of those blank. You can skip at any point. If responses are ever collected for research, this text will be rewritten and reviewed first.</p></details>
     <p><strong>Preview only:</strong> research collection is not open. Nothing is uploaded or submitted. You may download your responses for your own use; sharing or research use requires the final approved process.</p>
     <div className="field-grid">

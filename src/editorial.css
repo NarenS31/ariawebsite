@@ -41,7 +41,7 @@ h3 { font-size: 23px; line-height: 1.3; }
 .hero-brand-name { background: var(--color-accent); padding-inline: 8px; }
 .hero-category { color: var(--color-ink-2); }
 .hero .hero-lede { max-width: 60ch; margin-inline: auto; margin-block-end: 20px; font-size: 16px; line-height: 1.65; }
-.hero .hero-actions { flex-direction: row; justify-content: center; gap: 20px; margin-block-end: 20px; }
+.hero .hero-actions { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 20px; margin-block-end: 20px; }
 .hero .hero-actions .text-link { display: inline-flex; min-height: 48px; align-items: center; gap: 8px; padding-inline: 22px; border: 1px solid var(--color-rule-dark); border-radius: 6px; text-decoration: none; }
 .hero .hero-trust { justify-content: center; margin-inline: auto; gap: 24px; }
 .hero .hero-trust span { font-family: var(--font-body); font-size: 12px; }
@@ -95,6 +95,9 @@ h3 { font-size: 23px; line-height: 1.3; }
 
 .educator-section { background: var(--color-paper-mint); }
 .educator-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); gap: 48px; align-items: start; }
+.conference-invite-note { padding-inline-start: 28px; border-inline-start: 2px solid var(--color-accent); }
+.conference-invite-note h3 { font-size: 22px; margin-block-end: 16px; }
+.conference-invite-note p, .conference-research p { color: var(--color-ink-2); font-size: 16px; line-height: 1.65; }
 .educator-layout h2 { max-width: 18ch; }
 .educator-layout > div > p:not(.kicker) { max-width: 53ch; color: var(--color-ink-2); }
 .educator-actions { display: flex; flex-direction: column; align-items: flex-start; gap: 20px; margin-block-start: 28px; }

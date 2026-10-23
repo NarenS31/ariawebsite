@@ -27,7 +27,7 @@ export default function ParticipationForm() {
           <label>Grade band<select name="gradeBand" required defaultValue=""><option value="" disabled>Select a grade band</option><option>Middle school</option><option>High school</option><option>Higher education</option><option>Multiple grade bands</option></select></label>
           <label>Email<input name="email" type="email" autoComplete="email" maxLength={254} required /></label>
         </div>
-        <p>For educators and school staff. Please do not include student names, records, or medical information. <a href="/privacy">Privacy and data</a></p>
+        <p>This form is for educators and school staff. Please do not include student names, records, or medical information. <a href="/privacy">Privacy and data</a></p>
         <button className="btn btn--ink" type="submit">Prepare planning request <span aria-hidden="true">→</span></button>
       </form>
       {message && <div className="email-preview" role="status">
