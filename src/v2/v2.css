@@ -715,3 +715,20 @@
   .we__reply { opacity: 1; }
   html { scroll-behavior: auto; }
 }
+
+/* ---------------------------------------------------------------- real demo screenshots on Home */
+.shot { margin: 0; background: var(--v2-white); border: 2px solid var(--v2-ink); border-radius: 16px; box-shadow: 6px 6px 0 var(--v2-ink); overflow: hidden; transition: transform 220ms var(--v2-ease), box-shadow 220ms var(--v2-ease); }
+.shot__crop { position: relative; height: 22rem; overflow: hidden; border-bottom: 2px solid var(--v2-ink); background: var(--v2-warm); }
+.shot__crop img { position: absolute; left: 0; top: 0; display: block; width: var(--zoom, 100%); max-width: none; height: auto; transform: translate(var(--tx, 0), var(--ty, 0)); }
+.shot--watch, .shot--step { --zoom: 165%; --tx: -2%; --ty: -33%; }
+.shot--teacher .shot__crop { height: 24rem; }
+.shot--teacher { --zoom: 100%; --tx: 0; --ty: -26%; }
+.shot figcaption { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.7rem; padding: 0.7rem 0.9rem; font-size: 0.88rem; line-height: 1.4; color: var(--v2-ink-2); }
+.shot figcaption a { font-weight: 700; color: var(--v2-ink); }
+.shot:hover { transform: translate(-2px, -3px); box-shadow: 9px 9px 0 var(--v2-ink); }
+@media (min-width: 62rem) {
+  .shot--watch { grid-column: 1 / span 6; grid-row: 1; transform: rotate(-1.2deg); }
+  .shot--step { grid-column: 7 / span 6; grid-row: 1; margin-top: 4rem; transform: rotate(1.3deg); z-index: 2; }
+  .shot--teacher { grid-column: 2 / span 10; grid-row: 2; margin-top: 3rem; }
+  .shot--watch:hover, .shot--step:hover { transform: translate(-2px, -3px) rotate(0deg); }
+}

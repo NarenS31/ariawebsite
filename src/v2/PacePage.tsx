@@ -214,7 +214,7 @@ export default function PacePage() {
                 <div className="split">
                   <Reveal>
                     <p className="prose">
-                      The risk model is Bayesian Knowledge Tracing (BKT), fitted per skill on the training students with a pooled fallback for skills it has not seen. Stuck risk is the calibrated probability of not mastering the skill by try 10. We also trained neural sequence models; none improved the stuck ranking, so BKT stayed.
+                      The risk model is Bayesian Knowledge Tracing (BKT), fitted per skill on the training students with a pooled fallback for skills it has not seen. Stuck risk is the calibrated probability of not mastering the skill by try 10. Deep-learning models (DKT, SAKT) did not beat BKT at predicting stuck sequences (aria_pace/RESULTS_v3.md:8), so BKT stayed.
                     </p>
                   </Reveal>
                   <Reveal delay={80}>

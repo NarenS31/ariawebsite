@@ -106,7 +106,7 @@ export function TradeoffFigure() {
 }
 
 /* ------------------------------------------------------------------------------------------------
- * Figure 2. Same student, tries 1-6. Stuck risk 15 / 25 / 47 / 70% at tries 3-6, thresholds 57 / 19 / 9%,
+ * Figure 2. Same student, tries 1-6. Stuck risk 15 / 25 / 46 / 70% at tries 3-6, thresholds 57 / 19 / 9%,
  * first hints at try 6 / 4 / 3. Source: docs/DEMO_RUNBOOK.md section 6 and the ARIA poster; thresholds from frozen_val.json.
  * ---------------------------------------------------------------------------------------------- */
 export function TimelineFigure() {
@@ -126,7 +126,7 @@ export function TimelineFigure() {
     <svg className="fig" viewBox={`0 0 ${W} ${H}`} role="img" aria-labelledby="fig2-t fig2-d">
       <title id="fig2-t">One student, six tries, three settings</title>
       <desc id="fig2-d">
-        Tries 1 and 2 are right. Tries 3 to 6 are wrong, and the stuck risk is 15, 25, 47 and 70 percent. Supportive (threshold 9%) gives its
+        Tries 1 and 2 are right. Tries 3 to 6 are wrong, and the stuck risk is 15, 25, 46 and 70 percent. Supportive (threshold 9%) gives its
         first hint at try 3, Balanced (19%) at try 4, and Quiet (57%) at try 6.
       </desc>
       {/* answers */}

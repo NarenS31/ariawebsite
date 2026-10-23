@@ -1,5 +1,4 @@
 import { SitePage, SummitFollowUp } from "../AriaExperience";
-import { demoBuild, momentById } from "../demoMoments";
 import WheelExplainer from "./WheelExplainer";
 import { CountUp, Reveal } from "./motion";
 import { Doodle, Underline } from "./ui";
@@ -28,8 +27,6 @@ export function JoinCards({ compact = false }: { compact?: boolean }) {
 }
 
 export default function HomePage() {
-  const watching = momentById("M2");
-  const stepping = momentById("M8");
   return (
     <SitePage progress>
       <SummitFollowUp />
@@ -92,35 +89,23 @@ export default function HomePage() {
               <a className="textlink" href="/method">
                 How a step is checked <span aria-hidden="true">→</span>
               </a>
-              <p className="fineprint">Panels use the logged decisions and replies from summit build {demoBuild}.</p>
+              <p className="fineprint">Screenshots of the summit demo, tag summit-2026-10-24-pace.</p>
             </Reveal>
             <Reveal className="product__panels c-8" delay={80}>
-              <article className="panel panel--watch" aria-label="A step where ARIA stays quiet">
-                <header>
-                  <img src="/aria-symbol.svg" width="26" height="26" alt="" />
-                  <b>ARIA</b>
-                  <span className="state state--watch">Watching</span>
-                </header>
-                <p className="panel__problem">{watching.problem}</p>
-                <p className="panel__step">
-                  <small>Student step</small>
-                  {watching.turns[watching.turns.length - 1]}
-                </p>
-                <p className="panel__reply panel__reply--quiet">The step checks out. ARIA stays quiet.</p>
-              </article>
-              <article className="panel panel--step" aria-label="A step where ARIA steps in">
-                <header>
-                  <img src="/aria-symbol.svg" width="26" height="26" alt="" />
-                  <b>ARIA</b>
-                  <span className="state state--step">Stepping in</span>
-                </header>
-                <p className="panel__problem">{stepping.problem}</p>
-                <p className="panel__step">
-                  <small>Student step</small>
-                  {stepping.turns[stepping.turns.length - 1]}
-                </p>
-                <p className="panel__reply">{stepping.reply}</p>
-              </article>
+              <figure className="shot shot--watch">
+                <div className="shot__crop"><img src="/demo/03_watching.png" width={1280} height={1186} loading="lazy" alt="The ARIA demo in the Watching state: a wrong step at 15% risk, below the Balanced bar, so the hint is held." /></div>
+                <figcaption><span className="state state--watch">Watching</span> Wrong step, risk 15%, below the Balanced bar of 19%: ARIA holds the hint.</figcaption>
+              </figure>
+              <figure className="shot shot--step">
+                <div className="shot__crop"><img src="/demo/02_stepping_in.png" width={1280} height={1235} loading="lazy" alt="The ARIA demo in the Stepping in state: after wrong steps and a risk of 25%, the Balanced setting gives a hint." /></div>
+                <figcaption><span className="state state--step">Stepping in</span> Wrong step, risk 25%, Balanced bar 19%: one hint.</figcaption>
+              </figure>
+              <figure className="shot shot--teacher">
+                <div className="shot__crop"><img src="/demo/05_teacher_summary.png" width={1280} height={1484} loading="lazy" alt="The teacher summary tab: a timeline of each turn, where the student got stuck, and the hints given." /></div>
+                <figcaption>
+                  Teacher summary of the same session. <a href="/demo/05_teacher_summary.png">Open full size</a>
+                </figcaption>
+              </figure>
             </Reveal>
           </div>
         </section>

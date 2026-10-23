@@ -157,7 +157,7 @@ export default function WheelExplainer() {
       </div>
 
       <p className="sr-only">
-        With the real example values: after the third try the stuck risk is 15%, then 25%, 47% and 70% at tries 4, 5 and 6.
+        With the real example values: after the third try the stuck risk is 15%, then 25%, 46% and 70% at tries 4, 5 and 6.
         Supportive gives its first hint at try 3, Balanced at try 4 and Quiet at try 6. When Quiet holds the hint it says:
         {" " + replies.quietHolds} When Supportive hints it says: {replies.supportiveHints}
       </p>

@@ -79,14 +79,14 @@ export const baselinesQuiet: Baseline[] = [
 ];
 
 // RB:141, RB:150 and the ARIA poster (same student, tries 3-6). Tries 1-2 are correct steps.
-// Third wrong step: poster and brief say 47%; DEMO_RUNBOOK.md:141 says 46%. See PR notes.
+// Third wrong step reads 46% (DEMO_RUNBOOK.md:141; agent/demo_pace.py at tag summit-2026-10-24 gives 0.46499). The poster shows 47%.
 export const timeline = {
   tries: [
     { n: 1, answer: "right", risk: null as number | null },
     { n: 2, answer: "right", risk: null },
     { n: 3, answer: "wrong", risk: 15 },
     { n: 4, answer: "wrong", risk: 25 },
-    { n: 5, answer: "wrong", risk: 47 },
+    { n: 5, answer: "wrong", risk: 46 },
     { n: 6, answer: "wrong", risk: 70 },
   ],
   firstHint: { supportive: 3, balanced: 4, quiet: 6 } as Record<SettingId, number>,
