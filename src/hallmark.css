@@ -1737,7 +1737,7 @@ tbody tr:last-child td {
 }
 
 .methodology-wordmark {
-  font-size: var(--text-md);
+  font-size: var(--text-lg);
   font-weight: 750;
   letter-spacing: -0.04em;
   text-decoration: none;
@@ -1772,15 +1772,15 @@ tbody tr:last-child td {
 }
 
 .methodology-hero h1 {
-  max-width: 18ch;
-  font-size: clamp(2.1rem, 3.6vw, 3.25rem);
+  max-width: 12ch;
+  font-size: clamp(3rem, 7vw, 6rem);
 }
 
 .methodology-hero > p {
   max-width: 62ch;
   margin: 0;
   color: var(--color-ink-2);
-  font-size: var(--text-md);
+  font-size: var(--text-lg);
 }
 
 .methodology-status {
@@ -1811,7 +1811,7 @@ tbody tr:last-child td {
 
 .methodology-status strong {
   margin-block: var(--space-2xl) var(--space-md);
-  font-size: var(--text-lg);
+  font-size: var(--text-xl);
   line-height: 1.2;
 }
 
@@ -1827,14 +1827,14 @@ tbody tr:last-child td {
 .methodology-section > h2,
 .methodology-limitations h2,
 .methodology-next h2 {
-  max-width: 26ch;
-  font-size: clamp(1.55rem, 2.4vw, 2.1rem);
+  max-width: 20ch;
+  font-size: clamp(2rem, 4vw, 3.5rem);
 }
 
 .methodology-section > p:not(.kicker) {
   max-width: 70ch;
   color: var(--color-ink-2);
-  font-size: var(--text-base);
+  font-size: var(--text-md);
 }
 
 .methodology-process {
@@ -1861,7 +1861,7 @@ tbody tr:last-child td {
 
 .methodology-process h3 {
   margin-block-end: var(--space-xs);
-  font-size: var(--text-md);
+  font-size: var(--text-lg);
 }
 
 .methodology-process p {
@@ -1895,14 +1895,14 @@ tbody tr:last-child td {
 .methodology-result-grid strong {
   display: block;
   margin-block-end: var(--space-lg);
-  font-size: clamp(1.85rem, 3vw, 2.6rem);
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
   letter-spacing: -0.06em;
   line-height: 0.9;
 }
 
 .methodology-result-grid h3 {
   margin-block-end: var(--space-sm);
-  font-size: var(--text-base);
+  font-size: var(--text-md);
 }
 
 .methodology-result-grid p {
@@ -1983,7 +1983,7 @@ tbody tr:last-child td {
   align-self: end;
   margin: 0;
   color: color-mix(in oklch, var(--color-on-dark) 78%, var(--color-ink));
-  font-size: var(--text-base);
+  font-size: var(--text-md);
 }
 
 .methodology-footer {
