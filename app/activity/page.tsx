@@ -9,7 +9,7 @@ export default function ActivityPage() {
   return <SitePage><div className="methodology-page outreach-page">
     <article className="methodology-note">
       <header className="methodology-hero"><p className="kicker">For teachers · Two-minute preview</p><h1>Would you step in?</h1><p>A student is working through a math problem. When would you help, and when would you give them room?</p><div className="methodology-status"><span>Logged by the summit build {demoBuild} (commit {demoCommit})</span><strong>Preview, not active research collection</strong><small>The eight moments and ARIA’s decisions are copied from the summit activity data. Consent review is pending; nothing is uploaded.</small></div></header>
-      <section className="methodology-section"><p>These eight moments test ARIA’s default rule. ARIA makes the same decision on every one of them under the Quiet, Balanced and Supportive profiles, so they do not distinguish the three profiles.</p></section>
+      <section className="methodology-section"><p><small>These are logged examples, not a live tutoring session.</small></p><p>These eight moments test ARIA’s default rule. ARIA makes the same decision on every one of them under the Quiet, Balanced and Supportive profiles, so they do not distinguish the three profiles.</p></section>
       <TeacherActivity />
       <footer className="methodology-footer"><a href="/participate">Help plan a classroom study</a><a href="/researchers">Methods and evidence</a><a href="/">Back to ARIA</a></footer>
     </article>
