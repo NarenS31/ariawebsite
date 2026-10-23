@@ -1,5 +1,5 @@
-import AriaExperience from "./AriaExperience";
+import HomePage from "./v2/HomePage";
 
 export default function App() {
-  return <AriaExperience />;
+  return <HomePage />;
 }

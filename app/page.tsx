@@ -1,5 +1,5 @@
-import ResearchSite from "@/src/App";
+import HomePage from "@/src/v2/HomePage";
 
-export default function HomePage() {
-  return <ResearchSite />;
+export default function Home() {
+  return <HomePage />;
 }

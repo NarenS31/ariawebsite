@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "../src/hallmark.css";
 import "../src/editorial.css";
+import "../src/v2/v2.css";
 
 export const metadata: Metadata = {
   icons: { icon: "/aria-symbol.svg", apple: "/aria-symbol.svg" },

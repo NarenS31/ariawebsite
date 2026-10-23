@@ -16,6 +16,7 @@ const navItems = [
   { label: "Method", href: "/method" },
   { label: "Research", href: "/research" },
   { label: "Roadmap", href: "/roadmap" },
+  { label: "Team", href: "/team" },
 ] as const;
 
 const overviewCards = [
@@ -1451,6 +1452,7 @@ export function Footer() {
         <p>Research by Naren Saravanan and Karthik Malireddy · Last updated October 2026</p>
         <div>
           <a href="/pace">ARIA-Pace</a>
+          <a href="/team">Team</a>
           <a href="/methodology">Methodology</a>
           <a href="/activity">Teacher activity</a>
           <a href="/participate">For educators</a>
