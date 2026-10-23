@@ -1,9 +1,6 @@
-import { SitePage } from "../AriaExperience";
+import { Hero, SitePage } from "../AriaExperience";
 import { ConferenceInvitation, ConferenceResearch } from "../HomeSections";
-import WheelExplainer from "./WheelExplainer";
-import { CountUp, Reveal } from "./motion";
-import { Doodle, Underline } from "./ui";
-import { headline } from "./paceData";
+import { Reveal } from "./motion";
 
 export function JoinCards({ compact = false }: { compact?: boolean }) {
   const cards = [
@@ -30,54 +27,10 @@ export function JoinCards({ compact = false }: { compact?: boolean }) {
 export default function HomePage() {
   return (
     <SitePage progress>
+      <div className="legacy-hero">
+        <Hero />
+      </div>
       <div className="v2">
-        <section className="band band--grid hero2" id="home">
-          <div className="wrap g12">
-            <div className="hero2__copy c-5">
-              <p className="eyebrow">Student-led research initiative · Mathematics</p>
-              <h1>
-                When should a tutor <Underline>speak up?</Underline>
-              </h1>
-              <p className="lede">
-                ARIA is a math tutor that decides, step by step, whether a hint helps or interrupts, using a timing model fit on real student logs.
-              </p>
-              <div className="actions">
-                <a className="btn2 btn2--ink" href="/activity">
-                  Try the 8 moments <span aria-hidden="true">→</span>
-                </a>
-                <a className="btn2 btn2--line" href="/pace">
-                  Read the research
-                </a>
-              </div>
-              <p className="fineprint">Evaluated by replaying logged data, not in a classroom.</p>
-            </div>
-            <div className="hero2__stage c-7">
-              <Doodle kind="burst" className="hero2__burst" />
-              <WheelExplainer />
-              <ul className="chips" aria-label="Headline results">
-                <li className="chip chip--a">
-                  <b>
-                    <CountUp value={headline.fewer} suffix="%" />
-                  </b>
-                  <span>fewer skill sequences hinted (Quiet setting)</span>
-                </li>
-                <li className="chip chip--b">
-                  <b>
-                    <CountUp value={headline.missedPct} decimals={1} suffix="%" />
-                  </b>
-                  <span>missed help ({headline.missedN} of {headline.missedOf})</span>
-                </li>
-                <li className="chip chip--c">
-                  <b>
-                    <CountUp value={headline.testStudents} />
-                  </b>
-                  <span>held-out students, ASSISTments 2009–10</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
         <section className="band band--white product" id="product">
           <div className="wrap g12">
             <Reveal className="product__copy c-4">
