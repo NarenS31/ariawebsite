@@ -11,17 +11,17 @@ const glossary = [
   {
     term: "Development benchmark",
     meaning:
-      "A test used to find software weaknesses. Synthetic benchmark scores are not evidence that students learn more.",
+      "A development benchmark tests for software weaknesses. Synthetic benchmark scores are not evidence that students learn more.",
   },
   {
     term: "Human ground truth",
     meaning:
-      "Labels created independently by trained people using a locked codebook, without seeing ARIA’s prediction.",
+      "Human ground truth consists of labels created independently by trained people using a locked codebook, without seeing ARIA’s prediction.",
   },
   {
     term: "Active control",
     meaning:
-      "A comparison tool with the same tasks, interface, time, and base model, but without ARIA’s learner-conditioned pipeline.",
+      "An active control uses the same tasks, interface, time, and base model, but does not include ARIA’s learner-conditioned pipeline.",
   },
   {
     term: "Transfer",
@@ -47,25 +47,25 @@ const evidenceRows = [
     layer: "Response quality",
     status: "0 answer leaks, 0 math errors, 0 crashes in scripted harness runs on the 8 featured problems",
     meaning: "Independent human evaluation remains pending.",
-    claim: "A scripted test of the software on chosen inputs, not a student study. Results file: results/demo_harness_summit_pace.json in the aria.kls repository (branch summit-pace-mac).",
+    claim: "These results come from a scripted software test on chosen inputs, not a student study. The results are recorded in results/demo_harness_summit_pace.json in the aria.kls repository on the summit-pace-mac branch.",
   },
   {
     layer: "Intervention timing",
     status: "52% fewer interventions in offline replay (Quiet cost setting, 3-correct-in-a-row mastery definition)",
-    meaning: "ASSISTments 2009–10 logs, a held-out test of 597 students evaluated once. Interruptions weighted three times as costly as delayed help; with the weights reversed the saving shrinks to 3%.",
-    claim: "Missed 3.7% of students who went on to get stuck (95% CI 2.2–5.3%). Results and protocol are on the ARIA-Pace page. Replay does not establish that an intervention works.",
+    meaning: "We evaluated the policy using held-out ASSISTments 2009–10 logs. Interruptions were weighted three times as costly as delayed help; reversing those weights reduces the saving to 3%.",
+    claim: "The policy missed 3.7% of students who went on to get stuck (95% CI 2.2–5.3%). Results and protocol are on the ARIA-Pace page. Replay does not establish that an intervention works.",
   },
   {
     layer: "Synthetic stress test",
     status: "84.6% same-generator synthetic accuracy",
     meaning: "The balanced score is 0.837; the cross-generator gap is 9.05 points.",
-    claim: "Useful for debugging only.",
+    claim: "These results are useful for debugging, not for establishing learning benefits.",
   },
   {
     layer: "Student outcomes",
     status: "0 completed controlled studies",
     meaning: "Feasibility, learning, retention, and transfer remain untested with students.",
-    claim: "No effectiveness claim.",
+    claim: "We do not claim that ARIA improves learning outcomes.",
   },
 ];
 
@@ -163,12 +163,12 @@ export default function MethodologyPage() {
             <article>
               <strong>30</strong>
               <h3>Demo problems</h3>
-              <p>Answers re-derived by a symbolic engine; independent educator review is pending.</p>
+              <p>A symbolic engine re-derives the answers. Independent educator review is pending.</p>
             </article>
             <article>
               <strong>0</strong>
               <h3>Answer leaks in scripted tests</h3>
-              <p>No false mathematical claims in scripted harness replies. Not real-student evidence.</p>
+              <p>The scripted harness replies contained no false mathematical claims. These checks are not evidence from real students.</p>
             </article>
             <article>
               <strong>0</strong>

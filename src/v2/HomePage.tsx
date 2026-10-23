@@ -1,4 +1,5 @@
-import { SitePage, SummitFollowUp } from "../AriaExperience";
+import { SitePage } from "../AriaExperience";
+import { ConferenceInvitation, ConferenceResearch } from "../HomeSections";
 import WheelExplainer from "./WheelExplainer";
 import { CountUp, Reveal } from "./motion";
 import { Doodle, Underline } from "./ui";
@@ -29,7 +30,6 @@ export function JoinCards({ compact = false }: { compact?: boolean }) {
 export default function HomePage() {
   return (
     <SitePage progress>
-      <SummitFollowUp />
       <div className="v2">
         <section className="band band--grid hero2" id="home">
           <div className="wrap g12">
@@ -109,6 +109,11 @@ export default function HomePage() {
             </Reveal>
           </div>
         </section>
+
+        <div className="v2-legacy">
+          <ConferenceInvitation />
+          <ConferenceResearch />
+        </div>
 
         <section className="band band--dark status" id="status">
           <div className="wrap g12">

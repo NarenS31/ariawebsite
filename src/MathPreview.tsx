@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useState } from "react";
-import { demoBuild, momentById } from "./demoMoments";
+import { momentById } from "./demoMoments";
 
 const examples = [
   {
@@ -29,7 +29,7 @@ export default function MathPreview() {
   const id = useId();
   const example = examples[active];
   return <div className="math-preview">
-    <div className="math-preview__heading"><strong>One step. The right amount of support.</strong><span>Logged examples · summit build {demoBuild}</span></div>
+    <div className="math-preview__heading"><strong>One step. The right amount of support.</strong><span>Example interactions</span></div>
     <div className="math-preview__tabs" role="group" aria-label="Choose a tutoring example">
       {examples.map((item, index) => <button type="button" key={item.label} aria-pressed={active === index} aria-controls={id} onClick={() => setActive(index)}>{item.label}</button>)}
     </div>
@@ -47,6 +47,6 @@ export default function MathPreview() {
         <p className="math-preview__reason">{example.explanation}</p>
       </div>
     </div>
-    <div className="math-preview__footer"><span>Decisions logged by the summit build. Not a live tutoring session.</span><a href="/activity">Try eight student moments →</a></div>
+    <div className="math-preview__footer"><span>These are logged examples, not a live tutoring session.</span><a href="/activity">Try eight student moments →</a></div>
   </div>;
 }

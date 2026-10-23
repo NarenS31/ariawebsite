@@ -261,7 +261,7 @@ export default function PacePage() {
                   <p className="eyebrow">6 · Results</p>
                   <h2>Quiet roughly halves the hints and misses few stuck students.</h2>
                   <p className="prose">
-                    Locked test, {headline.testStudents} students, {headline.sequences.toLocaleString("en-US")} skill sequences. All figures use the 3-correct-in-a-row definition of stuck; the robustness section shows what other definitions do.
+                    We evaluated the policy once on {headline.testStudents} test students ({headline.sequences.toLocaleString("en-US")} skill sequences, {headline.stuckSequences} of them wheel-spinning). All figures use the 3-correct-in-a-row definition of stuck; the robustness section shows what other definitions do.
                   </p>
                 </Reveal>
 
@@ -309,7 +309,7 @@ export default function PacePage() {
                         </tr>
                       </tbody>
                     </table>
-                    <p className="small">Quiet missed-help 95% CI: {headline.ciLow}–{headline.ciHigh}%. For Supportive the difference from always-help includes zero: abstaining saves little when delayed help is the costly side.</p>
+                    <p className="small">The 95% confidence interval for Quiet missed help is {headline.ciLow}% to {headline.ciHigh}%, calculated by bootstrapping over students. For Supportive the difference from always-help includes zero: abstaining saves little when delayed help is the costly side.</p>
                   </Reveal>
                   <Reveal delay={80}>
                     <table className="table">
