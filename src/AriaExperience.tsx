@@ -1461,7 +1461,6 @@ export function Footer() {
           <a href="/students">For students</a>
           <a href="/researchers">For researchers</a>
           <a href="/privacy">Privacy and data</a>
-          <a href="https://github.com/NarenS31/aria.kls">Code and results</a>
           <a href="mailto:11narensara11@gmail.com">Contact</a>
         </div>
       </div>
