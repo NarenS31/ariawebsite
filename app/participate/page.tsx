@@ -11,7 +11,7 @@ export default function ParticipatePage() {
       <section className="methodology-section"><h2>A small study, planned together.</h2><p>The proposed format is 2–3 sessions of 30–45 minutes, focused on typed mathematics from algebra through calculus. Session length, tasks, and participation would be agreed with the school.</p><p>Educators would help choose useful measures and review the support ARIA provides. The team works from Waxhaw, North Carolina (Eastern Time); support arrangements would be agreed before a study starts.</p><a href="/activity">Try the two-minute “Would you step in?” preview →</a></section>
       <section className="methodology-section"><h2>What must be ready first.</h2><ul><li>We must verify offline operation and document how data is handled.</li><li>We must test the teacher summary for each session.</li><li>We must freeze the demo and complete release checks.</li><li>The school must approve the consent process, and any required research review must be complete.</li><li>We must agree on the class, room, laptop setup, and adult point of contact.</li></ul><p>Offline operation, teacher summaries, and specific privacy guarantees will be offered only after these checks are complete.</p></section>
       <section className="methodology-section" id="request"><h2>Start a planning conversation.</h2><p>This is an expression of interest, not a commitment to run a pilot.</p><ParticipationForm /></section>
-      <footer className="methodology-footer"><a href="/researchers">For researchers</a><a href="/">Back to ARIA</a></footer>
+      <footer className="methodology-footer"><a href="/join">Join ARIA</a><a href="/researchers">For researchers</a><a href="/">Back to ARIA</a></footer>
     </article>
   </div></SitePage>;
 }
