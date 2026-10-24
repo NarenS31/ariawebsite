@@ -59,7 +59,7 @@ const roles = [
 export default function TeamPage() {
   return (
     <SitePage>
-      <div className="v2">
+      <div className="v2 team-page">
         <header className="band band--grid pagehead">
           <div className="wrap g12">
             <div className="c-8">
