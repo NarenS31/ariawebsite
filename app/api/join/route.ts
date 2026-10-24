@@ -5,7 +5,7 @@ export const dynamic = "force-dynamic";
 
 const ROLES = ["Teacher", "Researcher", "Student", "Parent", "Other"];
 const EMAIL = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
-const MIN_FILL_MS = 3000;
+const MIN_FILL_MS = 2000;
 const MAX_BODY = 8000;
 
 const json = (body: object, status = 200) => Response.json(body, { status });
@@ -22,9 +22,9 @@ export async function POST(request: Request) {
   }
   if (!body || typeof body !== "object") return json({ error: "Invalid request." }, 400);
 
-  // Spam protection: a filled honeypot or an implausibly fast submit looks like a bot.
+  // Spam protection: a filled honeypot or an implausibly fast submit (elapsedMs is measured in the browser, so device clocks don't matter) looks like a bot.
   // Pretend success so bots get no signal, and store nothing.
-  const elapsed = Date.now() - Number(body.startedAt);
+  const elapsed = Number(body.elapsedMs);
   const trapped = text(body.hp, 200) !== "";
   if (trapped || !Number.isFinite(elapsed) || elapsed < MIN_FILL_MS) {
     console.warn("join: dropped as spam", { reason: trapped ? "honeypot" : "too-fast", elapsed });

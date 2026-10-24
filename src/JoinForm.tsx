@@ -5,7 +5,7 @@ import { useRef, useState, type FormEvent } from "react";
 type Status = "idle" | "sending" | "done" | "error";
 
 export default function JoinForm() {
-  const startedAt = useRef(Date.now());
+  const loadedAt = useRef(performance.now());
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState("");
   const [fields, setFields] = useState<Record<string, string>>({});
@@ -30,7 +30,7 @@ export default function JoinForm() {
           role: v.get("role"),
           consent: v.get("consent") === "on",
           hp: v.get("hp"),
-          startedAt: startedAt.current,
+          elapsedMs: Math.round(performance.now() - loadedAt.current),
           source: new URLSearchParams(window.location.search).get("source") ?? "",
         }),
       });
