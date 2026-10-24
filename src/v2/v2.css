@@ -572,3 +572,31 @@
   .shot--teacher { grid-column: 2 / span 10; grid-row: 2; margin-top: 3rem; }
   .shot--watch:hover, .shot--step:hover { transform: translate(-2px, -3px) rotate(0deg); }
 }
+
+/* ---------------------------------------------------------------- /team only: smaller and tighter (nothing here applies to other pages) */
+.team-page .eyebrow { font-size: 0.875rem; margin-bottom: 0.75rem; }
+.team-page .fineprint { font-size: 0.875rem; margin-top: 1rem; }
+.team-page .band { padding-block: clamp(2.4rem, 5.2vw, 4.5rem); }
+.team-page .pagehead { padding-top: calc(var(--banner-height) + clamp(1.4rem, 2.8vw, 2.45rem)); padding-bottom: clamp(1.6rem, 3.5vw, 2.8rem); }
+.team-page .pagehead h1 { font-size: clamp(1.8rem, 4.2vw, 3.45rem); }
+.team-page .pagehead .lede { margin-top: 1rem; font-size: clamp(0.95rem, 1.15vw, 0.98rem); line-height: 1.5; }
+
+.team-page .people { max-width: 48rem; margin-inline: auto; gap: clamp(0.95rem, 2.2vw, 1.9rem); }
+.team-page .person { border-radius: 16px; box-shadow: 5px 5px 0 var(--v2-yellow); }
+.team-page .person__photo { height: clamp(10rem, 16vw, 14rem); }
+.team-page .person__photo img { object-fit: cover; object-position: center 32%; }
+.team-page .person__body { padding: 1.05rem 1.15rem 1.2rem; }
+.team-page .person h2 { margin-bottom: 0.2rem; font-size: clamp(1.25rem, 2vw, 1.5rem); }
+.team-page .person__role, .team-page .person__school { font-size: 0.95rem; }
+.team-page .person__bio { margin: 0.8rem 0 0.15rem; padding: 0.6rem 0.8rem; font-size: 0.9rem; line-height: 1.5; }
+.team-page .person .textlink { margin-top: 0.8rem; font-size: 0.95rem; overflow-wrap: anywhere; }
+
+.team-page .sechead { margin-bottom: 1.8rem; }
+.team-page .sechead h2 { font-size: clamp(1.35rem, 2.5vw, 2rem); }
+.team-page .sechead__doodle { width: 3.4rem; }
+.team-page .joincards { gap: 0.95rem; grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr)); }
+.team-page .joincard { padding: 1.1rem 1.05rem 1.05rem; border-radius: 14px; }
+.team-page .joincard h3 { font-size: 1.15rem; }
+.team-page .joincard p { margin-top: 0.5rem; font-size: 0.92rem; line-height: 1.45; }
+.team-page .joincard a { margin-top: 0.9rem; font-size: 0.95rem; }
+.team-page .joincard a + a { margin-top: 0.45rem; font-size: 0.92rem; }
