@@ -29,7 +29,7 @@ export default function JoinForm() {
           interest: v.get("interest"),
           role: v.get("role"),
           consent: v.get("consent") === "on",
-          website: v.get("website"),
+          hp: v.get("hp"),
           startedAt: startedAt.current,
           source: new URLSearchParams(window.location.search).get("source") ?? "",
         }),
@@ -65,7 +65,7 @@ export default function JoinForm() {
         </div>
         <label>What interests you about ARIA?<textarea name="interest" rows={4} maxLength={400} required />{err("interest")}</label>
         <div aria-hidden="true" style={{ position: "absolute", left: "-10000px", width: 1, height: 1, overflow: "hidden" }}>
-          <label>Leave this field empty<input name="website" tabIndex={-1} autoComplete="off" /></label>
+          <label>Leave this field empty<input name="hp" tabIndex={-1} autoComplete="off" data-lpignore="true" data-1p-ignore /></label>
         </div>
         <label><input name="consent" type="checkbox" required /> I agree that ARIA may store these details to contact me about the project. <a href="/privacy">Privacy and data</a>{err("consent")}</label>
         <p>Please do not include student names, records, or medical information.</p>

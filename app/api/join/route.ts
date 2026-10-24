@@ -25,7 +25,9 @@ export async function POST(request: Request) {
   // Spam protection: a filled honeypot or an implausibly fast submit looks like a bot.
   // Pretend success so bots get no signal, and store nothing.
   const elapsed = Date.now() - Number(body.startedAt);
-  if (text(body.website, 200) !== "" || !Number.isFinite(elapsed) || elapsed < MIN_FILL_MS) {
+  const trapped = text(body.hp, 200) !== "";
+  if (trapped || !Number.isFinite(elapsed) || elapsed < MIN_FILL_MS) {
+    console.warn("join: dropped as spam", { reason: trapped ? "honeypot" : "too-fast", elapsed });
     return json({ ok: true });
   }
 
