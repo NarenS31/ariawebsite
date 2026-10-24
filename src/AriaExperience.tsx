@@ -1321,6 +1321,7 @@ export function Summit() {
           </a>
           <div className="summit-next-links">
             <a href="/activity">Try the two-minute teacher activity →</a>
+            <a href="/join">Join ARIA →</a>
             <a href="/participate">Plan a school partnership →</a>
             <a href="/pace">Review the research →</a>
             <a href="/privacy">Privacy and data →</a>
@@ -1466,6 +1467,7 @@ export function Footer() {
           <a href="/pace">ARIA-Pace</a>
           <a href="/methodology">Methodology</a>
           <a href="/activity">Teacher activity</a>
+          <a href="/join">Join ARIA</a>
           <a href="/participate">For educators</a>
           <a href="/students">For students</a>
           <a href="/researchers">For researchers</a>
