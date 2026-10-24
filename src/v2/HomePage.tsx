@@ -4,10 +4,10 @@ import { Reveal } from "./motion";
 
 export function JoinCards({ compact = false }: { compact?: boolean }) {
   const cards = [
-    { tone: "yellow", who: "Teachers", ask: "Try the 8 moments and help plan a reviewed classroom pilot.", href: "/team#join" },
-    { tone: "ink", who: "Researchers", ask: "Review our methods, replicate the replay, or collaborate.", href: "/team#join" },
-    { tone: "warm", who: "Students", ask: "Tell us how a hint should feel when you are stuck.", href: "/team#join" },
-    { tone: "tint", who: "Advisors and mentors", ask: "We are looking for an adult advisor for ethics review and study design.", href: "/team#join" },
+    { tone: "yellow", who: "Teachers", ask: "Try the 8 moments and help plan a reviewed classroom pilot.", href: "/join" },
+    { tone: "ink", who: "Researchers", ask: "Review our methods, replicate the replay, or collaborate.", href: "/join" },
+    { tone: "warm", who: "Students", ask: "Tell us how a hint should feel when you are stuck.", href: "/join" },
+    { tone: "tint", who: "Advisors and mentors", ask: "We are looking for an adult advisor for ethics review and study design.", href: "/join" },
   ];
   return (
     <ul className={`joincards${compact ? " joincards--compact" : ""}`}>

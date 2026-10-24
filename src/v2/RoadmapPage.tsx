@@ -47,9 +47,6 @@ export default function RoadmapPage() {
               <p className="eyebrow">Research roadmap</p>
               <h1>Five phases, in order.</h1>
             </div>
-            <p className="lede c-5 pagehead__intro">
-              Each phase has to hold up before the next one is worth running, and we are early in that sequence. Naming where we are is more useful than implying we are further along.
-            </p>
           </div>
         </header>
         <section className="band band--white timeline-band" aria-label="Research phases">

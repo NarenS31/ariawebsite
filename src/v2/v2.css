@@ -583,8 +583,9 @@
 
 .team-page .people { max-width: 48rem; margin-inline: auto; gap: clamp(0.95rem, 2.2vw, 1.9rem); }
 .team-page .person { border-radius: 16px; box-shadow: 5px 5px 0 var(--v2-yellow); }
-.team-page .person__photo { height: clamp(10rem, 16vw, 14rem); }
-.team-page .person__photo img { object-fit: cover; object-position: center 32%; }
+.team-page .person__photo { height: auto; aspect-ratio: 1 / 1; }
+.team-page .person__photo img { position: absolute; inset: 0; object-fit: cover; object-position: center 25%; }
+.team-page .team-join { margin-top: 1.5rem; font-size: 0.95rem; text-align: center; }
 .team-page .person__body { padding: 1.05rem 1.15rem 1.2rem; }
 .team-page .person h2 { margin-bottom: 0.2rem; font-size: clamp(1.25rem, 2vw, 1.5rem); }
 .team-page .person__role, .team-page .person__school { font-size: 0.95rem; }
