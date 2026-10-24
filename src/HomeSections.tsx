@@ -134,10 +134,11 @@ export function CommonQuestions() {
           <details>
             <summary>What happens to my responses?</summary>
             <p>
-              The teacher activity keeps responses in browser memory and downloads a CSV only when
-              you request it. It does not upload your answers. The planning form and the student
-              questions do not send anything either: one prepares an email you review and send
-              yourself, the other downloads a file. <a href="/privacy">Read the privacy page →</a>
+              The teacher activity keeps your answers in your browser unless you choose to share
+              them at the end; sharing is anonymous (your eight choices and an optional role, no
+              name or email). The planning form and the student questions do not send anything:
+              one prepares an email you review and send yourself, the other downloads a file.{" "}
+              <a href="/privacy">Read the privacy page →</a>
             </p>
           </details>
         </div>

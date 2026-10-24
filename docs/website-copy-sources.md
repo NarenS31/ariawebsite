@@ -19,8 +19,9 @@ Updated 2026-10-15 from the supplied section-by-section edit list.
   `summit-2026-10-24`, commit `e09218c`), replacing the earlier pre-freeze set (`074812d`). ARIA stays quiet on M1, M2, M4, M5
   and steps in on M3, M6, M7, M8. Sampling limitation, to record in any analysis plan: the set has two quiet-on-correct
   cases, two quiet-on-planning-words cases, two wrong-math step-ins, and two words-only step-ins; it has no wrong-but-quiet case.
-- Teacher decisions are committed before model decisions are revealed. CSV
-  exports are labeled `preview-not-research`; nothing is uploaded.
+- Teacher decisions are committed before model decisions are revealed. The CSV download was removed; at the end of the activity
+  visitors may share their eight Step in / Stay quiet choices anonymously (table `activity_responses`, `db/002_activity_responses.sql`).
+  Nothing is sent unless they tick consent and press Share.
 - The hero now includes help requests and difficulty signals as intervention
   triggers, matching the supplied words-only cases instead of claiming that
   intervention happens only on verified mathematical errors.
